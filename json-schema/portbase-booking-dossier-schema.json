@@ -1,0 +1,483 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-booking-dossier-schema.json",
+  "title": "BookingDossier",
+  "description": "A booking dossier belonging to an organisation",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/BookingDossier",
+  "properties": {
+    "bookingNumber": {
+      "type": "string",
+      "description": "The booking number"
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the dossier was created"
+    },
+    "bookingEquipments": {
+      "type": "array",
+      "description": "List of equipment associated with this booking",
+      "items": {
+        "$ref": "#/$defs/BookingEquipment"
+      }
+    },
+    "subscribedTerminals": {
+      "type": "array",
+      "description": "List of terminals subscribed to this booking",
+      "items": {
+        "$ref": "#/$defs/SubscribedTerminal"
+      }
+    },
+    "vesselVisit": {
+      "$ref": "#/$defs/VesselVisit"
+    },
+    "callReferenceNumber": {
+      "type": "string",
+      "description": "The call reference number registered on the booking subscription"
+    }
+  },
+  "required": [
+    "bookingEquipments",
+    "bookingNumber",
+    "dateCreated"
+  ],
+  "$defs": {
+    "Berth": {
+      "description": "A berth at a terminal",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the berth"
+        },
+        "code": {
+          "type": "string",
+          "description": "The berth code"
+        },
+        "terminalCode": {
+          "type": "string",
+          "description": "The terminal code the berth belongs to"
+        },
+        "terminal": {
+          "$ref": "#/$defs/Terminal"
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "terminal",
+        "terminalCode"
+      ]
+    },
+    "BerthVisit": {
+      "description": "A visit to a specific berth within a port",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique berth visit identifier"
+        },
+        "berth": {
+          "$ref": "#/$defs/Berth"
+        }
+      },
+      "required": [
+        "berth",
+        "id"
+      ]
+    },
+    "BookingEquipment": {
+      "description": "Equipment associated with a booking",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "description": "The container or equipment number"
+        },
+        "empty": {
+          "type": "boolean",
+          "description": "Whether the container is empty"
+        },
+        "manifest": {
+          "$ref": "#/$defs/Manifest"
+        },
+        "gateIn": {
+          "$ref": "#/$defs/GateIn"
+        },
+        "loadConfirmation": {
+          "$ref": "#/$defs/LoadConfirmation"
+        },
+        "documents": {
+          "type": "array",
+          "description": "List of export documents associated with this equipment",
+          "items": {
+            "$ref": "#/$defs/Document"
+          }
+        },
+        "equipmentStatus": {
+          "$ref": "#/$defs/EquipmentStatus"
+        }
+      }
+    },
+    "Document": {
+      "description": "An export document associated with equipment",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "description": "The unique document identifier"
+        },
+        "documentNumber": {
+          "type": "string",
+          "description": "The document number"
+        },
+        "createdByOrgFullName": {
+          "type": "string",
+          "description": "The full name of the organisation that created the document"
+        },
+        "registrationTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the document was registered"
+        },
+        "transhipment": {
+          "type": "boolean",
+          "description": "Whether this document is for transhipment cargo"
+        },
+        "documentType": {
+          "$ref": "#/$defs/DocumentType"
+        },
+        "dateUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time this document was last updated"
+        }
+      },
+      "required": [
+        "createdByOrgFullName",
+        "dateUpdated",
+        "documentId",
+        "documentNumber",
+        "documentType",
+        "registrationTime",
+        "transhipment"
+      ]
+    },
+    "DocumentType": {
+      "description": "The type classification of a document",
+      "properties": {
+        "forwarderCode": {
+          "type": "string",
+          "description": "The forwarder code identifying the document type"
+        }
+      },
+      "required": [
+        "forwarderCode"
+      ]
+    },
+    "EquipmentStatus": {
+      "description": "Aggregated status overview of an equipment across all process steps",
+      "properties": {
+        "customsInspectionStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "exportDocumentClearanceStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "exportDocumentStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "exportDocumentCustomsStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "exportDocumentPrenotificationStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "terminalBookingSubscriptionStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "transportEquipmentGateInStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "transportEquipmentLoadStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "vesselArrivalStatus": {
+          "$ref": "#/$defs/Status"
+        },
+        "vesselDepartureStatus": {
+          "$ref": "#/$defs/Status"
+        }
+      },
+      "required": [
+        "customsInspectionStatus",
+        "exportDocumentClearanceStatus",
+        "exportDocumentCustomsStatus",
+        "exportDocumentPrenotificationStatus",
+        "exportDocumentStatus",
+        "terminalBookingSubscriptionStatus",
+        "transportEquipmentGateInStatus",
+        "transportEquipmentLoadStatus",
+        "vesselArrivalStatus",
+        "vesselDepartureStatus"
+      ]
+    },
+    "GateIn": {
+      "description": "Gate-in information for equipment at a terminal",
+      "properties": {
+        "terminalFullName": {
+          "type": "string",
+          "description": "The full name of the terminal where the equipment was gated in"
+        },
+        "gatedInDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the equipment was gated in"
+        },
+        "dateUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time this gate-in record was last updated"
+        }
+      },
+      "required": [
+        "dateUpdated",
+        "gatedInDateTime",
+        "terminalFullName"
+      ]
+    },
+    "LoadConfirmation": {
+      "description": "Confirmation that equipment has been loaded onto a vessel",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "description": "The container or equipment number"
+        },
+        "callReferenceNumber": {
+          "type": "string",
+          "description": "The call reference number"
+        },
+        "terminalFullName": {
+          "type": "string",
+          "description": "The full name of the terminal where loading occurred"
+        },
+        "loadedDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the equipment was loaded"
+        },
+        "dateUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time this load confirmation was last updated"
+        }
+      },
+      "required": [
+        "callReferenceNumber",
+        "dateUpdated",
+        "equipmentNumber",
+        "loadedDateTime"
+      ]
+    },
+    "Manifest": {
+      "description": "Manifest information linking equipment to a vessel visit",
+      "properties": {
+        "manifestId": {
+          "type": "string",
+          "description": "The unique manifest identifier"
+        },
+        "voyageNumber": {
+          "type": "string",
+          "description": "The voyage number"
+        },
+        "callReferenceNumber": {
+          "type": "string",
+          "description": "The call reference number of the vessel visit"
+        },
+        "dateUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the manifest was last updated"
+        }
+      },
+      "required": [
+        "callReferenceNumber",
+        "dateUpdated",
+        "manifestId",
+        "voyageNumber"
+      ]
+    },
+    "Port": {
+      "description": "A port location",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the port"
+        },
+        "unCode": {
+          "type": "string",
+          "description": "The UN/LOCODE of the port"
+        },
+        "countryUnCode": {
+          "type": "string",
+          "description": "The UN country code"
+        }
+      },
+      "required": [
+        "countryUnCode",
+        "name",
+        "unCode"
+      ]
+    },
+    "PortOfCall": {
+      "description": "The port of call for a vessel visit",
+      "properties": {
+        "port": {
+          "$ref": "#/$defs/Port"
+        }
+      },
+      "required": [
+        "port"
+      ]
+    },
+    "PortVisit": {
+      "description": "A port visit containing berth visit information",
+      "properties": {
+        "berthVisits": {
+          "type": "array",
+          "description": "List of berth visits during this port visit",
+          "items": {
+            "$ref": "#/$defs/BerthVisit"
+          }
+        }
+      }
+    },
+    "Status": {
+      "description": "A status value with its filter classification, timestamp, and optional parameters",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The human-readable status value"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the status was recorded"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "description": "Additional key-value parameters providing context for the status"
+          },
+          "description": "Additional key-value parameters providing context for the status"
+        }
+      },
+      "required": [
+        "timestamp",
+        "value"
+      ]
+    },
+    "SubscribedTerminal": {
+      "description": "A terminal that is subscribed to a booking",
+      "properties": {
+        "orgFullName": {
+          "type": "string",
+          "description": "The full name of the subscribed organisation"
+        },
+        "subscriptionDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the terminal subscribed"
+        }
+      },
+      "required": [
+        "orgFullName",
+        "subscriptionDateTime"
+      ]
+    },
+    "Terminal": {
+      "description": "A terminal at a port",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the terminal"
+        },
+        "code": {
+          "type": "string",
+          "description": "The terminal code"
+        },
+        "ownerFullName": {
+          "type": "string",
+          "description": "The full name of the terminal owner organisation"
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "ownerFullName"
+      ]
+    },
+    "Vessel": {
+      "description": "A vessel",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the vessel"
+        },
+        "imoCode": {
+          "type": "string",
+          "description": "The IMO code of the vessel"
+        }
+      },
+      "required": [
+        "imoCode",
+        "name"
+      ]
+    },
+    "VesselVisit": {
+      "description": "A vessel visit to a port",
+      "properties": {
+        "callReferenceNumber": {
+          "type": "string",
+          "description": "The call reference number"
+        },
+        "dateRegistered": {
+          "type": "string",
+          "description": "The date the vessel visit was registered"
+        },
+        "cancelled": {
+          "type": "boolean",
+          "description": "Whether the vessel visit has been cancelled"
+        },
+        "portOfCall": {
+          "$ref": "#/$defs/PortOfCall"
+        },
+        "vessel": {
+          "$ref": "#/$defs/Vessel"
+        },
+        "visitDeclaration": {
+          "$ref": "#/$defs/VisitDeclaration"
+        }
+      },
+      "required": [
+        "callReferenceNumber",
+        "cancelled",
+        "dateRegistered",
+        "portOfCall",
+        "vessel",
+        "visitDeclaration"
+      ]
+    },
+    "VisitDeclaration": {
+      "description": "The visit declaration containing port visit details",
+      "properties": {
+        "portVisit": {
+          "$ref": "#/$defs/PortVisit"
+        }
+      },
+      "required": [
+        "portVisit"
+      ]
+    }
+  }
+}

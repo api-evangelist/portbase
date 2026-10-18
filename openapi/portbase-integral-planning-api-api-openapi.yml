@@ -1,0 +1,579 @@
+openapi: 3.2.0
+info:
+  title: Portbase Integral Planning API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Integral Planning API across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Integral Planning API
+  description: This endpoint can be used by the integral planner Nextlogic to update the planning information.
+paths:
+  /integralPlanning/voyage:
+    post:
+      tags:
+      - Integral Planning API
+      summary: Update voyage planning
+      description: This endpoint can be used to update an integrally planned voyage.
+      operationId: _01_planVoyage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanVoyage'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /integralPlanning/visit:
+    post:
+      tags:
+      - Integral Planning API
+      summary: Update visit planning
+      description: This endpoint can be used to update visits of an integrally planned voyage.
+      operationId: _02_planVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanVisitRequest'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /integralPlanning/handling:
+    post:
+      tags:
+      - Integral Planning API
+      summary: Update handling planning
+      description: This endpoint can be used to update handlings of an integrally planned voyage.
+      operationId: _03_planHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanHandling'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    Crane:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        speed:
+          type:
+          - number
+          - 'null'
+        height:
+          type:
+          - number
+          - 'null'
+        maxWidth:
+          type:
+          - number
+          - 'null'
+        outreach:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        twinningAllowed:
+          type:
+          - boolean
+          - 'null'
+        liftCapacity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        canHandleFullContainers:
+          type:
+          - boolean
+          - 'null'
+        canHandleOOG:
+          type:
+          - boolean
+          - 'null'
+        canHandleBundles:
+          type:
+          - boolean
+          - 'null'
+      description: The cranes used in this call as indicated by integral planning.
+    IntegralPlanningVoyageStatus:
+      type: object
+      properties:
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The time of arrival at the entry point of the port as estimated by Nextlogic.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        etd:
+          type:
+          - string
+          - 'null'
+          description: The time of departure from the exit point of the port as estimated by Nextlogic.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        pta:
+          type:
+          - string
+          - 'null'
+          description: The planned time of arrival at the entry point of the port.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        ptd:
+          type:
+          - string
+          - 'null'
+          description: The planned time of departure from the exit point of the port.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        ata:
+          type:
+          - string
+          - 'null'
+          description: The actual time of arrival at the entry point of the port as given by Nextlogic.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        atd:
+          type:
+          - string
+          - 'null'
+          description: The actual time of departure from the exit point of the port as given by Nextlogic.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        plannedEntryPoint:
+          allOf:
+          - $ref: '#/components/schemas/BargeAccessPoint'
+        plannedExitPoint:
+          allOf:
+          - $ref: '#/components/schemas/BargeAccessPoint'
+        actualEntryPoint:
+          allOf:
+          - $ref: '#/components/schemas/BargeAccessPoint'
+        actualExitPoint:
+          allOf:
+          - $ref: '#/components/schemas/BargeAccessPoint'
+        netTime:
+          type:
+          - integer
+          - 'null'
+          description: The net time in minutes of this rotation calculated by Nextlogic.
+          format: int32
+        slackTime:
+          type:
+          - integer
+          - 'null'
+          description: The slack time in minutes of this rotation calculated by Nextlogic.
+          format: int32
+        normTime:
+          type:
+          - integer
+          - 'null'
+          description: The norm time in minutes of this rotation calculated by Nextlogic.
+          format: int32
+        alerts:
+          type: array
+          description: Any alerts from Nextlogic while processing this voyage.
+          items:
+            $ref: '#/components/schemas/NextlogicAlert'
+      description: '`Integral planning` Nextlogic status for this voyage.'
+    Bollard:
+      required:
+      - bicsCode
+      - metersToNextBollard
+      - number
+      type: object
+      properties:
+        bicsCode:
+          type: string
+          description: The Binnenvaart Informatie- en Communicatie Systeem (BICS) code for the Terminal.
+        number:
+          type: string
+          description: Distinct bollard description, unique per quay. Can be just the bollard number or a text prefix with the bollard number.
+          example: DDE-59
+        coordinates:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The geographical position of the bollard.
+          readOnly: true
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/Coordinates'
+        metersToNextBollard:
+          type: number
+          description: The number of meters to the next bollard in the sequence.
+          readOnly: true
+        mooringSide:
+          type:
+          - string
+          - 'null'
+          description: A ship’s mooring side for mooring near this bollard.
+          readOnly: true
+          enum:
+          - port
+          - starboard
+      description: '`Integral planning` Physical location on the quay.'
+    BargeAccessPoint:
+      required:
+      - code
+      - name
+      type: object
+      properties:
+        code:
+          maxLength: 2
+          minLength: 0
+          type: string
+          description: Code of a barge scope in or scope out accesspoint.
+          example: BR
+        name:
+          type: string
+          description: Name of a barge scope in or scope out accesspoint.
+          example: Brienenoordbrug
+      description: 'Entrypoint: The location at which the port visit starts. Also known as scope in.<br> Exitpoint: The location at which the port visit ends. Also known as scope out.'
+    GetTerminalByBicsCode:
+      required:
+      - bicsCode
+      type: object
+      properties:
+        bicsCode:
+          type: string
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+      description: Get terminal by specified bicsCode.
+    IntegralPlanningVisitStatusRequest:
+      type: object
+      properties:
+        terminal:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The planned terminal (quay), this can (but does not have to) be different than the requested terminal.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/GetTerminalByBicsCode'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The time of arrival at the terminal as estimated by integral planning.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        etd:
+          type:
+          - string
+          - 'null'
+          description: The time of departure from the terminal as estimated by integral planning.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        pta:
+          type:
+          - string
+          - 'null'
+          description: The planned time of arrival at the terminal.
+          format: date-time
+          example: '2018-04-24T04:58:49.132Z'
+        ptd:
+          type:
+          - string
+          - 'null'
+          description: The planned time of departure from the terminal.
+          format: date-time
+          example: '2018-04-24T04:58:49.132Z'
+        ata:
+          type:
+          - string
+          - 'null'
+          description: The actual time of arrival at the terminal as given by integral planning.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        atd:
+          type:
+          - string
+          - 'null'
+          description: The actual time of departure from the terminal as given by integral planning.
+          format: date-time
+          example: '2019-09-12T21:34:22Z'
+        plannedHandlings:
+          allOf:
+          - $ref: '#/components/schemas/PlannedHandlings'
+        totalNetTeu:
+          type:
+          - number
+          - 'null'
+          description: The total net teu calculated by integral planning.
+        fromBollard:
+          allOf:
+          - $ref: '#/components/schemas/Bollard'
+        toBollard:
+          allOf:
+          - $ref: '#/components/schemas/Bollard'
+        bestMooringPosition:
+          allOf:
+          - $ref: '#/components/schemas/Bollard'
+        cranes:
+          type: array
+          description: The cranes used in this call as indicated by integral planning.
+          items:
+            $ref: '#/components/schemas/Crane'
+        lastUpdate:
+          type:
+          - string
+          - 'null'
+          description: The time of the last integral planning update with a change for this visit.
+          format: date-time
+        alerts:
+          type: array
+          description: Any alerts from the integral planning while processing this visit.
+          items:
+            $ref: '#/components/schemas/NextlogicAlert'
+    PlanVoyage:
+      required:
+      - status
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+        status:
+          allOf:
+          - $ref: '#/components/schemas/IntegralPlanningVoyageStatus'
+    Coordinates:
+      required:
+      - latitude
+      - longitude
+      type: object
+      properties:
+        latitude:
+          maximum: 90
+          minimum: -90
+          type: number
+          description: The decimal degrees from the equator
+        longitude:
+          maximum: 180
+          minimum: -180
+          type: number
+          description: The decimal degrees from the Prime Meridian (Greenwich)
+      description: The geographical position of the bollard.
+      readOnly: true
+      deprecated: true
+    PlannedHandlings:
+      type: object
+      properties:
+        dischargeTotal:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of all the containers to be discharged.
+          format: int32
+        dischargeOutOfGauge:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of non-standard containers to be discharged as the cargo doesn't fit inside a standard container as it exceeds its standard dimensions.
+          format: int32
+        dischargeTwinnable:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of to be discharged containers, loaded side by side in such a way that they can be lifted of the barge in one crane move.
+          format: int32
+        dischargeEmpty:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of standard empty containers to be discharged.
+          format: int32
+        dischargeStacked:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The number of containers (flatracks) stacked in bundles.'
+          format: int32
+        dischargeBundles:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The number of bundles.'
+          format: int32
+        loadingTotal:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of all the containers to be loaded.
+          format: int32
+        loadingOutOfGauge:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of non-standard containers to be loaded as the cargo doesn't fit inside a standard container as it exceeds its standard dimensions.
+          format: int32
+        loadingTwinnable:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of containers to be loaded side by side in such a way that they can be lifted of the barge in one crane move.
+          format: int32
+        loadingEmpty:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of standard empty containers to be loaded.
+          format: int32
+        loadingStacked:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The number of containers (flatracks) stacked in bundles.'
+          format: int32
+        loadingBundles:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The number of bundles.'
+          format: int32
+        shifters:
+          maximum: 9999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The number of containers to be relocated on board of a barge vessel during a terminal visit.
+          format: int32
+      description: The number of full and empty containers to be discharged, loaded and shifted during a terminal visit, as planned by integral planning. Required for any planning containing the pta and ptd.
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    NextlogicAlert:
+      required:
+      - code
+      - description
+      - severity
+      type: object
+      properties:
+        code:
+          type: string
+          description: Alert code from Nextlogic Optimizer.
+        description:
+          type: string
+          description: Human readable description of the alert.
+        severity:
+          type: string
+          description: Indication of how severe this alert is, indicating if it is blocking the integral planning process.
+          enum:
+          - ACTION_LOW_PRIO
+          - ACTION_HIGH_PRIO
+          - INFORMATIVE
+        forBargeOperator:
+          type: boolean
+          description: Is this alert meant for the declarant (barge operator)?
+        forTerminalOperator:
+          type: boolean
+          description: Is this alert meant for the terminal?
+      description: Alert from Nextlogic Optimizer.
+    IntegralPlanningHandlingStatus:
+      type: object
+      properties:
+        alerts:
+          type: array
+          description: Any alerts from Nextlogic while processing this handling.
+          items:
+            $ref: '#/components/schemas/NextlogicAlert'
+      description: '`Integral planning` Nextlogic status for this handling.'
+    PlanVisitRequest:
+      required:
+      - status
+      - visitId
+      type: object
+      properties:
+        status:
+          title: ''
+          type: ''
+          description: ''
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/IntegralPlanningVisitStatusRequest'
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    PlanHandling:
+      required:
+      - handlingId
+      - status
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        status:
+          allOf:
+          - $ref: '#/components/schemas/IntegralPlanningHandlingStatus'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

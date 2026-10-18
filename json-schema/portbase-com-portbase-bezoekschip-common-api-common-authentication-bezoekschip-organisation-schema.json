@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json",
+  "title": "BezoekschipOrganisation",
+  "description": "Owner: The organisation that is accountable for reporting the port visit\nDeclarant: The organisation that is responsible for reporting the port visit\nCargoDeclarant: The organisation that is responsible for reporting the cargo on board of the vessel\nFinancialDeclarant: The organisation that is responsible for reporting the harbour dues for a visit",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-vessel-visit-openapi.yml#/components/schemas/com.portbase.bezoekschip.common.api.common.authentication.BezoekschipOrganisation",
+  "required": [
+    "fullName",
+    "shortName"
+  ],
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "fullName": {
+      "minLength": 1,
+      "type": "string",
+      "description": "The full name of the organisation"
+    },
+    "shortName": {
+      "minLength": 1,
+      "type": "string",
+      "description": "The short name of the organisation"
+    },
+    "iamConnectedId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The IAM Connected id of the organisation"
+    },
+    "portAuthorityId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the organisation, issued by the port authority"
+    },
+    "creditNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The credit number of the organisation, issued by the port for harbour dues declarations"
+    },
+    "emailAddress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The email address of the organisation"
+    },
+    "address": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The address of the organisation"
+    },
+    "city": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The city where the organisation is located"
+    },
+    "zipCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The zip code of the organisation"
+    },
+    "countryUnCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The UN code of the country where the organisation is located"
+    },
+    "countryName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The name of the country where the organisation is located"
+    },
+    "phoneNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The phone number of the organisation"
+    },
+    "faxNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The fax number of the organisation"
+    },
+    "contact": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The contact person of the organisation"
+    },
+    "customsEORINumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The EORI number of the organisation, issued by customs"
+    },
+    "ean": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The EAN number of the organisation"
+    },
+    "chamberOfCommerceNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The chamber of commerce number of the organisation"
+    },
+    "scacCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The SCAC code of the organisation"
+    },
+    "rtoNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The warehouse license id"
+    }
+  }
+}

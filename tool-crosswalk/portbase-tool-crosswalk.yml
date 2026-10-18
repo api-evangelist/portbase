@@ -1,0 +1,40 @@
+generated: '2026-10-18'
+method: derived
+source: mcp/portbase-mcp.yml
+crosswalk:
+- tool: cargo_controller_export__subscribe
+  rest:
+  - operationId: subscribe
+    path: /v1/bookings
+    method: POST
+    api: openapi/portbase-cargo-controller-export-openapi.yml
+  confidence: high
+- tool: cargo_controller_export__get_by_subscription_id
+  rest:
+  - operationId: getBySubscriptionId
+    path: /v1/bookings/{subscriptionId}
+    method: GET
+    api: openapi/portbase-cargo-controller-export-openapi.yml
+  confidence: high
+- tool: cargo_controller_export__get_jwks
+  rest:
+  - operationId: getJwks
+    path: /public/.well-known/jwks.json
+    method: GET
+    api: openapi/portbase-cargo-controller-export-openapi.yml
+  confidence: high
+- tool: cargo_controller_import__nominate_inland_operators_1
+  rest:
+  - operationId: nominateInlandOperators_1
+    path: /public/track-requests/{trackRequestId}/inland-operator-nominations
+    method: PUT
+    api: openapi/portbase-cargo-controller-import-openapi.yml
+  confidence: high
+- tool: cargo_controller_import__assign_cargo_director
+  rest:
+  - operationId: assignCargoDirector
+    path: /public/track-requests/{trackRequestId}/assign-cargo-director
+    method: PUT
+    api: openapi/portbase-cargo-controller-import-openapi.yml
+  confidence: high
+note: Tool crosswalk derived from MCP candidate file which maps OpenAPI operations to tool names. These are not documented MCP tools but derived mappings.

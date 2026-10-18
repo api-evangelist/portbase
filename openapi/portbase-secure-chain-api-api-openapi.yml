@@ -1,0 +1,441 @@
+openapi: 3.2.0
+info:
+  title: Portbase Secure Chain API
+  version: v1.0
+  contact:
+    name: Portbase - Team Import Cargo
+    url: https://www.portbase.com/services/cargo-controller-import/
+    email: importcargo@portbase.com
+  x-logo:
+    url: images/portbase-logo.png
+    altText: Portbase logo
+  description: 'Operations tagged Secure Chain API across 2 of this provider''s published API definitions: portbase-cargo-controller-import.json, portbase-cargo-controller-import-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.cargo-controller.pcs.portbase.com
+  description: Production
+- url: https://api.cargo-controller.pcs.portbase.com/stub
+  description: Test
+- url: https://api.cargo-controller.kt.portbase.com
+  description: KT
+tags:
+- name: Secure Chain API
+paths:
+  /public/track-requests/{trackRequestId}/inland-operator-nominations:
+    put:
+      tags:
+      - Secure Chain API
+      summary: Nominate inland operator
+      description: '> Note that for using this endpoint additional authorisation for the Portbase Secure Chain is required. Please contact sales@portbase.com in order to obtain the authorisation.
+
+
+        This endpoint can be used to nominate an inland operator for transport equipment(s) listed on a Bill of Lading for which your organisation is Cargo Director.
+
+        After tracking a Bill of Lading, you will receive a track request id in the response which you will need to nominate an inland operator.
+
+        Besides nominating an inland operator it is also possible to send the transport order to the inland operator.
+
+
+        ### Withdraw inland operator nominations
+
+        With this endpoint it is also possible to withdraw / delete an existing inland operator nomination for a transport equipment by leaving field `inlandOperator` empty / blank.
+
+        In that case, the entire shipment will be withdrawn / deleted.'
+      operationId: nominateInlandOperators_1
+      parameters:
+      - name: portbase-access-key-id
+        in: header
+        schema:
+          type: string
+        example: abcdef
+      - name: portbase-secret-access-key
+        in: header
+        schema:
+          type: string
+        example: 1234567
+      - name: authorization
+        in: header
+        description: The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target="_self" href="#section/Configuration/1.-Set-up-API-access">Set up API access</a> section for authentication.
+        schema:
+          type: string
+      - name: trackRequestId
+        in: path
+        description: Track request ID, provided in the response of the track requests endpoint
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shipment'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '204':
+          description: OK, No Content
+      security:
+      - ${authorizer-name}: []
+      x-amazon-apigateway-integration:
+        passthroughBehavior: when_no_match
+        requestParameters:
+          integration.request.header.authorization: context.authorizer.jwtAuthHeader
+          integration.request.path.trackRequestId: method.request.path.trackRequestId
+        httpMethod: PUT
+        type: http_proxy
+        uri: ${backend-base-uri}/public/track-requests/{trackRequestId}/inland-operator-nominations
+    servers:
+    - url: https://api.cargo-controller.pcs.portbase.com
+      description: Production
+    - url: https://api.cargo-controller.pcs.portbase.com/stub
+      description: Test
+    - url: https://api.cargo-controller.kt.portbase.com
+      description: KT
+  /public/track-requests/{trackRequestId}/assign-cargo-director:
+    put:
+      tags:
+      - Secure Chain API
+      summary: Assign cargo director
+      description: '> Note that for using this endpoint additional authorisation for the Portbase Secure Chain is required. Please contact sales@portbase.com in order to obtain the authorisation.
+
+
+        This endpoint can be used to assign a cargo director for transport equipment(s) listed on a Bill of Lading for which your organisation is currently Cargo Director. After transfer you will no longer be the current Cargo director for the listed equipments. In the secure chain you will remain the former Cargo Director and, if applicable, the release-to party.'
+      operationId: assignCargoDirector
+      parameters:
+      - name: portbase-access-key-id
+        in: header
+        schema:
+          type: string
+        example: abcdef
+      - name: portbase-secret-access-key
+        in: header
+        schema:
+          type: string
+        example: 1234567
+      - name: authorization
+        in: header
+        description: The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target="_self" href="#section/Configuration/1.-Set-up-API-access">Set up API access</a> section for authentication.
+        schema:
+          type: string
+      - name: trackRequestId
+        in: path
+        description: Track request ID, provided in the response of the track requests endpoint
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '204':
+          description: OK, No Content
+      security:
+      - ${authorizer-name}: []
+      x-amazon-apigateway-integration:
+        passthroughBehavior: when_no_match
+        requestParameters:
+          integration.request.header.authorization: context.authorizer.jwtAuthHeader
+          integration.request.path.trackRequestId: method.request.path.trackRequestId
+        httpMethod: PUT
+        type: http_proxy
+        uri: ${backend-base-uri}/public/track-requests/{trackRequestId}/assign-cargo-director
+    servers:
+    - url: https://api.cargo-controller.pcs.portbase.com
+      description: Production
+    - url: https://api.cargo-controller.pcs.portbase.com/stub
+      description: Test
+    - url: https://api.cargo-controller.kt.portbase.com
+      description: KT
+components:
+  schemas:
+    TransportOrder:
+      type: object
+      properties:
+        invoiceReference:
+          type: string
+          description: Reference to use when invoicing the inland transport
+          example: REF1234
+        debtorName:
+          type: string
+          description: Name of party that owes money for the inland transport
+          example: Transport B.V.
+        consigneeName:
+          type: string
+          description: Name of the consignee that is importing the cargo
+          example: Importer B.V.
+        releaseExpiration:
+          type: string
+          description: 'Expiration moment of the commercial release. Format: yyyy-MM-ddThh:mm:ssZ'
+          example: '2022-06-30T07:30:00Z'
+        demurrage:
+          type: string
+          description: Number of free days at terminal. Number in whole days.
+          example: 14
+          pattern: '[0-9]+'
+        detention:
+          type: string
+          description: Number of free days to deliver equipment to inland terminal. Number in whole days.
+          example: 7
+          pattern: '[0-9]+'
+        returnTerminal:
+          type: string
+          description: The name of the terminal or depot where the empty equipment is returned. Preferably BICS or SMDG code but name is also allowed.
+          example: 0KRAW
+        returnReference:
+          type: string
+          description: The code that is required by terminal or depot to accept the equipment
+          example: ACC12345
+        destinationTargetDate:
+          type: string
+          description: 'Date on which the equipment preferably should have reached the destination. Format: yyyy-MM-dd'
+          example: '2022-06-30'
+        destinationReference:
+          type: string
+          description: The code that is required by the inland terminal to accept the empty equipment
+          example: ACC12345
+        destinationInstructions:
+          type: string
+          description: Instructions on how to deliver the equipment at the destination
+          example: instruction
+        customsCategory:
+          type: string
+          description: 'Three-letter customs category code for the inland transport. Possible values: IM4,MRN,DIN,FWV,ICT,NAR,NT1,BXI,TNK,PIE,PPZ.'
+          example: IM4
+          maxLength: 3
+          minLength: 3
+        documentNumber:
+          type: string
+          description: The movement reference number (MRN) from customs of the inland movement
+          example: 19NL00000012345678
+        documentExpiration:
+          type: string
+          description: 'Expiration date of MRN document. Format: yyyy-MM-dd'
+          example: '2022-06-30'
+    TransportEquipmentDto:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          description: Transport equipment number (for example a container number)
+          example: CONT9434134
+          minLength: 1
+        sizeType:
+          type: string
+          description: Size type code (e.g. 4230) of the container
+          example: 22G1
+          maxLength: 4
+          minLength: 4
+        containerOperator:
+          type: string
+          description: 'Carrier (i.e. shipping company) responsible for the deep sea transport of the cargo. Possible values: A 4-letter SCAC (Standard Carrier Alpha Code) or Portbase short name.'
+          example: MEFR
+          minLength: 1
+        placeOfDestination:
+          type: string
+          description: Final destination of the cargo, preferably UN code but name is also allowed
+          example: DE
+          maxLength: 2
+          minLength: 2
+        inlandTerminalLocation:
+          type: string
+          description: Location UN code of the inland terminal
+          example: DE
+          maxLength: 2
+          minLength: 2
+        inlandTerminalCode:
+          type: string
+          description: BICS code of the inland terminal. See https://binnenvaart.org/terminal-codes/ for all the barge terminals.
+          example: 0APMA
+        inlandOperator:
+          type: string
+          description: 'Operator authorised to perform the inland transport of the cargo. Value: EAN code'
+          example: 8713755177848
+        inlandModality:
+          type: string
+          description: 'The modality of the inland transport. Possible values: barge, rail or road'
+          enum:
+          - barge
+          - rail
+          - road
+          example: barge
+          pattern: barge|rail|road
+        releaseReference:
+          type: string
+          description: Reference number (i.e. pin code) from the carrier after the cargo’s commercial release
+          example: AB1234
+        transportOrder:
+          $ref: '#/components/schemas/TransportOrder'
+          description: Details relating to the transport order given by the cargo director to the inland operator
+      required:
+      - containerOperator
+      - equipmentNumber
+    Shipment:
+      type: object
+      properties:
+        deepSeaEta:
+          type: string
+          description: 'Estimated time of arrival of the deepsea vessel at the terminal. Format: yyyy-MM-ddThh:mm:ssZ'
+          example: '2022-06-30T07:30:00Z'
+          minLength: 1
+        deepSeaTerminal:
+          type: string
+          description: 'Code of the terminal. Possible values: SMDGn BICS code or Portbase short name. E.g.: MDT, NLMVII, DCD, EMX, RWG, RST. This value will be provided by the API updates.'
+          example: NLMVII
+          minLength: 1
+        deepSeaVesselName:
+          type: string
+          description: Name of the deepsea vessel that is delivering the cargo
+          example: SAFMARINE MAFADI
+        deepSeaVesselImo:
+          type: string
+          description: IMO code of the deepsea vessel that is delivering the cargo
+          example: 9314210
+        deepSeaVoyageNumber:
+          type: string
+          description: Voyage number of the deepsea vessel that is delivering the cargo
+          example: VOY-123
+        transportEquipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportEquipmentDto'
+      required:
+      - deepSeaEta
+      - deepSeaTerminal
+    TransferRequest:
+      type: object
+      properties:
+        equipmentNumbers:
+          type: array
+          description: A list of unique equipment number(s)
+          example:
+          - CONT9434134
+          - CONT9434135
+          - CONT9434136
+          items:
+            type: string
+          minItems: 1
+          uniqueItems: true
+        director:
+          type: string
+          deprecated: true
+          description: This field is deprecated. Use `cargoDirector.chamberOfCommerceNumber` instead.
+        cargoDirector:
+          $ref: '#/components/schemas/CargoDirector'
+      required:
+      - equipmentNumbers
+    ApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        rejectedValue: {}
+    CargoDirector:
+      type: object
+      description: 'Use either the CoC number (for Dutch organisations) or the iamConnectedId of the assigned organisation. When both are filled out, the iamConnectedId will be ignored.
+
+        You can use the CoC or Iam id of your own organisation when you want to ''reclaim'' the role for your organisation.'
+      properties:
+        chamberOfCommerceNumber:
+          type: string
+          description: Chamber of Commerce number of the assigned organisation. Can be used for Dutch organisations.
+          example: 1234567890
+        iamConnectedId:
+          type: string
+          description: IamConnectedId of the assigned organisation. Can be used for non-Dutch organisations
+          example: 521146bb-0399-4fbf-9a0d-d5efb9700391
+  securitySchemes:
+    authorizer-name:
+      type: apiKey
+      name: authorizer
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        authorizerResultTtlInSeconds: 0
+        authorizerCredentials: ${authorizer-credentials-arn}
+        type: request
+        identitySource: method.request.header.Portbase-access-key-id,method.request.header.Portbase-secret-access-key
+        authorizerUri: ${authorizer-uri-arn}
+x-refined-from:
+- portbase-cargo-controller-import.json
+- portbase-cargo-controller-import-openapi.yml

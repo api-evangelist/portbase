@@ -1,0 +1,360 @@
+openapi: 3.2.0
+info:
+  title: Portbase Forwarder API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Forwarder API across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Forwarder API
+paths:
+  /processShipments:
+    post:
+      tags:
+      - Forwarder API
+      summary: Declare shipments
+      description: This endpoint can be used to declare a batch of shipments and authorise operators. It is similar to /declareShipments but before declaring shipments it will look up all required reference data.
+      operationId: _01_processShipments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessShipments'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: forbidden operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /forwardShipment:
+    post:
+      tags:
+      - Forwarder API
+      summary: Forward a shipment
+      description: This endpoint can be used to forward a shipment to another inland operator.
+      operationId: _03_forwardShipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForwardShipment'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: validation error
+        '403':
+          description: forbidden operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /cancelShipmentForwarding:
+    post:
+      tags:
+      - Forwarder API
+      summary: Cancel shipment forwarding
+      description: This endpoint can be used to cancel the forwarding of a shipment to another inland operator.
+      operationId: _03b_cancelShipmentForwarding
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelShipmentForwarding'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: validation error
+        '403':
+          description: forbidden operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    TransportOrder:
+      type: object
+      properties:
+        invoiceReference:
+          type:
+          - string
+          - 'null'
+          description: Reference to use when invoicing the inland transport.
+        debtorName:
+          type:
+          - string
+          - 'null'
+          description: Name of party that owes money for the inland transport.
+        consigneeName:
+          type:
+          - string
+          - 'null'
+          description: Name of the consignee that is importing the cargo.
+        releaseExpiration:
+          type:
+          - string
+          - 'null'
+          description: Reference number (i.e. pin code) from the carrier after the cargo’s commercial release.
+          format: date-time
+        demurrage:
+          type:
+          - string
+          - 'null'
+          description: Amount of free time at terminal – in ISO 8601 duration format.
+          format: duration
+        detention:
+          type:
+          - string
+          - 'null'
+          description: Amount of time to deliver equipment to inland terminal – in ISO 8601 duration format.
+          format: duration
+        returnTerminal:
+          type:
+          - string
+          - 'null'
+          description: Name of the terminal or depot where the empty equipment should be returned.
+        returnReference:
+          type:
+          - string
+          - 'null'
+          description: The code that is required by terminal or depot to accept the empty equipment.
+        destinationTargetDate:
+          type:
+          - string
+          - 'null'
+          description: Date on which the equipment preferably should have reached the destination.
+          format: partial-date
+        destinationReference:
+          type:
+          - string
+          - 'null'
+          description: The code that is required by the inland terminal to accept the empty equipment.
+        destinationInstructions:
+          type:
+          - string
+          - 'null'
+          description: Instructions on how to deliver the equipment at the destination.
+        customsCategory:
+          type:
+          - string
+          - 'null'
+          description: Three-letter customs category code for the inland transport.
+        documentNumber:
+          type:
+          - string
+          - 'null'
+          description: The document number related to the inland movement. E.g. movement reference number.
+        documentExpiration:
+          type:
+          - string
+          - 'null'
+          description: Expiration moment of the customs document.
+          format: partial-date
+      description: Details relating to the transport order given by the cargo director to the inland operator
+    ValidationException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        violations:
+          uniqueItems: true
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+        violationSummaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViolationSummary'
+    UnprocessedContainerAuthorisation:
+      required:
+      - cargoDirector
+      - equipmentNumber
+      type: object
+      properties:
+        transportReference:
+          type:
+          - string
+          - 'null'
+          description: Reference number of the shipper or forwarder for this shipment
+        consignmentNumbers:
+          type: array
+          description: Consignment numbers (i.e. bill of lading numbers) from carrier as declared to customs.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Consignment numbers (i.e. bill of lading numbers) from carrier as declared to customs.
+        equipmentNumber:
+          type: string
+          description: Equipment number (i.e. container number) as declared to customs
+        deepSeaEta:
+          type:
+          - string
+          - 'null'
+          description: Estimated time of arrival of the vessel that is delivering the cargo
+          format: date-time
+        deepSeaTerminal:
+          type:
+          - string
+          - 'null'
+          description: BICS, SMDG or organisation short name of the terminal at which the cargo is discharged from the vessel
+        deepSeaCarrier:
+          type:
+          - string
+          - 'null'
+          description: Carrier (i.e. shipping company) responsible for the deep sea transport of the cargo
+        deepSeaVesselName:
+          type:
+          - string
+          - 'null'
+          description: Name of the vessel that is delivering the cargo
+        deepSeaVesselImo:
+          type:
+          - string
+          - 'null'
+          description: IMO code of the vessel that is delivering the cargo
+        deepSeaVoyageNumber:
+          type:
+          - string
+          - 'null'
+          description: Voyage number of the vessel that is delivering the cargo
+        releaseReference:
+          type:
+          - string
+          - 'null'
+          description: Reference number (i.e. pin code) given by the carrier after commercial release of the cargo
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: Size type code (e.g. 4230) of the container
+        cargoWeight:
+          type:
+          - number
+          - 'null'
+          description: Weight in kg of all the contents of the container (but excluding the weight of the container itself)
+        tareWeight:
+          type:
+          - number
+          - 'null'
+          description: Weight in kg of the container itself
+        inlandModality:
+          type:
+          - string
+          - 'null'
+          description: Modality of the inland transport, either 'barge', 'rail' or 'road'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        inlandTerminalLocation:
+          type:
+          - string
+          - 'null'
+          description: Location UN code of the inland terminal
+        inlandTerminalCode:
+          type:
+          - string
+          - 'null'
+          description: BICS code of the inland terminal
+        finalDestination:
+          type:
+          - string
+          - 'null'
+          description: Final destination of the cargo as location UN code
+        cargoDirector:
+          type: string
+          description: Code identifying the cargo director (or forwarder) of the cargo. May be Customs EORI number, Dutch Chamber of Commerce number, Scac code, EAN code or Portbase short name
+        inlandOperator:
+          type:
+          - string
+          - 'null'
+          description: Operator authorised to perform the inland transport of the cargo. May be Customs EORI number, Dutch Chamber of Commerce number, Scac code, EAN code or Portbase short name
+        transportOrder:
+          allOf:
+          - $ref: '#/components/schemas/TransportOrder'
+    CancelShipmentForwarding:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    ProcessShipments:
+      required:
+      - containerAuthorisations
+      type: object
+      properties:
+        containerAuthorisations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnprocessedContainerAuthorisation'
+    ViolationSummary:
+      type: object
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+    ForwardShipment:
+      required:
+      - id
+      - inlandOperator
+      type: object
+      properties:
+        id:
+          type: string
+        inlandOperator:
+          type: string
+          description: Operator authorised to perform the inland transport of the cargo. May be Customs EORI number, Dutch Chamber of Commerce number, Scac code, EAN code or Portbase id.
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

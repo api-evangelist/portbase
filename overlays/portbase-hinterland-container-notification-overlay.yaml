@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements overlay for Portbase Hinterland Container Notification API
+  version: 1.0.0
+extends: ../openapi/_original/portbase-hinterland-container-notification-openapi.yml
+x-generated: '2026-10-18'
+x-method: derived
+x-source: openapi/portbase-hinterland-container-notification-openapi.yml
+x-rationale: The spec description documents that every call requires the Portbase-access-key-id and Portbase-secret-access-key headers, but the
+  contract declares no usable security scheme. This overlay declares them and links the provider getting-started article and reference documentation.
+actions:
+- target: $.components
+  description: Ensure a components object exists for the security schemes below.
+  update:
+    securitySchemes:
+      portbaseAccessKeyId:
+        type: apiKey
+        in: header
+        name: Portbase-access-key-id
+        description: 'Portbase access key id. Documented in the API description: every API call requires the Portbase-access-key-id and Portbase-secret-access-key
+          headers; access keys are issued by Portbase.'
+      portbaseSecretAccessKey:
+        type: apiKey
+        in: header
+        name: Portbase-secret-access-key
+        description: Portbase secret access key, sent together with Portbase-access-key-id.
+- target: $
+  description: Apply both Portbase header credentials globally (both headers are required together).
+  update:
+    security:
+    - portbaseAccessKeyId: []
+      portbaseSecretAccessKey: []
+- target: $.externalDocs
+  description: The original externalDocs.url is the relative path linkmenu.html; this overlay replaces it with the provider getting-started article.
+  remove: true
+- target: $
+  description: Link the provider getting-started article for this system interface.
+  update:
+    externalDocs:
+      description: 'Portbase support: getting started with the Portbase Hinterland Container Notification API'
+      url: https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+- target: $.info
+  description: Record provider reference documentation and catalog provenance.
+  update:
+    x-api-evangelist:
+      provider: portbase
+      documentation: https://hcn.pcs.portbase.com/api-documentation/index.html
+      getting_started: https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+      status_page: https://status.portbase.com/

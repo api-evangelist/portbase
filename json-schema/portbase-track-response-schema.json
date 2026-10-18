@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-track-response-schema.json",
+  "title": "TrackResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TrackResponse",
+  "type": "object",
+  "properties": {
+    "trackedBLs": {
+      "type": "array",
+      "description": "If the combination of blNumber and equipmentNumber is known in our system, the Track Request will appear in this list.\nThe B/L is successfully tracked and you will automatically receive the B/L data (and every future update) on your webhook url.\n\nNB: if you are already successfully tracking this B/L (e.g. because someone already added it via the web interface),\nthe Track Request will still appear in this list. However, a reference number or labels in the (new) track request will be ignored.\n",
+      "items": {
+        "$ref": "#/$defs/TrackResult"
+      }
+    },
+    "notTrackedBLs": {
+      "type": "array",
+      "description": "If the combination of blNumber and equipmentNumber is not known in Cargo Controller (yet), the Track Request will appear in this list.\nWe will save the Track Request so ***you do not have to include this Track Request again in future requests to this endpoint***.\nThe saved Track Request will automatically be tracked when the B/L becomes known in our system. It will then be sent as an update to your webhook.\n",
+      "items": {
+        "$ref": "#/$defs/TrackResult"
+      }
+    },
+    "rejectedBLs": {
+      "type": "array",
+      "description": "If the handling agent has withdrawn your access to its cargo data, the Track Request will appear in this list together with the agent's name.\nPlease contact the handling agent for more information.\n",
+      "items": {
+        "$ref": "#/$defs/TrackResult"
+      }
+    }
+  },
+  "$defs": {
+    "TrackResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identification of your track request"
+        },
+        "blNumber": {
+          "type": "string",
+          "description": "Bill of Lading (consignment) number"
+        },
+        "transportEquipmentNumber": {
+          "type": "string",
+          "description": "Transport equipment number (for example a container number)"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "The self defined reference of the track request"
+        },
+        "vesselName": {
+          "type": "string",
+          "description": "The name of the vessel that was added by filling out the CRN or IMO code in the track request"
+        },
+        "labels": {
+          "type": "array",
+          "description": "The self defined labels of the track request",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

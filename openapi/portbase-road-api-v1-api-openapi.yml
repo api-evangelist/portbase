@@ -1,0 +1,3399 @@
+openapi: 3.2.0
+info:
+  title: Portbase Road API V1 API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Road API V1 across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Road API V1
+  description: Deprecated Road API. Please upgrade to Operator API endpoints.
+paths:
+  /roadvisits:
+    post:
+      tags:
+      - Road API V1
+      summary: Create visit
+      description: Creates new Visit. Replaced by Operator API endpoints
+      operationId: _01_createVisit_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoadVisitRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitCreateResultDTO'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /roadvisits/{visitUuid}:
+    get:
+      tags:
+      - Road API V1
+      summary: Get roadvisit by visitUuid
+      description: Get roadvisit by visitUuid. Replaced by Operator API endpoints
+      operationId: _04_getVisitByUuid
+      parameters:
+      - name: visitUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoadVisitResultResult'
+      deprecated: true
+    delete:
+      tags:
+      - Road API V1
+      summary: Delete roadvisit
+      description: Deletes a roadVisit. Replaced by Operator API endpoints
+      operationId: _05_deleteRoadVisit
+      parameters:
+      - name: visitUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelopeEmpty'
+      deprecated: true
+    patch:
+      tags:
+      - Road API V1
+      summary: Update visit eta
+      description: Update the eta of a roadVisit. Replaced by Operator API endpoints
+      operationId: _02_updateRoadVisitEta
+      parameters:
+      - name: visitUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVisitEtaRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /roadvisits/{visitUuid}/equipments:
+    get:
+      tags:
+      - Road API V1
+      summary: Find attached equipments
+      description: Find Equipments attached to the specified visit. Replaced by Operator API endpoints
+      operationId: _03_getRoadVisitEquipments
+      parameters:
+      - name: visitUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContainerListItem'
+      deprecated: true
+    patch:
+      tags:
+      - Road API V1
+      summary: Update attached equipments
+      description: Update the equipments attached to the specified visit. Replaced by Operator API endpoints
+      operationId: _06_updateRoadVisitEquipments
+      parameters:
+      - name: visitUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachDetachEquipments'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelopeEmpty'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /equipments:
+    post:
+      tags:
+      - Road API V1
+      summary: Create equipment
+      description: Creates an Equipment. Replaced by Operator API endpoints
+      operationId: _11_createEquipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentCreateRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCreateResult'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /equipments/{equipmentUuid}:
+    get:
+      tags:
+      - Road API V1
+      summary: Get equipment
+      description: Get Equipment by uuid. Replaced by Operator API endpoints
+      operationId: _13_getEquipmentByUuid
+      parameters:
+      - name: equipmentUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentWebResult'
+      deprecated: true
+    put:
+      tags:
+      - Road API V1
+      summary: Replace equipment
+      description: Replaces an Equipment. Replaced by Operator API endpoints
+      operationId: _12_replaceEquipment
+      parameters:
+      - name: equipmentUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentUpdateRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCreateResult'
+      deprecated: true
+    delete:
+      tags:
+      - Road API V1
+      summary: Delete equipment
+      description: Deletes an Equipment. Replaced by Operator API endpoints
+      operationId: _14_deleteEquipment
+      parameters:
+      - name: equipmentUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /bookings:
+    post:
+      tags:
+      - Road API V1
+      summary: Create booking
+      description: Creates a Booking. Replaced by Operator API endpoints.
+      operationId: _21_createBooking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCreateResult'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /bookings/{bookingUuid}:
+    put:
+      tags:
+      - Road API V1
+      summary: Replace booking
+      description: Replaces a Booking. Replaced by Operator API endpoints.
+      operationId: _22_replaceBooking
+      parameters:
+      - name: bookingUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+      responses:
+        '200':
+          description: successful operation
+      deprecated: true
+    delete:
+      tags:
+      - Road API V1
+      summary: Delete booking
+      description: Deletes a Booking. Replaced by Operator API endpoints.
+      operationId: _23_deleteBooking
+      parameters:
+      - name: bookingUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /preferences/notification:
+    get:
+      tags:
+      - Road API V1
+      summary: Get terminal notification preferences
+      description: Get terminal notification preferences by params. Replaced by Operator API endpoints
+      operationId: _31_getNotificationPreferenceByParams
+      parameters:
+      - name: terminalEAN
+        in: query
+        schema:
+          type: string
+      - name: modality
+        in: query
+        schema:
+          type: string
+          deprecated: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationPreference'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /preferences/organisation:
+    get:
+      tags:
+      - Road API V1
+      summary: Get organisation preferences
+      description: Get organisation preferences by params. Replaced by Operator API endpoints
+      operationId: _32_getOrganisationPreferencesByParams
+      parameters:
+      - name: terminalEAN
+        in: query
+        schema:
+          type: string
+      - name: organisationShortName
+        in: query
+        schema:
+          type: string
+      - name: modality
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationPreference'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /quaymodalities:
+    get:
+      tags:
+      - Road API V1
+      summary: Get quay modalities
+      description: Get quay modalities. Replaced by Operator API endpoints
+      operationId: _40_getQuayModalities
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuayModalitySelectItemDTO'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    ResponseEnvelope:
+      type: object
+      properties:
+        success:
+          type: boolean
+        result:
+          allOf:
+          - type: object
+    NotificationStatusBase:
+      type: object
+      properties:
+        state:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..50 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| EAN number of charter party that will execute the physical transport |
+
+            |**Possible values**|''NEW'' = Not Sent|
+
+            ||''DECLARED'' = Sent|
+
+            ||''ACCEPTED'' = Accepted by terminal|
+
+            ||''REJECTED'' = Rejected by terminal|
+
+            ||''UPDATED'' = Updated|
+
+            ||''CANCEL_SEND'' = Cancelled|
+
+            '
+        stateReasons:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Remarks'
+      description: Notification status resource representation
+    RoadVisitRequest:
+      type: object
+      properties:
+        expectedArrivalDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Expected arrival date / time (ETA) |
+
+            '
+          format: date-time
+        terminal:
+          allOf:
+          - $ref: '#/components/schemas/TerminalRequest'
+      description: RoadVisit representation
+    EquipmentCreateResult:
+      required:
+      - equipmentUuid
+      type: object
+      properties:
+        equipmentUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the equipment as generated by the PCS |
+
+            '
+    EquipmentStatusListItem:
+      type: object
+      properties:
+        aggregatedStatus:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Container status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - O, N, U,
+        available:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Available status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        bookingApproved:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Booking approved status (*deprecated*) |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        bookingPresent:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Booking present status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        commercialRelease:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Commercial release status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        customsDocument:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Customs document status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        sizeTypeApproved:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Size type approved status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        customsRelease:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Blocked status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported, IB = Is Blocked, NB = Not Blocked |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS, IB, NB
+        cargoOpening:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Cargo opening status |
+
+            |**Possible values:**| U = Unknown, O = OK, N = Not OK, NA = Not Applicable, NS = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+    VisitListItem:
+      type: object
+      properties:
+        visitId:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..12 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Barge Call ID, Terminal Voyage Number (treknumber) or TAR (Truck Appointment Reference) |
+
+            '
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the visit as generated by the PCS |
+
+            '
+        modality:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n1 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Modality |
+
+            |**Possible values:**| 2 = Rail, 3 = Road, 8 = Barge |
+
+            '
+          enum:
+          - 2,3,8
+        handlingTimeActual:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Actual handling (loading or discharge) date/time , ISO datetime  |
+
+            '
+          format: date-time
+        timeSlotStartDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Timeslot end date/time as issued by the terminal, ISO datetime  |
+
+            '
+          format: date-time
+        timeSlotEndDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Timeslot start date/time as issued by the terminal, ISO datetime  |
+
+            '
+          format: date-time
+        truckLicenseId:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..17 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Truck license ID |
+
+            '
+        expectedArrivalDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Expected arrival date/time (ETA), ISO datetime  |
+
+            '
+          format: date-time
+        terminalDisplayName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..200 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Terminal display name |
+
+            '
+        terminalShortName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Terminal short name |
+
+            '
+      description: Container list item representation
+    HandlingResultDto:
+      type: object
+      properties:
+        offDimensionsFront:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions front - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsHeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions height - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsLeft:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions left - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsRear:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions rear - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsRight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions right - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        temperatureMaximum:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Maximum temperature in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            '
+        temperatureMinimum:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Minimum temperature in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            '
+        temperatureSetting:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Temperature setting in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            '
+      description: '| | |
+
+        |----|----|
+
+        |**Occurrence**| 0..1 |
+
+        |**Description**| Handling representation |
+
+        '
+    CarrierRequest:
+      type: object
+      properties:
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| Carrier SCAC Code |
+
+            |**Validation**|R245 - C-SMDG or SCAC code must be present |
+
+            ||R031 - V-valid SCAC or SMDG |
+
+            ||R043 - V-for POST duplicate check |
+
+            '
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an3 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| Carrier SMDG Code |
+
+            |**Validation**|R245 - C-SMDG or SCAC code must be present |
+
+            ||R031 - V-valid SCAC or SMDG |
+
+            ||R043 - V-for POST duplicate check |
+
+            '
+      description: 'Carrier representation: SCAC code and/or SMDG code'
+    ModalitySelectItemDTO:
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    TerminalResult:
+      type: object
+      properties:
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..12 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| BICS code of terminal |
+
+            '
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..12 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| SMDG code of terminal |
+
+            '
+        terminalDisplayName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..200 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Terminal display name |
+
+            '
+        organisation:
+          allOf:
+          - $ref: '#/components/schemas/OrganisationResult'
+    EquipmentCreateRequest:
+      required:
+      - bookingOrderReference
+      - full
+      - loading
+      - notificationType
+      - visitUuid
+      type: object
+      properties:
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the Visit as generated by the PCS |
+
+            |**Validation**|R191 - V-Valid Visit UUID |
+
+            '
+        equipmentNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..11 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| ''AAAA9999999'' |
+
+            |**Description**| Equipment number|
+
+            |**Validation**| R040 - C-Loading on size type |
+
+            ||R037 - V-If not shippers owned format must be correct |
+
+            ||R043 - V-for POST duplicate check |
+
+            ||R088 - V-for PUT duplicate check |
+
+            ||R089 - V-for PUT equipment number allowed |'
+        shippersOwnedContainer:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Shippers owned indicator. Default = False. True bypasses the equipment number validation. |
+
+            '
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |
+
+            |**Validation**|R087 - V-for PUT duplicate check |
+
+            '
+        loading:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Loading or discharge. True = loading, False = discharge |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        bookingOrderReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        grossWeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| Gross weight in KGM |
+
+            |**Validation**|R045 - C-Mandatory if terminal preference is true |
+
+            '
+          format: int32
+        sealNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| min 2 and max 15 characters |
+
+            |**Description**| Seal number |
+
+            |**Validation**|R053 - C-Mandatory if terminal preference is true |
+
+            '
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| ISO Size Type code, ie 22G1 |
+
+            |**Validation**|R040 - C-Loading on size type |
+
+            ||R136 - C-Mandatory if terminal preference is true |
+
+            ||R036 - V-valid ISO Size Type code |
+
+            '
+        transportReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Customer''s ref number of the hinterland transport. |
+
+            '
+        notificationType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| a1 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Notification type |
+
+            |**Validation**|R091 - V-can only be changed from R to N |
+
+            |**Possible values**| ''N'' = Notification, ||''R'' = Status Request |
+
+            '
+          enum:
+          - N, R
+        executingHaulierEANNumber:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| EAN number of charter party that will execute the physical transport |
+
+            |**Validation**|R182 - V-Valid Road Haulier |
+
+            ||R183 - P-ignored if not mandatory |
+
+            ||R184 - V-only allowed if modality = Road |
+
+            '
+          format: int64
+        carrier:
+          allOf:
+          - $ref: '#/components/schemas/CarrierRequest'
+        handling:
+          allOf:
+          - $ref: '#/components/schemas/HandlingRequest'
+      description: Equipment representation
+    BookingRequest:
+      required:
+      - bookingOrderReference
+      - carrier
+      - full
+      - loading
+      - terminal
+      type: object
+      properties:
+        loading:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Loading or discharge. True = loading, False = discharge |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        bookingOrderReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        equipmentNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..11 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| ''AAAA9999999'' |
+
+            |**Description**| Equipment number|
+
+            |**Validation**| R040 - C-Loading on size type |
+
+            '
+        carrier:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: ''
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/CarrierRequest'
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |
+
+            |**Validation**|R087 - V-for PUT duplicate check |
+
+            '
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| ISO Size Type code, ie 22G1 |
+
+            |**Validation**|R040 - C-Loading on size type |
+
+            ||R136 - C-Mandatory if terminal preference is true |
+
+            ||R036 - V-valid ISO Size Type code |
+
+            '
+        grossWeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| Gross weight in KGM |
+
+            |**Validation**|R045 - C-Mandatory if terminal preference is true |
+
+            '
+          format: int32
+        sealNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| min 2 and max 15 characters |
+
+            |**Description**| Seal number |
+
+            |**Validation**|R053 - C-Mandatory if terminal preference is true |
+
+            '
+        terminal:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: ''
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TerminalRequest'
+        modality:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n1 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Modality |
+
+            |**Possible values:**| 2 = Rail, 3 = Road, 8 = Barge |
+
+            '
+          enum:
+          - 2, 3, 8
+        shippersOwnedContainer:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Shippers owned indicator. Default = False. True bypasses the equipment number validation. |
+
+            '
+    HandlingRequest:
+      type: object
+      properties:
+        temperatureMaximum:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Maximum temperature in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            |**Validation**|R060 - V-if container is empty no value allowed |
+
+            ||R063 - V-both min and max temperature must be present |
+
+            ||R064 - V-if temperature setting is filled, no min and max allowed |
+
+            '
+        temperatureMinimum:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Minimum temperature in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            |**Validation**|R060 - V-if container is empty no value allowed |
+
+            ||R062 - V-max temperature higher than min |
+
+            ||R063 - V-both min and max temperature must be present |
+
+            ||R064 - V-if temperature setting is filled, no min and max allowed |
+
+            '
+        temperatureSetting:
+          type:
+          - number
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n3,1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Temperature setting in degrees Celsius |
+
+            |**Format**| 999 max 1 decimal |
+
+            |**Validation**|R060 - V-if container is empty no value allowed |
+
+            ||R065 - V-if min and max are filled, no temperature setting allowed |
+
+            '
+        offDimensionsFront:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions front - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsHeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions height - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsLeft:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions left - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsRear:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions rear - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+        offDimensionsRight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n4,0 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Off dimensions right - Dimensions in Centimeter |
+
+            |**Format**| 4 numbers no decimals |
+
+            '
+          format: int32
+      description: '| | |
+
+        |----|----|
+
+        |**Occurrence**| 0..1 |
+
+        |**Description**| Handling representation |
+
+        '
+    OrganisationPreference:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..50 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Description of the Preference Type |
+
+            '
+        value:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..50 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Value of the Organisation Preference |
+
+            '
+    UpdateVisitEtaRequest:
+      required:
+      - expectedArrivalDateTime
+      type: object
+      properties:
+        expectedArrivalDateTime:
+          type: string
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 1..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Expected Date Time of Arrival (ETA) |
+
+            '
+          format: date-time
+      description: Update eta request
+    OrganisationResult:
+      type: object
+      properties:
+        eanCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| EAN number of Terminal Organisation |
+
+            '
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Short Name of Terminal Organisation |
+
+            '
+    RoadVisitResultResult:
+      type: object
+      properties:
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique reference generated by the PCS for a Visit |
+
+            '
+        expectedArrivalDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Expected arrival date/time (ETA) |
+
+            '
+          format: date-time
+        terminal:
+          allOf:
+          - $ref: '#/components/schemas/TerminalResult'
+        equipmentUuids:
+          type: array
+          description: '| | |
+
+            |----|----|
+
+            |**Occurrence**| 0..xx |
+
+            |**Description**| Array of equipmentUuid''s |
+
+            '
+          items:
+            type:
+            - string
+            - 'null'
+            description: '| | |
+
+              |----|----|
+
+              |**Occurrence**| 0..xx |
+
+              |**Description**| Array of equipmentUuid''s |
+
+              '
+        timeSlotReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..10 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| TAR (Truck Appointment Reference |
+
+            '
+        timeSlotStartDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Time slot start date / time |
+
+            '
+          format: date-time
+        timeSlotEndDateTime:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Time slot end date / time |
+
+            '
+          format: date-time
+        truckLicenseId:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..10 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Truck license id |
+
+            '
+    EquipmentResult:
+      required:
+      - bookingOrderReference
+      - equipmentUuid
+      - full
+      - loading
+      - notificationType
+      - sizeType
+      type: object
+      properties:
+        equipmentUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the equipment as generated by the PCS |
+
+            '
+        equipmentNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..11 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| ''AAAA9999999'' |
+
+            |**Description**| Equipment number|
+
+            |**Validation**| R040 - C-Loading on size type |
+
+            '
+        shippersOwnedContainer:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Shippers owned indicator. Default = False. True bypasses the equipment number validation. |
+
+            '
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |
+
+            '
+        loading:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Loading or discharge. True = loading, False = discharge |
+
+            '
+        bookingOrderReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |
+
+            '
+        grossWeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Gross weight in KGM |
+
+            '
+          format: int32
+        sealNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| min 2 and max 15 characters |
+
+            |**Description**| Seal number |
+
+            '
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| ISO Size Type code, ie 22G1 |
+
+            '
+        sizeTypeName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..256 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| ISO Size Type Name, ie "20''x8''x8''6" General Purpose Container" |
+
+            '
+        transportReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Customer''s ref number of the hinterland transport. |
+
+            '
+        notificationType:
+          type:
+          - string
+          - 'null'
+          description: "| | |\n|----|----|\n|**Length**| a1 |\n|**Occurrence**| 1..1 |\n|**Description**| Notification type |\n|**Possible values**| 'N' = Notification |\n ||'R' = Status Request |\n||'B' = booking (status request without visit)|\n||'O' = No notification/request |\n"
+          enum:
+          - N, R, B, O,
+        executingHaulierEANNumber:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| EAN number of charter party that will execute the physical transport |
+
+            '
+          format: int64
+        carrier:
+          allOf:
+          - $ref: '#/components/schemas/CarrierResult'
+        handling:
+          allOf:
+          - $ref: '#/components/schemas/HandlingResultDto'
+        notificationStatus:
+          allOf:
+          - $ref: '#/components/schemas/NotificationStatusBase'
+        visit:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Occurrence**| 0..9 |
+
+            |**Description**| Documents |
+
+            '
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/VisitResult'
+      description: Container resource representation
+    NotificationPreference:
+      required:
+      - dischargeEmptySetting
+      - dischargeFullSetting
+      - loadingEmptySetting
+      - loadingFullSetting
+      - type
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n1 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Notification preference type |
+
+            |**Possible values:**| 1 = Reefer |
+
+            || 2 = Executing haulier |
+
+            || 3 = Out of gauge |
+
+            || 4 = Seal number |
+
+            || 5 = Size type |
+
+            || 6 = Dangerous goods |
+
+            || 7 = Gross weight |
+
+            '
+        loadingFullSetting:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indication if notification preference type is required/supported for loading of a full container: true= required/supported by Terminal, false= Not required/supported by Terminal |
+
+            '
+        loadingEmptySetting:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indication if notification preference type is required/supported for loading of an empty container: true= required/supported by Terminal, false= Not required/supported by Terminal |
+
+            '
+        dischargeFullSetting:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indication if notification preference type is required/supported for discharge of a full container: true= required/supported by Terminal, false= Not required/supported by Terminal |
+
+            '
+        dischargeEmptySetting:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indication if notification preference type is required/supported for discharge of an empty container: true= required/supported by Terminal, false= Not required/supported by Terminal |
+
+            '
+    AttachDetachEquipments:
+      required:
+      - equipmentUuids
+      type: object
+      properties:
+        equipmentUuids:
+          type: array
+          description: '| | |
+
+            |----|----|
+
+            |**Occurrence**| 0..xx |
+
+            |**Description**| Array of equipmentUuid''s |
+
+            '
+          items:
+            type:
+            - string
+            - 'null'
+            description: '| | |
+
+              |----|----|
+
+              |**Occurrence**| 0..xx |
+
+              |**Description**| Array of equipmentUuid''s |
+
+              '
+      description: Contains list of equipmentUuid's
+    ContainerListItem:
+      required:
+      - equipmentNumber
+      - full
+      type: object
+      properties:
+        equipmentNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..11 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Format**| ''AAAA9999999'' |
+
+            |**Description**| Equipment number|
+
+            '
+        bookingOrderReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |
+
+            '
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |
+
+            '
+        loading:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Loading or discharge. True = loading, False = discharge |
+
+            '
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| ISO Size Type code, ie 22G1 |
+
+            '
+        notificationType:
+          type:
+          - string
+          - 'null'
+          description: "| | |\n|----|----|\n|**Length**| a1 |\n|**Occurrence**| 1..1 |\n|**Description**| Notification type |\n|**Possible values**| 'N' = Notification |\n ||'R' = Status Request |\n||'B' = booking (status request without visit)|\n||'O' = No notification/request |\n"
+          enum:
+          - N, R, B, O,
+        equipmentUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the equipment as generated by the PCS |
+
+            '
+        notificationStatus:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..50 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| EAN number of charter party that will execute the physical transport |
+
+            |**Possible values**|''NEW'' = Not Sent|
+
+            ||''DECLARED'' = Sent|
+
+            ||''ACCEPTED'' = Accepted by terminal|
+
+            ||''REJECTED'' = Rejected by terminal|
+
+            ||''UPDATED'' = Updated|
+
+            ||''CANCEL_SEND'' = Cancelled|
+
+            '
+        isoDateMsgSent:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| date/time message sent to terminal, ISO datetime  |
+
+            '
+          format: date-time
+        rejectCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..3 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Terminal reject codes |
+
+            '
+        messageAcceptedOnce:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Message has been accepted by terminal: true= has been accepted at least one time, false= has never been accepted |
+
+            '
+        operatorShortname:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Operator shortname |
+
+            '
+        dateCreated:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 1..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| date/time equipment created, ISO datetime  |
+
+            '
+          format: date-time
+        dateModified:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 1..1 |
+
+            |**Format**| YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| date/time equipment modified, ISO datetime  |
+
+            '
+          format: date-time
+        visit:
+          allOf:
+          - $ref: '#/components/schemas/VisitListItem'
+        equipmentStatus:
+          allOf:
+          - $ref: '#/components/schemas/EquipmentStatusListItem'
+        handlingStatus:
+          allOf:
+          - $ref: '#/components/schemas/HandlingStatusBase'
+      description: Container list item representation
+    ResponseEnvelopeEmpty:
+      type: object
+      properties:
+        success:
+          type: boolean
+    EquipmentUpdateRequest:
+      required:
+      - bookingOrderReference
+      - full
+      - loading
+      - notificationType
+      - visitUuid
+      type: object
+      properties:
+        equipmentNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..11 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| ''AAAA9999999'' |
+
+            |**Description**| Equipment number|
+
+            |**Validation**| R040 - C-Loading on size type |
+
+            ||R037 - V-If not shippers owned format must be correct |
+
+            ||R043 - V-for POST duplicate check |
+
+            ||R088 - V-for PUT duplicate check |
+
+            ||R089 - V-for PUT equipment number allowed |'
+        shippersOwnedContainer:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Shippers owned indicator. Default = False. True bypasses the equipment number validation. |
+
+            '
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |
+
+            |**Validation**|R087 - V-for PUT duplicate check |
+
+            '
+        loading:
+          type:
+          - boolean
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Loading or discharge. True = loading, False = discharge |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        bookingOrderReference:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..35 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |
+
+            |**Validation**|R043 - V-for PUT duplicate check |
+
+            '
+        grossWeight:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| Gross weight in KGM |
+
+            |**Validation**|R045 - C-Mandatory if terminal preference is true |
+
+            '
+          format: int32
+        sealNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Format**| min 2 and max 15 characters |
+
+            |**Description**| Seal number |
+
+            |**Validation**|R053 - C-Mandatory if terminal preference is true |
+
+            '
+        sizeType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Cardinality**| Conditional |
+
+            |**Description**| ISO Size Type code, ie 22G1 |
+
+            |**Validation**|R040 - C-Loading on size type |
+
+            ||R136 - C-Mandatory if terminal preference is true |
+
+            ||R036 - V-valid ISO Size Type code |
+
+            '
+        transportReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..15 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Customer''s ref number of the hinterland transport. |
+
+            '
+        notificationType:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| a1 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Notification type |
+
+            |**Validation**|R091 - V-can only be changed from R to N |
+
+            |**Possible values**| ''N'' = Notification, ||''R'' = Status Request |
+
+            '
+          enum:
+          - N, R
+        executingHaulierEANNumber:
+          type:
+          - integer
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n35 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| EAN number of charter party that will execute the physical transport |
+
+            |**Validation**|R182 - V-Valid Road Haulier |
+
+            ||R183 - P-ignored if not mandatory |
+
+            ||R184 - V-only allowed if modality = Road |
+
+            '
+          format: int64
+        carrier:
+          allOf:
+          - $ref: '#/components/schemas/CarrierRequest'
+        handling:
+          allOf:
+          - $ref: '#/components/schemas/HandlingRequest'
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique Identifier for the Visit as generated by the PCS |
+
+            |**Validation**|R191 - V-Valid Visit UUID |
+
+            '
+      description: Equipment representation
+    TerminalRequest:
+      type: object
+      properties:
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..5 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| The Binnenvaart Informatie- en Communicatie Systeem (BICS) code for the Terminal |
+
+            |**Validation**|R034 - V-valid BICS and/or SMDG code |
+
+            '
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..6 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| The Shipplanning Message Development Group (SMDG) code for the Terminal |
+
+            |**Validation**|R034 - V-valid BICS and/or SMDG code |
+
+            '
+      description: '| | |
+
+        |----|----|
+
+        |**Occurrence**| 1..1 |
+
+        |**Description**| Terminal representation: BICS code and/or SMDG code |
+
+        |**Validation**|R249 - V-terminal cannot be changed => will be ignored in PUT |
+
+        '
+    ContainerStatusBase:
+      type: object
+      properties:
+        available:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Available status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        availableRemarks:
+          type: array
+          description: Available remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        bookingApproved:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Booking approved status (*deprecated*) |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        bookingApprovedRemarks:
+          type: array
+          description: Booking approved remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        bookingPresent:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Booking present status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        bookingPresentRemarks:
+          type: array
+          description: Booking present remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        commercialRelease:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Commercial release status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        commercialReleaseRemarks:
+          type: array
+          description: Commercial release remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        customsDocument:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Customs document status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        customsDocumentRemarks:
+          type: array
+          description: Customs document remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        customsRelease:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Blocked status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported, ''IB'' = Is Blocked, ''NB'' = Not Blocked |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS, IB, NB
+        customsReleaseRemarks:
+          type: array
+          description: Blocked remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        sizeTypeApproved:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Size type approved status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        sizeTypeApprovedRemarks:
+          type: array
+          description: Size type approved remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+        cargoOpening:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an2 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Cargo opening status |
+
+            |**Possible values:**| ''U'' = Unknown, ''O'' = OK, ''N'' = Not OK, ''NA'' = Not Applicable, ''NS'' = Not Supported |
+
+            '
+          enum:
+          - N
+          - O
+          - U
+          - NA
+          - NS
+          - IB
+          - NB
+          - U, O, N, NA, NS
+        cargoOpeningRemarks:
+          type: array
+          description: Cargo opening remarks
+          items:
+            $ref: '#/components/schemas/Remarks'
+      description: Equipment status representation
+    QuayModalitySelectItemDTO:
+      type: object
+      properties:
+        organisationShortName:
+          type:
+          - string
+          - 'null'
+        organisationEANCode:
+          type:
+          - string
+          - 'null'
+        quayDisplayName:
+          type:
+          - string
+          - 'null'
+        quaySmdgCode:
+          type:
+          - string
+          - 'null'
+        quayBicsCode:
+          type:
+          - string
+          - 'null'
+        modalities:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ModalitySelectItemDTO'
+    CarrierResult:
+      type: object
+      properties:
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an4 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Carrier SCAC Code |
+
+            '
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an3 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Carrier SMDG Code |
+
+            '
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..70 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Carrier Display name |
+
+            '
+    VisitResult:
+      type: object
+      properties:
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| char..32 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Universal Unique Identifier for the equipment as generated by the PCS |
+
+            '
+        modality:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| n1 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Modality |
+
+            |**Possible values:**| 2 = Rail, 3 = Road, 8 = Barge |
+
+            '
+          enum:
+          - 2,3,8
+        terminal:
+          allOf:
+          - $ref: '#/components/schemas/TerminalResult'
+      description: '| | |
+
+        |----|----|
+
+        |**Occurrence**| 0..9 |
+
+        |**Description**| Documents |
+
+        '
+    EquipmentWebResult:
+      type: object
+      properties:
+        equipment:
+          allOf:
+          - $ref: '#/components/schemas/EquipmentResult'
+        handlingStatus:
+          allOf:
+          - $ref: '#/components/schemas/HandlingStatusBase'
+        equipmentStatus:
+          allOf:
+          - $ref: '#/components/schemas/ContainerStatusBase'
+      description: Container resource representation
+    VisitCreateResultDTO:
+      type: object
+      properties:
+        visitUuid:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..32 |
+
+            |**Occurrence**| 1..1 |
+
+            |**Description**| Universal Unique reference generated by the PCS for a Visit |
+
+            '
+      description: VisitCreateResult
+    HandlingStatusBase:
+      type: object
+      properties:
+        handlingTimeActual:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| datetime |
+
+            |**Occurrence**| 0..1 |
+
+            |**Format**| ISO datetime, YYYY-MM-DDThh:mm:ss+TZD |
+
+            |**Description**| Actual handling (loading or discharge) date/time |
+
+            '
+          format: date-time
+      description: Equipment handling status representation
+    Remarks:
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..3 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Terminal reject codes |
+
+            '
+        remarks:
+          type: array
+          description: '| | |
+
+            |----|----|
+
+            |**Length**| an..1024 |
+
+            |**Occurrence**| 0..1 |
+
+            |**Description**| Free text terminal remarks |
+
+            '
+          items:
+            type:
+            - string
+            - 'null'
+            description: '| | |
+
+              |----|----|
+
+              |**Length**| an..1024 |
+
+              |**Occurrence**| 0..1 |
+
+              |**Description**| Free text terminal remarks |
+
+              '
+      description: Remarks resource representation
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

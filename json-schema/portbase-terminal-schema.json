@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-terminal-schema.json",
+  "title": "Terminal",
+  "description": "The terminal location at which the containers are loaded onto and discharged from the barge. <br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to resolve a valid Terminal and its attributes",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-hinterland-container-notification-openapi.yml#/components/schemas/Terminal",
+  "required": [
+    "allowedModalities",
+    "bicsCode",
+    "location",
+    "quayName",
+    "shortName",
+    "terminalSettings"
+  ],
+  "type": "object",
+  "properties": {
+    "shortName": {
+      "type": "string",
+      "description": "Code issued by Portbase to identify the Terminal organisation."
+    },
+    "ean": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "European Article Numbering issued by Secure Logistics to identify the Terminal organisation."
+    },
+    "bicsCode": {
+      "type": "string",
+      "description": "Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat."
+    },
+    "quayName": {
+      "type": "string",
+      "description": "The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders."
+    },
+    "smdgCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Terminal facility code according to the Shipplanning Message Development Group."
+    },
+    "location": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Location"
+        }
+      ]
+    },
+    "displayNameOverrides": {
+      "title": "",
+      "type": "",
+      "description": "Quay name override per modality",
+      "deprecated": false,
+      "allOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Quay name override per modality"
+          },
+          "description": "Quay name override per modality"
+        }
+      ]
+    },
+    "requiredDataAuthorisations": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "deepSeaEta",
+          "cargoOpening",
+          "expectedDischargeTime"
+        ]
+      }
+    },
+    "allowedModalities": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "road",
+          "rail",
+          "barge",
+          "cer",
+          "sea"
+        ]
+      }
+    },
+    "tarRequired": {
+      "type": "boolean",
+      "description": "Only relevant for road. Indicates whether the terminal uses TAR codes or not."
+    },
+    "roadStatusRequestAllowed": {
+      "type": "boolean",
+      "description": "Only relevant for road. Indicates whether the terminal can process road status requests."
+    },
+    "bargeStatusRequestForbidden": {
+      "type": "boolean",
+      "description": "Only relevant for barge. Indicates whether the terminal can process barge status requests. Default is false."
+    },
+    "cutoffPeriod": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Only relevant for rail. Indicates the cutoff period for the train composition upload (relative to the eta) for this terminal.",
+      "format": "duration"
+    },
+    "loadDischargeListSettings": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/LoadDischargeListSettings"
+        }
+      ]
+    },
+    "quaySelectByDeclarantForbidden": {
+      "type": "boolean",
+      "description": "Indicates whether the terminal can be used by the Declarant to send a visit declaration. Some terminals can only be selected by the terminal organisation or Nextlogic, if so this option is set to true."
+    },
+    "updateAllowed": {
+      "type": "boolean",
+      "description": "Indicates whether the terminal allows updates on pre-notifications, only for *barge*. Status requests can always be updated. Deprecated, use the handlingUpdateForbidden setting to see for which modality updates are forbidden",
+      "deprecated": true
+    },
+    "handlingUpdateForbidden": {
+      "type": "array",
+      "description": "Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.",
+        "enum": [
+          "road",
+          "rail",
+          "barge",
+          "cer",
+          "sea"
+        ]
+      }
+    },
+    "handlingUpdateBypassAllowed": {
+      "type": "array",
+      "description": "Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.",
+        "enum": [
+          "road",
+          "rail",
+          "barge",
+          "cer",
+          "sea"
+        ]
+      }
+    },
+    "handlingMoveBypassAllowed": {
+      "type": "array",
+      "description": "Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.",
+        "enum": [
+          "road",
+          "rail",
+          "barge",
+          "cer",
+          "sea"
+        ]
+      }
+    },
+    "maxSealNumberLength": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Maximum length of the seal number.",
+      "format": "int32"
+    },
+    "acceptAfterRejectForbidden": {
+      "type": "boolean",
+      "description": "Indicates whether the terminal does not allow a handling accept after a handling reject."
+    },
+    "terminalSettings": {
+      "type": "array",
+      "description": "Terminal settings restricting handling declarations depending on the type of declaration.",
+      "items": {
+        "$ref": "#/$defs/TerminalSettings"
+      }
+    },
+    "nextlogicParticipant": {
+      "type": "boolean",
+      "description": "Setting that indicates this terminal is a Nextlogic Integral Planning participant."
+    },
+    "prenotificationRestrictedToDeclarants": {
+      "title": "",
+      "type": "",
+      "description": "List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.",
+      "deprecated": false,
+      "allOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "description": "List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.",
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames."
+            }
+          },
+          "description": "List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames."
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "LoadDischargeListSettings": {
+      "type": "object",
+      "properties": {
+        "autoRejectEnabled": {
+          "type": "boolean",
+          "description": "Indicates whether non-green handlings are rejected automatically after visit closing."
+        },
+        "handlingUpdateBypassAllowed": {
+          "type": "boolean",
+          "description": "Indicates whether updates are allowed for handlings after load-discharge-list is reopend or sent before cargo cutoff."
+        }
+      },
+      "description": "The settings for the configuration of the load-discharge-list."
+    },
+    "Location": {
+      "required": [
+        "locationUnCode"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the location"
+        },
+        "locationUnCode": {
+          "maxLength": 5,
+          "minLength": 0,
+          "type": "string",
+          "description": "UN/LOCODE; the United Nations Code for Trade and Transport Locations of the location"
+        }
+      },
+      "description": "Use a location retrieved with find locations via the Reference Data API wiht the operation [findLocations](#operation/_05_findLocations)."
+    },
+    "TerminalSettings": {
+      "required": [
+        "modality"
+      ],
+      "type": "object",
+      "properties": {
+        "loading": {
+          "type": "boolean",
+          "description": "Does the setting apply to loading or discharge."
+        },
+        "full": {
+          "type": "boolean",
+          "description": "Does the setting apply to full or empty."
+        },
+        "modality": {
+          "type": "string",
+          "description": "Does the setting apply to rail, road or barge.",
+          "enum": [
+            "road",
+            "rail",
+            "barge",
+            "cer",
+            "sea"
+          ]
+        },
+        "sealNumberAllowed": {
+          "type": "boolean",
+          "description": "Is the seal number required."
+        },
+        "reeferAllowed": {
+          "type": "boolean",
+          "description": "Is reefer information required."
+        },
+        "grossWeightAllowed": {
+          "type": "boolean",
+          "description": "Is gross weight required."
+        },
+        "outOfGaugeAllowed": {
+          "type": "boolean",
+          "description": "Is out of gauge required."
+        },
+        "dangerousGoodsAllowed": {
+          "type": "boolean",
+          "description": "Is dangerous goods information required."
+        },
+        "cargoCutOffInMinutes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The minimum amount of time (in minutes) before visit arrival when operators are still allowed to submit changes to the cargo list.",
+          "format": "int32"
+        },
+        "lossenOpRichtlijnAllowed": {
+          "type": "boolean",
+          "description": "Are equipment numbers optional for empty discharge handlings."
+        }
+      },
+      "description": "Contains restrictions on handling declarations, depending on the type of declaration."
+    }
+  }
+}

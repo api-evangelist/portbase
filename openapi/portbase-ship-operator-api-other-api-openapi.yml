@@ -1,0 +1,991 @@
+openapi: 3.2.0
+info:
+  title: Portbase Ship Operator API - other API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Ship Operator API - other across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Ship Operator API - other
+paths:
+  /declarations/pax:cancel:
+    post:
+      tags:
+      - Ship Operator API - other
+      summary: Cancel all crew and passenger lists
+      description: This endpoint can be used to cancel all crew and passenger lists.
+      operationId: cancelPax
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.CancelPax'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /declarations/pax:declare:
+    post:
+      tags:
+      - Ship Operator API - other
+      summary: Declare crew and passenger list
+      description: This endpoint can be used to declare a crew and passenger list.
+      operationId: declarePax
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingDeclarePax'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /declarations/security:declare:
+    post:
+      tags:
+      - Ship Operator API - other
+      summary: Declare security
+      description: This endpoint can be used to declare security.
+      operationId: declareSecurity
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.DeclareSecurity'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /declarations/shipstores:declare:
+    post:
+      tags:
+      - Ship Operator API - other
+      summary: Declare ship's stores
+      description: This endpoint can be used to declare the ship's stores.
+      operationId: declareShipStores
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.shipstores.DeclareShipStores'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /declarations/waste:declare:
+    post:
+      tags:
+      - Ship Operator API - other
+      summary: Declare waste
+      description: This endpoint can be used to declare waste.
+      operationId: declareWaste
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.DeclareWaste'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.pax.common.PaxDeclaration:
+      title: PaxDeclaration
+      required:
+      - crewMembers
+      - crewMembersOtherShip
+      - passengers
+      - stowaways
+      type: object
+      properties:
+        crewMembers:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.CrewMember'
+        passengers:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.Passenger'
+        crewMembersOtherShip:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.CrewMemberOtherShip'
+        stowaways:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.Stowaway'
+    com.portbase.bezoekschip.common.api.waste.DeclareWaste:
+      title: DeclareWaste
+      required:
+      - crn
+      - wasteDeclaration
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        wasteDeclaration:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.common.WasteDeclaration'
+    com.portbase.bezoekschip.common.api.common.authentication.BezoekschipOrganisation:
+      title: BezoekschipOrganisation
+      required:
+      - fullName
+      - shortName
+      type:
+      - object
+      - 'null'
+      properties:
+        fullName:
+          minLength: 1
+          type: string
+          description: The full name of the organisation
+        shortName:
+          minLength: 1
+          type: string
+          description: The short name of the organisation
+        iamConnectedId:
+          type:
+          - string
+          - 'null'
+          description: The IAM Connected id of the organisation
+        portAuthorityId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the organisation, issued by the port authority
+        creditNumber:
+          type:
+          - string
+          - 'null'
+          description: The credit number of the organisation, issued by the port for harbour dues declarations
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address of the organisation
+        address:
+          type:
+          - string
+          - 'null'
+          description: The address of the organisation
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city where the organisation is located
+        zipCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code of the organisation
+        countryUnCode:
+          type:
+          - string
+          - 'null'
+          description: The UN code of the country where the organisation is located
+        countryName:
+          type:
+          - string
+          - 'null'
+          description: The name of the country where the organisation is located
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the organisation
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number of the organisation
+        contact:
+          type:
+          - string
+          - 'null'
+          description: The contact person of the organisation
+        customsEORINumber:
+          type:
+          - string
+          - 'null'
+          description: The EORI number of the organisation, issued by customs
+        ean:
+          type:
+          - string
+          - 'null'
+          description: The EAN number of the organisation
+        chamberOfCommerceNumber:
+          type:
+          - string
+          - 'null'
+          description: The chamber of commerce number of the organisation
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: The SCAC code of the organisation
+        rtoNumber:
+          type:
+          - string
+          - 'null'
+          description: The warehouse license id
+      description: 'Owner: The organisation that is accountable for reporting the port visit
+
+        Declarant: The organisation that is responsible for reporting the port visit
+
+        CargoDeclarant: The organisation that is responsible for reporting the cargo on board of the vessel
+
+        FinancialDeclarant: The organisation that is responsible for reporting the harbour dues for a visit'
+    com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingDeclarePax:
+      title: DeclarePax
+      required:
+      - crn
+      - paxDeclaration
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        paxDeclaration:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.PaxDeclaration'
+    com.portbase.bezoekschip.common.api.security.common.IsscSecurityDocument:
+      title: IsscSecurityDocument
+      required:
+      - availability
+      - expiryDate
+      - issuer
+      type: object
+      properties:
+        availability:
+          type: string
+          description: Indication whether the International Ship Security Certificate is available
+          enum:
+          - 'YES'
+          - 'NO'
+          - INTERIM
+        expiryDate:
+          type: string
+          description: The expiry date of the International Ship Security Certificate
+          format: partial-date
+        reasonNoValidIsscOnBoard:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The reason why there is no (valid) International Ship Security Certificate on board
+        issuer:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.common.CertifyingOrganisation'
+      description: The International Ship Security Certificate of the vessel
+    com.portbase.bezoekschip.common.api.pax.CancelPax:
+      title: CancelPax
+      required:
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+    com.portbase.bezoekschip.common.api.pax.common.CrewMember:
+      title: CrewMember
+      required:
+      - dateOfBirth
+      - familyName
+      - givenNames
+      - jobTitle
+      - nationality
+      - travelDocuments
+      type: object
+      properties:
+        familyName:
+          maxLength: 70
+          minLength: 0
+          type: string
+        givenNames:
+          maxLength: 70
+          minLength: 0
+          type: string
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - NOT_KNOWN
+          - MALE
+          - FEMALE
+        nationality:
+          maxLength: 2
+          minLength: 2
+          type: string
+        dateOfBirth:
+          type: string
+          format: partial-date
+        placeOfBirth:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        travelDocuments:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.TravelDocument'
+        embarkingAtPortOfCall:
+          type: boolean
+        disembarkingAtPortOfCall:
+          type: boolean
+        transitIndicator:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PERSON_WILL_NOT_LEAVE_THE_VESSEL
+          - PERSON_WILL_LEAVE_THE_VESSEL_TEMPORARILY_DURING_VISIT
+          - PERSON_HAS_LEFT_THE_VESSEL_BUT_IS_ON_BOARD_AGAIN
+        jobTitle:
+          maxLength: 10
+          minLength: 0
+          type: string
+        specialCareHandlingInformation:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.shipstores.DeclareShipStores:
+      title: DeclareShipStores
+      required:
+      - crn
+      - shipStoresDeclaration
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        shipStoresDeclaration:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.shipstores.common.ShipStoresDeclaration'
+    com.portbase.bezoekschip.common.api.security.common.CertifyingOrganisation:
+      title: CertifyingOrganisation
+      required:
+      - code
+      - name
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: The IMO GISIS maritime security code of the certifying organisation
+        name:
+          minLength: 1
+          type: string
+          description: The IMO GISIS maritime security name of the certifying organisation
+      description: The Recognised Security Organisation (RSO) that has issued the International Ship Security Certificate
+    com.portbase.bezoekschip.common.api.security.common.ShipToShipActivity:
+      title: ShipToShipActivity
+      required:
+      - compliantWithSsp
+      - location
+      - type
+      type: object
+      properties:
+        location:
+          maxLength: 256
+          minLength: 0
+          type: string
+          description: The location where the ship-to-ship activity is executed by the vessel
+        type:
+          type: string
+          description: The type of ship-to-ship activity that is executed by the vessel
+          enum:
+          - PASSENGER_MOVEMENT
+          - TAKING_BUNKERS
+          - CHANGING_CREW
+          - TAKING_SUPPLIES
+          - REPAIR
+          - MISCELLANEOUS
+          - CREW_MOVEMENT
+          - QUARANTINE_INSPECTION
+          - UNLOADING_CARGO
+          - LOADING_CARGO
+          - CARGO_TANK_CLEANING
+          - DE_GASSING
+          - WASTE_DISPOSAL
+          - UNKNOWN
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: The start date of the ship-to-ship activity
+          format: partial-date
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: The end date of the ship-to-ship activity
+          format: partial-date
+        compliantWithSsp:
+          type: boolean
+          description: Indication whether the ship-to-ship activity has been executed in compliance with the Ship Security Plan
+        securityMeasures:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The security measures applied in lieu
+      description: The activity taking place between vessels whether at sea, in inshore waters or within harbour limits while not berthed
+    com.portbase.bezoekschip.common.api.pax.common.Passenger:
+      title: Passenger
+      required:
+      - dateOfBirth
+      - familyName
+      - givenNames
+      - nationality
+      - travelDocuments
+      type: object
+      properties:
+        familyName:
+          maxLength: 70
+          minLength: 0
+          type: string
+        givenNames:
+          maxLength: 70
+          minLength: 0
+          type: string
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - NOT_KNOWN
+          - MALE
+          - FEMALE
+        nationality:
+          maxLength: 2
+          minLength: 2
+          type: string
+        dateOfBirth:
+          type: string
+          format: partial-date
+        placeOfBirth:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        travelDocuments:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.TravelDocument'
+        embarkingAtPortOfCall:
+          type: boolean
+        disembarkingAtPortOfCall:
+          type: boolean
+        transitIndicator:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PERSON_WILL_NOT_LEAVE_THE_VESSEL
+          - PERSON_WILL_LEAVE_THE_VESSEL_TEMPORARILY_DURING_VISIT
+          - PERSON_HAS_LEFT_THE_VESSEL_BUT_IS_ON_BOARD_AGAIN
+        specialCareHandlingInformation:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.security.common.SecurityDeclaration:
+      title: SecurityDeclaration
+      required:
+      - approvedSspDocumentOnBoard
+      - companySecurityOfficer
+      - currentSecurityLevel
+      - isscSecurityDocument
+      - securityReportRequired
+      - shipToShipActivities
+      type: object
+      properties:
+        securityReportRequired:
+          type: string
+          description: Indication whether security must be reported
+          enum:
+          - 'YES'
+          - 'NO'
+          - EXEMPTION
+        companySecurityOfficer:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.common.CompanySecurityOfficer'
+        currentSecurityLevel:
+          type: string
+          description: The security level at which the vessel is operating at the time of the security declaration
+          enum:
+          - SL1
+          - SL2
+          - SL3
+        approvedSspDocumentOnBoard:
+          type: boolean
+          description: Indication whether there is an approved Ship Security Plan on board of the vessel
+        isscSecurityDocument:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.common.IsscSecurityDocument'
+        shipToShipActivities:
+          type: array
+          description: The activity taking place between vessels whether at sea, in inshore waters or within harbour limits while not berthed
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.common.ShipToShipActivity'
+        securityRelatedMatter:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The remarks about any other security related matter
+        reasonLessPortFacilities:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The reason why less than the required number of port facilities have been mentioned
+      description: The declaration of the security information of the port visit
+    com.portbase.bezoekschip.common.api.common.visit.WasteTypeSsn:
+      title: WasteTypeSsn
+      required:
+      - code
+      - description
+      - marpolCategory
+      - specificationRequired
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: The code of the waste type in the Maritime Single Window.
+        description:
+          minLength: 1
+          type: string
+          description: The description of the waste type in the Maritime Single Window.
+        marpolCategory:
+          minLength: 1
+          type: string
+          description: The MARPOL category of the waste type.
+        specificationRequired:
+          type: boolean
+          description: Indication whether a specification is required.
+      description: The waste type in the Maritime Single Window.
+    com.portbase.bezoekschip.common.api.pax.common.TravelDocument:
+      title: TravelDocument
+      required:
+      - expiryDate
+      - issuingCountry
+      - number
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - IDENTITY_CARD
+          - PASSPORT
+          - REGISTRATION_DOCUMENT
+          - VISA
+          - SEAMANS_BOOK
+          - RESIDENCE_PERMIT
+        number:
+          maxLength: 35
+          minLength: 0
+          type: string
+        expiryDate:
+          type: string
+          format: partial-date
+        issuingCountry:
+          maxLength: 2
+          minLength: 2
+          type: string
+    com.portbase.bezoekschip.common.api.pax.common.CrewMemberOtherShip:
+      title: CrewMemberOtherShip
+      required:
+      - travelDocuments
+      type: object
+      properties:
+        familyName:
+          maxLength: 70
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        givenNames:
+          maxLength: 70
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - NOT_KNOWN
+          - MALE
+          - FEMALE
+        nationality:
+          maxLength: 2
+          minLength: 2
+          type:
+          - string
+          - 'null'
+        dateOfBirth:
+          type:
+          - string
+          - 'null'
+          format: partial-date
+        placeOfBirth:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        travelDocuments:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.TravelDocument'
+        embarkingAtPortOfCall:
+          type: boolean
+        disembarkingAtPortOfCall:
+          type: boolean
+        transitIndicator:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PERSON_WILL_NOT_LEAVE_THE_VESSEL
+          - PERSON_WILL_LEAVE_THE_VESSEL_TEMPORARILY_DURING_VISIT
+          - PERSON_HAS_LEFT_THE_VESSEL_BUT_IS_ON_BOARD_AGAIN
+        specialCareHandlingInformation:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.common.visit.Port:
+      title: Port
+      required:
+      - countryUnCode
+      - locationUnCode
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the port
+        locationUnCode:
+          minLength: 1
+          type: string
+          description: The UN locode of the location where the port is located
+        countryUnCode:
+          minLength: 1
+          type: string
+          description: The UN code of the country where the port is located
+        euPort:
+          type: boolean
+          description: Indication whether the port is located in the EU
+    com.portbase.bezoekschip.common.api.waste.common.WasteItem:
+      title: WasteItem
+      required:
+      - quantityToBeDelivered
+      - quantityToBeRetained
+      - ssn
+      type: object
+      properties:
+        ssn:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.WasteTypeSsn'
+        berthIdForPickup:
+          type:
+          - string
+          - 'null'
+          description: The code of the berth where the waste is delivered
+        collector:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.authentication.BezoekschipOrganisation'
+        specification:
+          maxLength: 70
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The specification of the waste type
+        quantityToBeDelivered:
+          type: number
+          description: The quantity to be delivered in the port of call
+        quantityToBeRetained:
+          type: number
+          description: The quantity that is retained on board of the vessel
+        maxDedicatedCapacity:
+          type:
+          - number
+          - 'null'
+          description: The maximum dedicated storage capacity for the waste type on board of the vessel
+        quantityToBeGenerated:
+          type:
+          - number
+          - 'null'
+          description: The quantity generated between departure from the port of call and the next port of call
+        portForRetainedWaste:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Port'
+        type:
+          type:
+          - string
+          - 'null'
+          description: The type of waste
+          enum:
+          - SLUDGE
+          - FUEL_REMNANTS
+          - BILGE_WATER
+          - USED_ENGINE_OIL
+          - DIRTY_BALLASTWATER
+          - WASHWATER_OIL
+          - OILY_WASTE_FROM_CLEANING
+          - OTHER_OILY_WASTE
+          - OTHER_SUBSTANCES
+          - CARGO_RESIDUES_OR_WASHWATER
+          - DIRTY_BALLASTWATER_CHEMICALS
+          - OTHER_CARGO_RESIDUES
+          - SEWAGE_WASTE_BLACK
+          - SEWAGE_WASTE_GREY
+          - FOOD_WASTE
+          - PLASTIC_ANY
+          - PLASTIC_CLEAN
+          - DOMESTIC_WASTES
+          - PLASTIC_CONTAMINATED
+          - SMALL_DANGEROUS_WASTE
+          - OTHER_DOMESTIC_WASTE
+          - INTERNATIONAL_CATERING_WASTE
+          - PAPER_OR_CARTON
+          - RAGS
+          - GLASS
+          - METAL_OR_STEELWIRES
+          - BOTTLES
+          - CROCKERY
+          - INCINERATOR_ASHES
+          - ANIMAL_CARCASSES
+          - EWASTE_WHOLE_DEVICES
+          - EWASTE_DEVICES
+          - PYROTECHNICS
+          - BATTERIES
+          - FIRE_EXTINGUISHERS
+          - CAR_TYRES_OR_RUBBER
+          - COOLING_LIQUIDS
+          - PROPELLER_SHAFT_GREASE
+          - FUMIGATION_PRODUCTS
+          - FILTER_OR_RAGS_BAGS
+          - WOOD
+          - OIL_CONTAMINATED_DRUMS
+          - FISHING_GEAR
+          - COOKING_OIL
+          - OPERATIONAL_WASTE
+          - WASHWATER_DRY_CARGO_HME
+          - WASHWATER_DRY_CARGO_NON_HME
+          - DRY_CARGO_RESIDUES_HME
+          - DRY_CARGO_RESIDUES_NON_HME
+          - OTHER_CARGO_RESIDUES_NON_TANKERS
+          - OZONE_DEPLETION
+          - EXHAUST_GAS_CLEANING
+          - PASSIVELY_FISHED_WASTE
+      description: The waste which is on board of the  vessel  and  which  will  be either (partly) delivered or will (partly) remain on board during a port call
+    com.portbase.bezoekschip.common.api.pax.common.Stowaway:
+      title: Stowaway
+      required:
+      - travelDocuments
+      type: object
+      properties:
+        familyName:
+          maxLength: 70
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        givenNames:
+          maxLength: 70
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - NOT_KNOWN
+          - MALE
+          - FEMALE
+        nationality:
+          maxLength: 2
+          minLength: 2
+          type:
+          - string
+          - 'null'
+        dateOfBirth:
+          type:
+          - string
+          - 'null'
+          format: partial-date
+        placeOfBirth:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        travelDocuments:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.pax.common.TravelDocument'
+        embarkingAtPortOfCall:
+          type: boolean
+        disembarkingAtPortOfCall:
+          type: boolean
+        transitIndicator:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PERSON_WILL_NOT_LEAVE_THE_VESSEL
+          - PERSON_WILL_LEAVE_THE_VESSEL_TEMPORARILY_DURING_VISIT
+          - PERSON_HAS_LEFT_THE_VESSEL_BUT_IS_ON_BOARD_AGAIN
+        specialCareHandlingInformation:
+          maxLength: 512
+          minLength: 0
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.security.DeclareSecurity:
+      title: DeclareSecurity
+      required:
+      - crn
+      - securityDeclaration
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        securityDeclaration:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.security.common.SecurityDeclaration'
+    com.portbase.bezoekschip.common.api.waste.common.WasteDeclaration:
+      title: WasteDeclaration
+      required:
+      - declarationId
+      - wasteItems
+      type: object
+      properties:
+        portOfLastDelivery:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Port'
+        lastDeliveryDate:
+          type:
+          - string
+          - 'null'
+          description: The last date when waste has been delivered
+          format: partial-date
+        portOfNextDelivery:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Port'
+        wasteItems:
+          type: array
+          description: The waste which is on board of the  vessel  and  which  will  be either (partly) delivered or will (partly) remain on board during a port call
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.common.WasteItem'
+        declarationId:
+          minLength: 1
+          type: string
+      description: The declaration of waste information of the port visit
+    com.portbase.bezoekschip.common.api.shipstores.common.ShipStoresDeclaration:
+      title: ShipStoresDeclaration
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            x-additionalPropertiesName: article
+          description: 'The articles on board of the vessel at arrival at the port of call.<br>Contains a map from article to weight, e.g. {"SPIRITS": 10.3, "BEER": 5.25}. The weight unit is kilogram.<br>Enum:  `"SPIRITS"` `"BEER"` `"WINE"` `"OTHER"` `"CIGARETTES"` `"CIGARS"` `"TOBACCO"` `"FUEL_OIL"` `"LUBRICATING_OIL"` `"MEAT"` `"NARCOTICS"` `"FIRE_ARMS"`'
+          x-additionalPropertiesName: article
+      description: The declaration of shipstores information of the port visit.
+    com.portbase.bezoekschip.common.api.security.common.CompanySecurityOfficer:
+      title: CompanySecurityOfficer
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 70
+          minLength: 0
+          type: string
+          description: The name of the company security officer
+        email:
+          maxLength: 50
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The email address of the company security officer
+        phoneNumber:
+          maxLength: 15
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The phone number of the company security officer
+      description: The company security officer for the vessel
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

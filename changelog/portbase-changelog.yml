@@ -1,0 +1,25 @@
+generated: '2026-10-18'
+method: searched
+source: https://portbase.com/en/release-notes/
+scheme: dated
+current_version: unknown
+entries:
+- version: unknown
+  date: '2026-10-02'
+  breaking: false
+  highlights:
+  - ETA Train functionality now fully live for Hinterland Container Notification Rail
+  source: https://www.portbase.com/en/release-notes/the-eta-train-functionality-now-fully-live-trial-period-begins-2/
+- version: unknown
+  date: '2026-09-30'
+  breaking: false
+  highlights:
+  - Change of sender for import service email notifications
+  source: https://www.portbase.com/en/release-notes/email-notifications-import-services-will-change-sender/
+- version: unknown
+  date: '2026-09-29'
+  breaking: false
+  highlights:
+  - Change in notification requirements for fumigated bulk cargo
+  source: https://www.portbase.com/en/release-notes/change-in-notification-requirements-for-fumigated-bulk-cargo/
+note: Release notes page exists but detailed access is blocked by firewall. Dates and titles extracted from summary view.

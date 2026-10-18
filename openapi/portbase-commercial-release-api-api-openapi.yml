@@ -1,0 +1,352 @@
+openapi: 3.2.0
+info:
+  title: Portbase Commercial Release API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Commercial Release API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Commercial Release API
+paths:
+  /commercialRelease:declare:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Declare commercial release
+      description: This endpoint can be used to create or update a commercial release.
+      operationId: _01_declareCommercialRelease
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.commercialrelease.input.InputCommercialReleaseData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.CommercialReleaseEndpoint_DeclareCommercialReleaseResult'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /commercialRelease:cancel:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Cancel commercial release
+      description: This endpoint can be used to cancel a commercial release.
+      operationId: _02_cancelCommercialRelease
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.commercialrelease.CancelCommercialRelease'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /commercialRelease:accept:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Accept commercial release
+      description: This endpoint SHOULD NOT be used by terminals to accept a commercial release.
+      operationId: _03_acceptCommercialRelease
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.commercialrelease.AcceptCommercialRelease'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /commercialRelease:reject:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Reject commercial release
+      description: This endpoint SHOULD NOT be used by terminals to reject a commercial release.
+      operationId: _04_rejectCommercialRelease
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.commercialrelease.RejectCommercialRelease'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /organisation:registerCustomer:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Register customer of organisation
+      description: This endpoint can e.g. be used to register release-to parties of carriers.
+      operationId: _05_registerCustomer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.accountmanagement.RegisterCustomer'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /organisation:removeCustomer:
+    post:
+      tags:
+      - Commercial Release API
+      summary: Remove customer of organisation
+      description: This endpoint can e.g. be used to remove release-to parties of carriers.
+      operationId: _06_deleteCustomer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.accountmanagement.RemoveCustomer'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.accountmanagement.RemoveCustomer:
+      title: RemoveCustomer
+      required:
+      - customerShortName
+      - shortName
+      type: object
+      properties:
+        shortName:
+          minLength: 1
+          type: string
+          description: Portbase id (short name) of the organisation that wants to remove a customer. I.e. for commercial release customers enter the carrier short name.
+        customerShortName:
+          minLength: 1
+          type: string
+          description: Portbase id (short name) of the customer. I.e. for commercial release customers enter the forwarder short name.
+    com.portbase.bezoekschip.common.api.accountmanagement.RegisterCustomer:
+      title: RegisterCustomer
+      required:
+      - customerReferences
+      - customerShortName
+      - shortName
+      type: object
+      properties:
+        shortName:
+          minLength: 1
+          type: string
+          description: Portbase id (short name) of the organisation that wants to register a customer reference. I.e. for commercial release customers enter the carrier short name.
+        customerShortName:
+          minLength: 1
+          type: string
+          description: Portbase id (short name) of the customer. I.e. for commercial release customers enter the forwarder short name.
+        customerReferences:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          description: Unique references of this customer. Requires a minimum of one.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Unique references of this customer. Requires a minimum of one.
+    com.portbase.bezoekschip.common.api.cargo.common.SizeType:
+      title: SizeType
+      required:
+      - code
+      type:
+      - object
+      - 'null'
+      properties:
+        code:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The coded container's length, width, height, type and features.
+          example: 22G1
+        name:
+          type:
+          - string
+          - 'null'
+          description: The descriptive name of the size type of container as specified with the code.
+          example: 20'x8'x8'6\" General Purpose Container
+      description: The classification of the container's length, width, height, type and features.<br>Use a size type retrieved with find size types via the Reference Data API '[Find SizeTypes](#operation/_06_findSizeTypes)'.
+    com.portbase.bezoekschip.common.api.commercialrelease.input.InputCommercialReleaseData:
+      title: InputCommercialReleaseData
+      required:
+      - consignmentNumber
+      - containerOperatorCode
+      - equipmentNumber
+      - releaseToPartyCode
+      - terminalCode
+      type: object
+      properties:
+        equipmentNumber:
+          minLength: 1
+          type: string
+          description: Unique identifier of the container.
+        empty:
+          type: boolean
+          description: Indication whether the container is full or empty.
+        consignmentNumber:
+          type:
+          - string
+          - 'null'
+          description: Synonym of Bill of Lading number. Unique identifier of the consignment in the container. If multiple consignments are present in the container, fill in the first consignment number.
+        releaseDeadline:
+          type:
+          - string
+          - 'null'
+          description: The commercial release is valid until this datetime.
+          format: date-time
+        releaseModality:
+          type:
+          - string
+          - 'null'
+          description: The modality of the on-carriage transport.
+          enum:
+          - road
+          - rail
+          - barge
+          - sea
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Remarks about this release from the carrier.
+        releaseReference:
+          type:
+          - string
+          - 'null'
+          description: Reference number of the release as it is known with the carrier. This is *not* the pin code of the container.
+        sizeType:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.cargo.common.SizeType'
+        crn:
+          type:
+          - string
+          - 'null'
+          description: The call reference number of the visit
+        terminalCode:
+          minLength: 1
+          type: string
+          description: The SMDG code of the terminal to send this commercial release to.
+        containerOperatorCode:
+          minLength: 1
+          type: string
+          description: The SMDG code of the box operator authorising this commercial release.
+        releaseToPartyCode:
+          minLength: 1
+          type: string
+          description: Identity of the customer of this carrier which is given the permission to pick up the container. Note, this code needs to be registered by the customer in Portbase service Cargo Controller before it is used by the carrier.
+        inlandOperatorEanCode:
+          type:
+          - string
+          - 'null'
+          description: 'The inland-operator which is nominated by the cargo director (the carrier department / subsidiary) to
+
+            pick-up the container from the terminal. Every inland-operator active at the Port of Rotterdam terminals
+
+            has been issued an identifier by Secure Logistics in the format of an EAN-code. This is the unique
+
+            identifier used by Portbase and the terminals to identify parties.
+
+            '
+    com.portbase.bezoekschip.common.api.commercialrelease.AcceptCommercialRelease:
+      title: AcceptCommercialRelease
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: Unique identifier of the commercial release within Portbase.
+    com.portbase.bezoekschip.common.api.commercialrelease.CancelCommercialRelease:
+      title: CancelCommercialRelease
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: Unique identifier of the commercial release within Portbase.
+    com.portbase.bezoekschip.adapter.CommercialReleaseEndpoint_DeclareCommercialReleaseResult:
+      title: DeclareCommercialReleaseResult
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'Unique identifier of the commercial release within Portbase. '
+          example: 17fe4b13-0bb7-4623-b0e4-db6ce7cedbad
+    com.portbase.bezoekschip.common.api.commercialrelease.RejectCommercialRelease:
+      title: RejectCommercialRelease
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: Unique identifier of the commercial release within Portbase.
+        reasons:
+          type:
+          - string
+          - 'null'
+          description: Optional list of reasons for the rejection of the commercial release.
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

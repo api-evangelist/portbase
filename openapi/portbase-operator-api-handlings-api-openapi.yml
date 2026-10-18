@@ -1,0 +1,2741 @@
+openapi: 3.2.0
+info:
+  title: Portbase Operator API - handlings API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Operator API - handlings across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Operator API - handlings
+  description: API for the declarant to create, update, move, detach or cancel attached handlings (handlings that are connected to a visit and voyage).
+paths:
+  /attachedHandlings:create:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Create handling
+      description: This endpoint can be used to create a handling attached to a barge, rail or road visit.
+      operationId: _01_createAttachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHandling'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHandlingResult'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /attachedHandlings:update:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Update handling
+      description: This endpoint can be used to update a handling attached to a barge, rail or road visit.
+      operationId: _02_updateAttachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateHandling'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /attachedHandlings:detach:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Detach handling
+      description: This endpoint can be used to detach a handling from one of your barge, rail or road visits.
+      operationId: _03_detach
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetachHandling'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /handlings:cancel:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Cancel any handling
+      description: This endpoint can be used to cancel any handling. Cancelling an attached handling will also detach the handling from the visit.
+      operationId: _04_cancelAnyHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAndDetachHandling'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /handlings:move:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Move any handling
+      description: This endpoint can be used to move any handling to another one of your barge, rail or road visits.
+      operationId: _05_move
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveHandling'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /detachedHandlings:create:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Create detached handling
+      description: This endpoint can be used to create a handling which is not attached to a visit.
+      operationId: _11_createDetachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDetachedHandling'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHandlingResult'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /detachedHandlings:update:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Update detached handling
+      description: This endpoint can be used to update a handling which is not attached to a visit.
+      operationId: _12_updateDetachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDetachedHandling'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /detachedHandlings:get:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Get detached handling
+      description: This endpoint can be used to get a detached handling. Does not return voyages.
+      operationId: _13_getDetachedHandlings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDetachedHandling'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDetachedHandling'
+        '204':
+          description: no detached handlings found
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /attachedHandlings:cancel:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Cancel handling
+      description: This endpoint can be used to cancel a handling which is attached to a visit. Replaced by Cancel any handling.
+      operationId: _14_cancelAttachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAndDetachHandling'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /detachedHandlings:cancel:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Cancel detached handling
+      description: This endpoint can be used to cancel a handling which is not attached to a visit. Replaced by Cancel any handling.
+      operationId: _15_cancelDetachedHandling
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelDetachedHandling'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /attachedHandlings:move:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Move handling
+      description: This endpoint can be used to move an attached handling to another one of your barge, rail or road visits. Replaced by Move any handling.
+      operationId: _16_move
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveHandling'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /detachedHandlings:attach:
+    post:
+      tags:
+      - Operator API - handlings
+      summary: Attach detached handling
+      description: This endpoint can be used to attach a detached handling to one of your barge, rail or road visits. Replaced by Update handling.
+      operationId: _17_attach
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachHandling'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    UpdateDetachedHandling:
+      required:
+      - handlingData
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        terminal:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The terminal location at which the container will be loaded or discharged.<br>Terminal must support the given modality.<br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to get a list of known Terminals and its attributes.<br>Only one subfield is required.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/GetTerminal'
+        handlingData:
+          allOf:
+          - $ref: '#/components/schemas/HandlingData'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The expected time of arrival of the means of hinterland's transport at the terminal.
+          format: date-time
+    Shipment:
+      required:
+      - data
+      - goods
+      - id
+      - movements
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of this shipment
+        data:
+          title: ''
+          type: ''
+          description: The shipment data as reported by the forwarder
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ShipmentData'
+        movements:
+          type: array
+          description: One or more movements to transport this shipment from origin to destination
+          items:
+            $ref: '#/components/schemas/CargoMovement'
+        goods:
+          type: array
+          description: The shipped goods
+          items:
+            $ref: '#/components/schemas/ContainedGood'
+        forwarders:
+          type: array
+          description: Organisations that have delegated the inland transport to another inland operator (or forwarder)
+          items:
+            $ref: '#/components/schemas/HinterlandOrganisation'
+        releaseToParty:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Party that will receive the commercial release.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/HinterlandOrganisation'
+        cargoWeight:
+          type:
+          - number
+          - 'null'
+        currentReleaseToPartyFullName:
+          type:
+          - string
+          - 'null'
+      description: A shipment of goods from origin to destination. A shipment is unique identified by a combination of B/L number and equipment number. Shipments are typically created by the shipper (consignor) or forwarder responsible for the cargo.
+    CreateHandling:
+      required:
+      - handlingData
+      - preNotification
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        handlingData:
+          allOf:
+          - $ref: '#/components/schemas/HandlingData'
+        preNotification:
+          type: boolean
+          description: Indication whether a pre-announcement (true) or a status request (when supported by the terminal for the given modality) must be send to the terminal (false). Status request on a visit not supported for Road.
+    HandlingData:
+      required:
+      - bookingNumber
+      - full
+      - modality
+      - shippingCompany
+      - sizeType
+      - type
+      type: object
+      properties:
+        equipmentNumber:
+          maxLength: 11
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Required except for loading empty and depending on terminal setting `lossenOpRichtlijnAllowed`. <br>Unique identifier of the container.
+          example: BICU1234565
+        weight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: Required depending on terminal setting. <br>The weight of the cargo in kilograms meaning the tare weight of the container excluded.
+        tareWeight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: The weight of the container itself in kilograms without the weight of the cargo.
+        sealNumber:
+          type:
+          - string
+          - 'null'
+          description: Required depending on terminal setting and max length depending on terminal. <br>The identification number of the container seal.
+        reefer:
+          allOf:
+          - $ref: '#/components/schemas/Reefer'
+        outOfGauge:
+          allOf:
+          - $ref: '#/components/schemas/OutOfGauge'
+        bookingNumber:
+          maxLength: 35
+          minLength: 0
+          type: string
+          description: The delivery ref for discharge or the release reference (pin code) for loading of the container at the terminal.
+        shippingCompany:
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        sizeType:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        type:
+          type: string
+          description: Indication whether the container is loaded onto or unloaded from the hinterland means of transport.
+          enum:
+          - loading
+          - discharge
+        full:
+          type: boolean
+          description: Indication whether the container is full or empty.
+        shippersOwned:
+          type: boolean
+          description: Indication whether the container identifier is a ISO 6346 compliant container number (apply true when it does not comply).
+        humidity:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` The humidity for this container in percentage.'
+        doorOpen:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether the door for this container is open.'
+        chainWork:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether chains are needed to load or discharge this container.'
+        generator:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether this container has a generator.'
+        damageRemark:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` Can be used to communicate detected damage to the container.'
+        previousPort:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The code of the port this container departed from before arriving at Rotterdam.'
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Remarks regarding this container.
+          example: Connected reefer
+        category:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The category of the container, free text, for example ‘food grade’.'
+        nextPort:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The code of the port this container will be shipped to after departing from Rotterdam. Only for export containers (discharging).'
+        finalPort:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The code of the port which is the final destination for this container, after departing from Rotterdam. Only for export containers (discharging).'
+        dangerousGoods:
+          type: array
+          description: The specification of dangerous goods in this container
+          items:
+            $ref: '#/components/schemas/DangerousGood'
+        consignmentNumber:
+          type:
+          - string
+          - 'null'
+          description: The unique transport document number from the Bill of Lading, used to identify and associate this container with its corresponding shipment
+        totalContainerWeight:
+          type:
+          - number
+          - 'null'
+          description: The total weight of the container, meaning the 'weight' and the 'tareWeight' added.
+        modality:
+          type: string
+          description: The way in which the transportation of the cargo takes place in the hinterland.
+          example: barge
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        deepSea:
+          allOf:
+          - $ref: '#/components/schemas/DeepSeaReference'
+      description: 'Cargo handling details as requested by the declarant for the given modality. '
+      discriminator:
+        propertyName: modality
+        mapping:
+          barge: '#/components/schemas/BargeHandlingData'
+          road: '#/components/schemas/RoadHandlingData'
+          rail: '#/components/schemas/RailHandlingData'
+    TerminalRejectReason:
+      required:
+      - parsedReason
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: The error code sent by the terminal
+        terminalDescription:
+          type:
+          - string
+          - 'null'
+          description: The error description sent by the terminal
+        parsedReason:
+          type: string
+          description: A user friendly description of the error code
+    ContainerGoodData:
+      required:
+      - hazardClass
+      - unCode
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the container good
+          example: PENTAERYTHRIETTETRANITRAAT (PENTAERYTHRITOLTETRANITRAAT, PETN), BEVOCHTIGD met ten minste 25 massa-% water of GEDESENSIBILISEERD, met ten minst 15 massa-% flegmatiseermiddel
+        unCode:
+          type: string
+          description: The UN code of the container good
+          example: '150'
+        hazardClass:
+          type: string
+          description: The IMO hazard class of the container good
+          example: '1'
+        subsidiaryRisk:
+          type:
+          - string
+          - 'null'
+          description: Any risks in addition to the class to which dangerous goods are assigned; and which is determined by a requirement to have a subsidiary risk.
+        emsFireCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the emergency response procedure for vessels carrying dangerous goods in case of fire
+        emsSpillageCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the emergency response procedures for vessels carrying dangerous goods in case of spillage
+        properties:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the container good
+        segregationGroup:
+          type:
+          - string
+          - 'null'
+          description: The segregation group of the container good
+        packingGroup:
+          type:
+          - string
+          - 'null'
+          description: Indication of the level of danger
+          enum:
+          - MINOR_DANGER
+          - MEDIUM_DANGER
+          - GREAT_DANGER
+        flashPoint:
+          type:
+          - number
+          - 'null'
+          description: The temperature in degrees Celsius at which a good will give off enough flammable vapour to be ignited. According IMDG Code DG Class 3 or subsidiary risk of Class 3
+      description: Container good information as provided by the terminal
+    AttachHandling:
+      required:
+      - handlingId
+      - nextVisitId
+      - nextVoyageId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        nextVisitId:
+          type: string
+          description: Unique identification of the visit to which the cargo handling must move.
+        nextVoyageId:
+          type: string
+          description: Unique identification of the voyage related to the visit to which the cargo handling must move.
+        preNotification:
+          type: boolean
+          description: Indication whether a pre-announcement (true) or a status request (when supported by the terminal for the given modality) must be send to the terminal (false). Status request on a visit not supported for Road.
+    HandlingWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      description: For loading this constitutes the commercial release window, for discharge the cargo opening/closing.
+    CancelDetachedHandling:
+      required:
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        cancelReason:
+          type:
+          - string
+          - 'null'
+    HinterlandOrganisation:
+      required:
+      - fullName
+      - shortName
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: The full name of the organisation
+        shortName:
+          type: string
+          description: The short name of the organisation
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address of the organisation
+        address:
+          type:
+          - string
+          - 'null'
+          description: The address of the organisation
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city where the organisation is located
+        countryUnCode:
+          type:
+          - string
+          - 'null'
+          description: The UN code of the country where the organisation is located
+        countryName:
+          type:
+          - string
+          - 'null'
+          description: The name of the country where the organisation is located
+        zipCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code of the organisation
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the organisation
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number of the organisation
+        contact:
+          type:
+          - string
+          - 'null'
+          description: The contact person of the organisation
+        customsEORINumber:
+          type:
+          - string
+          - 'null'
+          description: The EORI number of the organisation, issued by customs
+        ean:
+          type:
+          - string
+          - 'null'
+          description: The EAN code of the organisation
+        chamberOfCommerceNumber:
+          type:
+          - string
+          - 'null'
+          description: The chamber of commerce number of the organisation
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: The SCAC code of the organisation
+      description: Party that will receive the commercial release.
+    Terminal:
+      required:
+      - allowedModalities
+      - bicsCode
+      - location
+      - quayName
+      - shortName
+      - terminalSettings
+      type: object
+      properties:
+        shortName:
+          type: string
+          description: Code issued by Portbase to identify the Terminal organisation.
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+        bicsCode:
+          type: string
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: 00DDE
+        quayName:
+          type: string
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: DDE
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        displayNameOverrides:
+          title: ''
+          type: ''
+          description: Quay name override per modality
+          deprecated: false
+          allOf:
+          - type: object
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              description: Quay name override per modality
+            description: Quay name override per modality
+        requiredDataAuthorisations:
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - deepSeaEta
+            - cargoOpening
+            - expectedDischargeTime
+        allowedModalities:
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        tarRequired:
+          type: boolean
+          description: Only relevant for road. Indicates whether the terminal uses TAR codes or not.
+        roadStatusRequestAllowed:
+          type: boolean
+          description: Only relevant for road. Indicates whether the terminal can process road status requests.
+        bargeStatusRequestForbidden:
+          type: boolean
+          description: Only relevant for barge. Indicates whether the terminal can process barge status requests. Default is false.
+        cutoffPeriod:
+          type:
+          - string
+          - 'null'
+          description: Only relevant for rail. Indicates the cutoff period for the train composition upload (relative to the eta) for this terminal.
+          format: duration
+        loadDischargeListSettings:
+          allOf:
+          - $ref: '#/components/schemas/LoadDischargeListSettings'
+        quaySelectByDeclarantForbidden:
+          type: boolean
+          description: Indicates whether the terminal can be used by the Declarant to send a visit declaration. Some terminals can only be selected by the terminal organisation or Nextlogic, if so this option is set to true.
+        updateAllowed:
+          type: boolean
+          description: Indicates whether the terminal allows updates on pre-notifications, only for *barge*. Status requests can always be updated. Deprecated, use the handlingUpdateForbidden setting to see for which modality updates are forbidden
+          deprecated: true
+        handlingUpdateForbidden:
+          type: array
+          description: Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        handlingUpdateBypassAllowed:
+          type: array
+          description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        handlingMoveBypassAllowed:
+          type: array
+          description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        maxSealNumberLength:
+          type:
+          - integer
+          - 'null'
+          description: Maximum length of the seal number.
+          format: int32
+        acceptAfterRejectForbidden:
+          type: boolean
+          description: Indicates whether the terminal does not allow a handling accept after a handling reject.
+        terminalSettings:
+          type: array
+          description: Terminal settings restricting handling declarations depending on the type of declaration.
+          items:
+            $ref: '#/components/schemas/TerminalSettings'
+        nextlogicParticipant:
+          type: boolean
+          description: Setting that indicates this terminal is a Nextlogic Integral Planning participant.
+        prenotificationRestrictedToDeclarants:
+          title: ''
+          type: ''
+          description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+          deprecated: false
+          allOf:
+          - type: object
+            additionalProperties:
+              type: array
+              description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+              items:
+                type:
+                - string
+                - 'null'
+                description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+            description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+      description: The terminal location at which the containers are loaded onto and discharged from the barge. <br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to resolve a valid Terminal and its attributes
+    ApiModel:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Enum: `"detachedHandling"` `"bargeVoyage"` `"roadVoyage"` `"railVoyage"`'
+      discriminator:
+        propertyName: type
+        mapping:
+          detachedHandling: '#/components/schemas/ApiDetachedHandling'
+          bargeVoyage: '#/components/schemas/ApiBargeVoyage'
+          railVoyage: '#/components/schemas/ApiRailVoyage'
+          roadVoyage: '#/components/schemas/ApiRoadVoyage'
+    DeepSeaStatus:
+      type: object
+      properties:
+        shipName:
+          type:
+          - string
+          - 'null'
+        imoCode:
+          type:
+          - string
+          - 'null'
+        crnNumber:
+          type:
+          - string
+          - 'null'
+        voyageNumber:
+          type:
+          - string
+          - 'null'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: ETA given by the terminal
+          format: date-time
+        etd:
+          type:
+          - string
+          - 'null'
+          description: ETD given by the terminal
+          format: date-time
+        expectedDischargeTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      description: Information about the deep sea ship this container has been or will be on provided by the terminal.
+    DangerousGood:
+      required:
+      - hazardClass
+      - unCode
+      type: object
+      properties:
+        unCode:
+          type: string
+          description: The UN code of the container good
+          example: '1150'
+        hazardClass:
+          type: string
+          description: The IMO hazard class of the container good
+          example: '1'
+        gevi:
+          type:
+          - string
+          - 'null'
+          description: The hazard identification number of the container good
+          example: X839
+        limitedQuantity:
+          type:
+          - string
+          - 'null'
+          description: Limited Quantities are dangerous goods that have a reduced risk of harm when presented in smaller quantities (Yes/No)
+          example: 'Yes'
+        packingGroup:
+          type:
+          - string
+          - 'null'
+          description: The packing group is a grouping according to the degree of danger presented by hazardous materials or dangerous goods (I/II/III)
+          example: I
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of this dangerous good
+          example: Articles containing a pyrotechnic substance.
+      description: Dangerous goods information for the container
+    ApiDetachedHandling:
+      required:
+      - declarant
+      - handlingData
+      - handlingId
+      - terminal
+      - type
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ApiModel'
+      - type: object
+        properties:
+          handlingId:
+            type: string
+          modality:
+            type:
+            - string
+            - 'null'
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+          declarant:
+            allOf:
+            - $ref: '#/components/schemas/HinterlandOrganisation'
+          handlingData:
+            allOf:
+            - $ref: '#/components/schemas/HandlingData'
+          handlingStatus:
+            allOf:
+            - $ref: '#/components/schemas/HandlingStatus'
+          eta:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          cancelled:
+            type: boolean
+          attached:
+            type: boolean
+          handlingDeclaration:
+            title: ''
+            type:
+            - ''
+            - 'null'
+            description: The latest handling declaration
+            deprecated: false
+            allOf:
+            - $ref: '#/components/schemas/ApiHandlingDeclaration'
+          terminal:
+            allOf:
+            - $ref: '#/components/schemas/Terminal'
+          bookingNumberSource:
+            type:
+            - string
+            - 'null'
+            description: Source of the booking number. OPERATOR in case the pin code is provided by the operator, CARGO_DIRECTOR in case the pin code is provided by the client (no secure chain), COMMERCIAL_RELEASE in case the pin code is provided by secure chain release
+            enum:
+            - COMMERCIAL_RELEASE
+            - CARGO_DIRECTOR
+            - OPERATOR
+          deepSea:
+            allOf:
+            - $ref: '#/components/schemas/DeepSea'
+          shipment:
+            title: ''
+            type:
+            - ''
+            - 'null'
+            description: Container shipment data associated with this handling.
+            deprecated: false
+            allOf:
+            - $ref: '#/components/schemas/Shipment'
+    Coordinates:
+      required:
+      - latitude
+      - longitude
+      type: object
+      properties:
+        latitude:
+          maximum: 90
+          minimum: -90
+          type: number
+          description: The decimal degrees from the equator
+        longitude:
+          maximum: 180
+          minimum: -180
+          type: number
+          description: The decimal degrees from the Prime Meridian (Greenwich)
+      description: The geographical position of the bollard.
+      readOnly: true
+      deprecated: true
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    ExchangeRate:
+      required:
+      - currency
+      - rate
+      type: object
+      properties:
+        rate:
+          type: number
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CargoCurrency'
+      description: Exchange rate of 1 euro.
+    CancelAndDetachHandling:
+      required:
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        cancelReason:
+          type:
+          - string
+          - 'null'
+    Stop:
+      type: object
+      properties:
+        portbaseId:
+          type:
+          - string
+          - 'null'
+        location:
+          allOf:
+          - $ref: '#/components/schemas/CargoLocation'
+        eta:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ata:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        etd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        atd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      description: Itinerary of sea movement contains known stops made by the vessel on this movement, including for loading and discharging of the cargo. Itinerary of inland movement contains visit associated with handling and the final destination.
+    AcceptStatus:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: Broad categories of accept statuses. We categorize most accept codes under these types. When we cannot match a code to a type, we leave the type empty (null).<br><br>CARGO_OPENING and BOOKING_APPROVED are never applicable to loading.<br><br>AVAILABLE and COMMERCIAL_RELEASE are never applicable to discharge.
+          enum:
+          - AVAILABLE
+          - BOOKING_APPROVED
+          - COMMERCIAL_RELEASE
+          - CUSTOMS_DOCUMENT
+          - BLOCKED
+          - SIZETYPE_APPROVED
+          - CARGO_OPENING
+        ok:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether this type of accept status is unknown (null), ok (true) or not ok (false).
+        code:
+          type:
+          - string
+          - 'null'
+          description: The warning code that is sent by the terminal.
+        remark:
+          type:
+          - string
+          - 'null'
+          description: The optional remark sent by the terminal.
+    ContainerStatus:
+      type: object
+      properties:
+        loadDischargeListClosed:
+          type: boolean
+        preNotification:
+          type: boolean
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - DECLARED
+          - REJECTED
+          - ACCEPTED
+        acceptStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcceptStatus'
+        rejectReasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerminalRejectReason'
+        allStatussesOK:
+          type: boolean
+      description: Known terminal status for the dropoff of the shipped cargo.
+    Damage:
+      type: object
+      properties:
+        typeOfDamage:
+          type:
+          - string
+          - 'null'
+        damageArea:
+          type:
+          - string
+          - 'null'
+      description: Information about container damage.
+    TransportOrder:
+      type: object
+      properties:
+        invoiceReference:
+          type:
+          - string
+          - 'null'
+          description: Reference to use when invoicing the inland transport.
+        debtorName:
+          type:
+          - string
+          - 'null'
+          description: Name of party that owes money for the inland transport.
+        consigneeName:
+          type:
+          - string
+          - 'null'
+          description: Name of the consignee that is importing the cargo.
+        releaseExpiration:
+          type:
+          - string
+          - 'null'
+          description: Reference number (i.e. pin code) from the carrier after the cargo’s commercial release.
+          format: date-time
+        demurrage:
+          type:
+          - string
+          - 'null'
+          description: Amount of free time at terminal – in ISO 8601 duration format.
+          format: duration
+        detention:
+          type:
+          - string
+          - 'null'
+          description: Amount of time to deliver equipment to inland terminal – in ISO 8601 duration format.
+          format: duration
+        returnTerminal:
+          type:
+          - string
+          - 'null'
+          description: Name of the terminal or depot where the empty equipment should be returned.
+        returnReference:
+          type:
+          - string
+          - 'null'
+          description: The code that is required by terminal or depot to accept the empty equipment.
+        destinationTargetDate:
+          type:
+          - string
+          - 'null'
+          description: Date on which the equipment preferably should have reached the destination.
+          format: partial-date
+        destinationReference:
+          type:
+          - string
+          - 'null'
+          description: The code that is required by the inland terminal to accept the empty equipment.
+        destinationInstructions:
+          type:
+          - string
+          - 'null'
+          description: Instructions on how to deliver the equipment at the destination.
+        customsCategory:
+          type:
+          - string
+          - 'null'
+          description: Three-letter customs category code for the inland transport.
+        documentNumber:
+          type:
+          - string
+          - 'null'
+          description: The document number related to the inland movement. E.g. movement reference number.
+        documentExpiration:
+          type:
+          - string
+          - 'null'
+          description: Expiration moment of the customs document.
+          format: partial-date
+      description: Details relating to the transport order given by the cargo director to the inland operator
+    SizeType:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The coded container's length, width, height, type and features.
+          example: 22G1
+        name:
+          type:
+          - string
+          - 'null'
+          description: The descriptive name of the size type of container as specified with the code.
+          readOnly: true
+          example: 20'x8'x8'6\" General Purpose Container
+      description: The classification of the container's length, width, height, type and features.<br>Use a size type retrieved with find size types via the Reference Data API '[Find SizeTypes](#operation/_06_findSizeTypes)'.
+    Location:
+      required:
+      - locationUnCode
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the location
+        locationUnCode:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: UN/LOCODE; the United Nations Code for Trade and Transport Locations of the location
+      description: Use a location retrieved with find locations via the Reference Data API wiht the operation [findLocations](#operation/_05_findLocations).
+    ShippingCompany:
+      required:
+      - name
+      - scacCode
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the shipping company.
+        scacCode:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The Standard Carrier Alpha Code (SCAC) which is a privately controlled US code used as identifier for the shipping company.
+        smdgCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the shipping company, issued by the SMDG.
+      description: 'Also called carrier (dutch: rederij). The organisation that arranges the transport of the goods.<br>Use a carrier retrieved with find carriers via the ref Data API.. Two fields required'
+    FinalDestinationLocation:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the location
+        locationUnCode:
+          maxLength: 5
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: UN/LOCODE; the United Nations Code for Trade and Transport Locations of the location
+      description: Final destination of the cargo
+    DeepSea:
+      type: object
+      properties:
+        shipName:
+          type:
+          - string
+          - 'null'
+        imoCode:
+          type:
+          - string
+          - 'null'
+        crnNumber:
+          type:
+          - string
+          - 'null'
+        voyageNumber:
+          type:
+          - string
+          - 'null'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: ETA according to the shipping agent (cargadoor) or terminal. See `source`.
+          format: date-time
+        etd:
+          type:
+          - string
+          - 'null'
+          description: ETD according to the shipping agent (cargadoor) or terminal. See `source`.
+          format: date-time
+        expectedDischargeTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        radioCallSign:
+          type:
+          - string
+          - 'null'
+        shipsStayReference:
+          type:
+          - string
+          - 'null'
+        cargoOpeningTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        cargoClosingTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        shippingAgent:
+          type:
+          - string
+          - 'null'
+        source:
+          type:
+          - string
+          - 'null'
+          description: Source of deep sea information.
+          enum:
+          - TERMINAL
+          - AGENT
+        lastUpdated:
+          type:
+          - string
+          - 'null'
+          description: Last change of the deep sea information provided by `source`
+          format: date-time
+      description: Information about the deep sea ship this container has been on. Provide shipName or imoCode to receive deep sea information updates for the handling.
+    CargoPackageType:
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        bulk:
+          type: boolean
+    HandlingStatus:
+      type: object
+      properties:
+        equipmentNumber:
+          maxLength: 11
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Required except for loading empty. <br>Unique identifier of the container.
+          example: BICU1234565
+        weight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: Required depending on terminal setting. <br>The gross weight of the cargo in kilograms meaning the tare weight of the container excluded.
+        tareWeight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: The weight of the container itself in kilograms without the gross weight of the cargo.
+        sealNumber:
+          maxLength: 25
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Required depending on terminal setting. <br>The identification number of the container seal.
+        reefer:
+          allOf:
+          - $ref: '#/components/schemas/Reefer'
+        outOfGauge:
+          allOf:
+          - $ref: '#/components/schemas/OutOfGauge'
+        window:
+          allOf:
+          - $ref: '#/components/schemas/HandlingWindow'
+        dangerousGoods:
+          type: array
+          description: A list of dangerous goods present inside the container.
+          items:
+            $ref: '#/components/schemas/ContainerGood'
+        bookingNumber:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The delivery ref for discharge or the release reference (pincode) for loading of the container at the terminal.
+        shippingCompany:
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        sizeType:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: Indication whether the container is full or empty.
+        shippersOwned:
+          type: boolean
+          description: Indication whether the container identifier is a ISO 6346 compliant container number (apply true when is does not comply).
+        type:
+          type:
+          - string
+          - 'null'
+          description: Indication whether the container is loaded onto or unloaded from the hinterland means of transport.
+          enum:
+          - loading
+          - discharge
+        humidity:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` The humidity for this container in percentage.'
+        doorOpen:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether the door for this container is open.'
+          default: false
+        chainWork:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether chains are needed to load or discharge this container.'
+          default: false
+        generator:
+          type:
+          - boolean
+          - 'null'
+          description: '`Integral planning` Indicates whether this container has a generator.'
+          default: false
+        damageRemark:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` Can be used to communicate detected damage to the container.'
+        previousPort:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The code of the port this container departed from before arriving at Rotterdam.'
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` Remarks regarding this container.'
+        blockGroup:
+          type:
+          - string
+          - 'null'
+          description: Block group where the container can be picked up at the terminal
+        masterBundleContainerNumber:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The ISO-6346 container number of the “master” container of the bundle this container belongs to. If this container is the master container, this is its own container number. If this container is not part of a bundle, this field should be left empty.'
+        deepSea:
+          allOf:
+          - $ref: '#/components/schemas/DeepSeaStatus'
+        closestBollard:
+          allOf:
+          - $ref: '#/components/schemas/Bollard'
+        releasedForModality:
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` Indicates what modality this container is released for.'
+          example: barge
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        documentsPresent:
+          type:
+          - boolean
+          - 'null'
+          description: Indication whether the documents for this container are present.
+          default: false
+        notifications:
+          type: array
+          description: A list of important but non-blocking notifications from the terminal about this handling.
+          items:
+            $ref: '#/components/schemas/TerminalNotification'
+        equipmentStatusCode:
+          type:
+          - string
+          - 'null'
+          description: A code indicating the purpose of a container.
+          enum:
+          - CONTINENTAL
+          - EXPORT
+          - IMPORT
+          - TRANSSHIPMENT
+        documentNumbers:
+          type: array
+          description: MRN numbers or other document references.
+          items:
+            type:
+            - string
+            - 'null'
+            description: MRN numbers or other document references.
+        damages:
+          type: array
+          description: List of reported container damage.
+          items:
+            $ref: '#/components/schemas/Damage'
+      description: 'The cargo handling details according to the terminal, with additional statuses. '
+    CreateDetachedHandling:
+      required:
+      - handlingData
+      - terminal
+      type: object
+      properties:
+        terminal:
+          title: ''
+          type: ''
+          description: The terminal location at which the container will be loaded or discharged.<br>Terminal must support the given modality.<br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to get a list of known Terminals and its attributes.<br>Only one subfield is required.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/GetTerminal'
+        handlingData:
+          allOf:
+          - $ref: '#/components/schemas/HandlingData'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The expected time of arrival of the means of hinterland's transport at the terminal.
+          format: date-time
+    Party:
+      type: object
+      properties:
+        portbaseId:
+          type:
+          - string
+          - 'null'
+        eoriNumber:
+          maxLength: 35
+          minLength: 0
+          pattern: '[A-Z]{2}[^\s]*|null'
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        address:
+          type:
+          - string
+          - 'null'
+        zipCode:
+          maxLength: 9
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          maxLength: 2
+          minLength: 2
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+      description: Party to which this cargo is released after this movement.
+    LoadDischargeListSettings:
+      type: object
+      properties:
+        autoRejectEnabled:
+          type: boolean
+          description: Indicates whether non-green handlings are rejected automatically after visit closing.
+        handlingUpdateBypassAllowed:
+          type: boolean
+          description: Indicates whether updates are allowed for handlings after load-discharge-list is reopend or sent before cargo cutoff.
+      description: The settings for the configuration of the load-discharge-list.
+    CargoVessel:
+      type: object
+      properties:
+        modality:
+          type:
+          - string
+          - 'null'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+      description: Vessel transporting the cargo
+      discriminator:
+        propertyName: modality
+        mapping:
+          sea: '#/components/schemas/SeaVessel'
+          barge: '#/components/schemas/BargeVessel'
+          road: '#/components/schemas/RoadVessel'
+          rail: '#/components/schemas/RailVessel'
+    TerminalSettings:
+      required:
+      - modality
+      type: object
+      properties:
+        loading:
+          type: boolean
+          description: Does the setting apply to loading or discharge.
+        full:
+          type: boolean
+          description: Does the setting apply to full or empty.
+        modality:
+          type: string
+          description: Does the setting apply to rail, road or barge.
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        sealNumberAllowed:
+          type: boolean
+          description: Is the seal number required.
+        reeferAllowed:
+          type: boolean
+          description: Is reefer information required.
+        grossWeightAllowed:
+          type: boolean
+          description: Is gross weight required.
+        outOfGaugeAllowed:
+          type: boolean
+          description: Is out of gauge required.
+        dangerousGoodsAllowed:
+          type: boolean
+          description: Is dangerous goods information required.
+        cargoCutOffInMinutes:
+          type:
+          - integer
+          - 'null'
+          description: The minimum amount of time (in minutes) before visit arrival when operators are still allowed to submit changes to the cargo list.
+          format: int32
+        lossenOpRichtlijnAllowed:
+          type: boolean
+          description: Are equipment numbers optional for empty discharge handlings.
+      description: Contains restrictions on handling declarations, depending on the type of declaration.
+    GetTerminal:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the Terminal organisation.
+          example: PB_TERMINAL
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+          example: '8713712345678'
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+          example: PBT
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: PBT01
+        quayName:
+          type:
+          - string
+          - 'null'
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: Rotterdam Oudehaven
+      description: Terminal query. Only one field required
+    GetDetachedHandling:
+      required:
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+    Bollard:
+      required:
+      - bicsCode
+      - metersToNextBollard
+      - number
+      type: object
+      properties:
+        bicsCode:
+          type: string
+          description: The Binnenvaart Informatie- en Communicatie Systeem (BICS) code for the Terminal.
+        number:
+          type: string
+          description: Distinct bollard description, unique per quay. Can be just the bollard number or a text prefix with the bollard number.
+          example: DDE-59
+        coordinates:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The geographical position of the bollard.
+          readOnly: true
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/Coordinates'
+        metersToNextBollard:
+          type: number
+          description: The number of meters to the next bollard in the sequence.
+          readOnly: true
+        mooringSide:
+          type:
+          - string
+          - 'null'
+          description: A ship’s mooring side for mooring near this bollard.
+          readOnly: true
+          enum:
+          - port
+          - starboard
+      description: '`Integral planning` Physical location on the quay.'
+    DeepSeaReference:
+      type: object
+      properties:
+        shipName:
+          type:
+          - string
+          - 'null'
+        imoCode:
+          type:
+          - string
+          - 'null'
+        crnNumber:
+          type:
+          - string
+          - 'null'
+    ContainerGood:
+      type: object
+      properties:
+        dangerousGoodData:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Static information about the dangerous good.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ContainerGoodData'
+        weight:
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: Weight of this dangerous good.
+        limitedQuantities:
+          type: boolean
+        handledTime:
+          type:
+          - string
+          - 'null'
+          description: Only for previous dangerous goods.
+      description: Dangerous good information for one good inside a container.
+    TerminalData:
+      type: object
+      properties:
+        equipmentNumber:
+          maxLength: 11
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the container.
+          example: BICU1234565
+        weight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: The gross weight of the cargo in kilograms meaning the tare weight of the container excluded.
+        tareWeight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: The weight of the container itself in kilograms without the gross weight of the cargo.
+        sealNumber:
+          maxLength: 25
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identification number of the container seal.
+        window:
+          allOf:
+          - $ref: '#/components/schemas/HandlingWindow'
+        shippingCompany:
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        sizeType:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Size type code (e.g. 4230) of the container
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: Indication whether the container is full or empty.
+        type:
+          type:
+          - string
+          - 'null'
+          description: Indication whether the container is loaded onto or unloaded from the hinterland means of transport.
+          enum:
+          - loading
+          - discharge
+        notifications:
+          type: array
+          description: A list of important but non-blocking notifications from the terminal about this handling.
+          items:
+            $ref: '#/components/schemas/TerminalNotification'
+        equipmentStatusCode:
+          type:
+          - string
+          - 'null'
+          description: A code indicating the purpose of a container.
+          enum:
+          - CONTINENTAL
+          - EXPORT
+          - IMPORT
+          - TRANSSHIPMENT
+        expectedDischargeTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      description: The handling data as reported by the terminal.
+    UpdateHandling:
+      required:
+      - handlingData
+      - handlingId
+      - preNotification
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+        handlingData:
+          title: ''
+          type: ''
+          description: The cargo handling details according to the declarant.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/HandlingData'
+        preNotification:
+          type: boolean
+          description: Indication whether a pre-announcement (true) or a status request (when supported by the terminal for the given modality) must be send to the terminal (false). Status request on a visit not supported for Road.
+        visitId:
+          type:
+          - string
+          - 'null'
+          description: 'Unique identifier of the visit which was generated on the creation of the visit. <br>If given, the update will work even if the handling has been detached. '
+          example: '75111204'
+    CargoLocation:
+      type: object
+      properties:
+        unLocation:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - terminal
+          - depot
+          - warehouse
+          - port
+          - other
+        name:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        owner:
+          type:
+          - string
+          - 'null'
+        ownerShortName:
+          type:
+          - string
+          - 'null'
+    OutOfGauge:
+      type: object
+      properties:
+        left:
+          maximum: 99999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          format: int32
+        front:
+          maximum: 99999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          maximum: 99999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          format: int32
+        right:
+          maximum: 99999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rear:
+          maximum: 99999
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          format: int32
+      description: Required depending on terminal setting.<br>The number of centimeters on which the cargo exceeds the dimensions of the container.
+    Reefer:
+      type: object
+      properties:
+        temperatureFixed:
+          type:
+          - boolean
+          - 'null'
+          description: Indication whether the cooling system of the container must be set to a constant temperature.
+        temperature:
+          maximum: 999
+          minimum: -999
+          type:
+          - number
+          - 'null'
+          description: The constant number of degrees Celsius on which the cooling system must be set.
+        minimumTemperature:
+          maximum: 999
+          minimum: -999
+          type:
+          - number
+          - 'null'
+          description: The lower bound of the number of degrees Celsius on which the cooling system must be set.
+        maximumTemperature:
+          maximum: 999
+          minimum: -999
+          type:
+          - number
+          - 'null'
+          description: The upper bound of the number of degrees Celsius on which the cooling system must be set.
+      description: Required depending on terminal setting.<br>Containing the refrigerated container details.
+    CargoItem:
+      type: object
+      properties:
+        containerNumber:
+          type:
+          - string
+          - 'null'
+        containerType:
+          type:
+          - string
+          - 'null'
+          enum:
+          - CONTAINER
+          - TRAILER
+          - SWAP_BODY
+          - CHASSIS
+        sizeType:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        tareWeight:
+          type:
+          - number
+          - 'null'
+          description: The weight of the container without its content.
+        empty:
+          type: boolean
+          description: Indication whether the container is full or empty.
+        temperature:
+          type:
+          - number
+          - 'null'
+        overlength:
+          type:
+          - number
+          - 'null'
+        overheight:
+          type:
+          - number
+          - 'null'
+        overwidth:
+          type:
+          - number
+          - 'null'
+        oversizeRemarks:
+          type:
+          - string
+          - 'null'
+      description: The shipped item.
+    TerminalNotification:
+      required:
+      - code
+      - description
+      - level
+      type: object
+      properties:
+        level:
+          type: string
+          description: 'The urgency of the notification: LOW is intended to be informative only. MEDIUM and HIGH are considered actionable for the recipient.'
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+        code:
+          type: string
+          description: Used to group notifications of the same type, chosen by the sender of the notification.
+        description:
+          type: string
+          description: The content of the notification.
+      description: A notification from the terminal with important information about this handling or visit.
+    DetachHandling:
+      required:
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+    ShipmentData:
+      required:
+      - cargoDirector
+      - consignmentNumbers
+      - equipmentNumber
+      - sizeType
+      type: object
+      properties:
+        transportReference:
+          type:
+          - string
+          - 'null'
+          description: Reference number of the shipper or forwarder for this shipment
+        consignmentNumbers:
+          uniqueItems: true
+          type: array
+          description: Consignment numbers (i.e. bill of lading numbers) from carrier as declared to customs
+          items:
+            type:
+            - string
+            - 'null'
+            description: Consignment numbers (i.e. bill of lading numbers) from carrier as declared to customs
+        equipmentNumber:
+          type: string
+          description: Equipment number (i.e. container number) as declared to customs
+        deepSeaEta:
+          type:
+          - string
+          - 'null'
+          description: Estimated time of arrival of the vessel that is delivering the cargo
+          format: date-time
+        deepSeaTerminal:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Terminal at which the cargo is discharged from the vessel
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Terminal'
+        deepSeaCarrier:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Carrier (i.e. shipping company) responsible for the deep sea transport of the cargo
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        deepSeaVesselName:
+          type:
+          - string
+          - 'null'
+          description: Name of the vessel that is delivering the cargo
+        deepSeaVesselImo:
+          type:
+          - string
+          - 'null'
+          description: IMO code of the vessel that is delivering the cargo
+        deepSeaVoyageNumber:
+          type:
+          - string
+          - 'null'
+          description: Voyage number of the vessel that is delivering the cargo
+        releaseReference:
+          type:
+          - string
+          - 'null'
+          description: Reference number (i.e. pin code) given by the carrier after commercial release of the cargo
+        sizeType:
+          title: ''
+          type: ''
+          description: Size type code (e.g. 4230) of the container
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        cargoWeight:
+          type:
+          - number
+          - 'null'
+          description: Weight in kg of all the contents of the container (but excluding the weight of the container itself)
+        tareWeight:
+          type:
+          - number
+          - 'null'
+          description: Weight in kg of the container itself
+        inlandModality:
+          type:
+          - string
+          - 'null'
+          description: Modality of the inland transport, either 'barge', 'rail' or 'road'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        inlandTerminalLocation:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Location UN code of the inland terminal
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        inlandTerminalCode:
+          type:
+          - string
+          - 'null'
+          description: BICS code of the inland terminal
+        finalDestination:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Final destination of the cargo
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/FinalDestinationLocation'
+        cargoDirector:
+          title: ''
+          type: ''
+          description: Cargo director (or forwarder) for this shipment.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/HinterlandOrganisation'
+        inlandOperator:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Operator authorised to perform the inland transport of the cargo
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/HinterlandOrganisation'
+        transportOrder:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Details relating to the transport order given by the cargo director to the inland operator
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TransportOrder'
+        haulageArrangement:
+          type:
+          - string
+          - 'null'
+          enum:
+          - carrier
+          - merchant
+      description: The shipment data as reported by the forwarder
+    CargoMovement:
+      type: object
+      properties:
+        vessel:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The vessel that ships the cargo during movement.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/CargoVessel'
+        operator:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The party responsible for operation of the vessel during movement.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Party'
+        portbaseVoyageId:
+          type:
+          - string
+          - 'null'
+          description: Id that unique identifies this movement in Portbase. Eg the call reference number of a sea movement.
+        transportReference:
+          type:
+          - string
+          - 'null'
+          description: Transport reference of the vessel operator for this movement.
+        terminalData:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The handling data as reported by the terminal.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TerminalData'
+        consignmentNumbers:
+          uniqueItems: true
+          type: array
+          description: Consignment numbers for this shipment as registered by the operator.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Consignment numbers for this shipment as registered by the operator.
+        movementReferenceNumbers:
+          type: array
+          description: Identifiers from the government that describe this movement.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Identifiers from the government that describe this movement.
+        exchangeRate:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Exchange rate against the Euro as agreed upon by parties when agreeing to move this cargo.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ExchangeRate'
+        item:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The shipped item.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/CargoItem'
+        shipperSealNumber:
+          type:
+          - string
+          - 'null'
+          description: Seal number registered by the named party.
+        carrierSealNumber:
+          type:
+          - string
+          - 'null'
+          description: Seal number registered by the named party.
+        customsSealNumber:
+          type:
+          - string
+          - 'null'
+          description: Seal number registered by the named party.
+        position:
+          type:
+          - string
+          - 'null'
+          description: Position of the cargo on board of the vessel during movement.
+        containerOperator:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Party responsible for this shipment during this movement.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        loading:
+          type:
+          - string
+          - 'null'
+          description: Timestamp of loading the cargo at the start of this movement.
+          format: date-time
+        itinerary:
+          type: array
+          description: Itinerary of sea movement contains known stops made by the vessel on this movement, including for loading and discharging of the cargo. Itinerary of inland movement contains visit associated with handling and the final destination.
+          items:
+            $ref: '#/components/schemas/Stop'
+        discharge:
+          type:
+          - string
+          - 'null'
+          description: Timestamp of discharging the cargo at the end of this movement.
+          format: date-time
+        origin:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Origin location of the cargo as reported by the operator (might be from before this movement).
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        destination:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Final destination of the cargo as reported by the operator (might be reached after this movement).
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        portbaseLoadingId:
+          type:
+          - string
+          - 'null'
+          description: Portbase identifier for the loading of the cargo onto the vessel. Eg handling id in hinterland.
+        portbaseDischargeId:
+          type:
+          - string
+          - 'null'
+          description: Portbase identifier for the discharge of the cargo off the vessel. Eg handling id in hinterland.
+        pickupStatus:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Known terminal status for the pickup of the shipped cargo.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ContainerStatus'
+        pickupReference:
+          type:
+          - string
+          - 'null'
+          description: Known reference to identify the pickup of the shipped cargo. Sometimes same as pin code. Might be hidden from view if recipient is unauthorised.
+        dropoffStatus:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Known terminal status for the dropoff of the shipped cargo.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/ContainerStatus'
+        dropoffReference:
+          type:
+          - string
+          - 'null'
+          description: Known reference to identify the dropoff of the shipped cargo.
+        releaseExpiration:
+          type:
+          - string
+          - 'null'
+          description: Expiration for the commercial release.
+          format: date-time
+        releaseReference:
+          type:
+          - string
+          - 'null'
+          description: Reference passed to the next responsible party after the cargo has been released. Also known as pin code. Might be hidden from view if recipient is unauthorised.
+        releaseParty:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Party to which this cargo is released after this movement.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/Party'
+        haulageArrangement:
+          type:
+          - string
+          - 'null'
+          description: Specifies which party arranges haulage for this movement, either 'carrier' or 'merchant'. Only applies to inland movements.
+          enum:
+          - carrier
+          - merchant
+      description: One or more movements to transport this shipment from origin to destination
+    ContainedGood:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the container good
+          example: PENTAERYTHRIETTETRANITRAAT (PENTAERYTHRITOLTETRANITRAAT, PETN), BEVOCHTIGD met ten minste 25 massa-% water of GEDESENSIBILISEERD, met ten minst 15 massa-% flegmatiseermiddel
+        classification:
+          allOf:
+          - $ref: '#/components/schemas/GoodsClassification'
+        grossWeight:
+          type:
+          - number
+          - 'null'
+          description: The gross weight of the cargo in kilograms, including package weight, excluding container weight.
+        numberOfPackages:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        packageType:
+          allOf:
+          - $ref: '#/components/schemas/CargoPackageType'
+        minimumTemperature:
+          type:
+          - number
+          - 'null'
+          description: The minimum temperature (degrees C) on which the cooling system must be set.
+        maximumTemperature:
+          type:
+          - number
+          - 'null'
+          description: The maximum temperature (degrees C) on which the cooling system must be set.
+        unCode:
+          type:
+          - string
+          - 'null'
+          description: The UN code of the container good
+          example: '150'
+        hazardClass:
+          type:
+          - string
+          - 'null'
+          description: The IMO hazard class of the container good
+          example: '1'
+        subsidiaryRisk:
+          type:
+          - string
+          - 'null'
+          description: Any risks in addition to the class to which dangerous goods are assigned; and which is determined by a requirement to have a subsidiary risk.
+        emsFireCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the emergency response procedure for vessels carrying dangerous goods in case of fire
+        emsSpillageCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the emergency response procedures for vessels carrying dangerous goods in case of spillage
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the container good
+        segregationGroup:
+          type:
+          - string
+          - 'null'
+          description: The segregation group of the container good
+        packingGroup:
+          type:
+          - string
+          - 'null'
+          description: Indication of the level of danger
+          enum:
+          - MINOR_DANGER
+          - MEDIUM_DANGER
+          - GREAT_DANGER
+        flashPoint:
+          type:
+          - number
+          - 'null'
+          description: The temperature in degrees Celsius at which a good will give off enough flammable vapour to be ignited. According IMDG Code DG Class 3 or subsidiary risk of Class 3
+      description: Required depending on terminal setting.
+    MoveHandling:
+      required:
+      - handlingId
+      - nextVisitId
+      - nextVoyageId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the handling/container which was generated on the creation of the handling.
+          example: d7727b42-b7d3-490e-aa70-619d7717b1d1
+        nextVisitId:
+          type: string
+          description: Unique identification of the visit to which the cargo handling must move.
+        nextVoyageId:
+          type: string
+          description: Unique identification of the voyage related to the visit to which the cargo handling must move.
+        preNotification:
+          type: boolean
+          description: Indication whether a pre-announcement (true) or a status request (when supported by the terminal for the given modality) must be send to the terminal (false). Status request on a visit not supported for Road.
+        handlingData:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: Optional to update handling data while moving handling to a another visit
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/HandlingData'
+    GoodsClassification:
+      required:
+      - code
+      - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    ApiHandlingDeclaration:
+      type: object
+      properties:
+        declarationUsingUpdateBypass:
+          type: boolean
+          description: Indicating whether the handling declaration is using the update by-pass. Depends on the terminal property `handlingUpdateBypassAllowed`
+        cancelForUpdateByPassAcceptedByTerminal:
+          type: boolean
+          description: Indicating whether the cancel before the update is accepted by the terminal not supporting updates. See `declarationUsingUpdateBypass` and terminal property `handlingUpdateBypassAllowed`
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - DECLARED
+          - REJECTED
+          - ACCEPTED
+        acceptStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcceptStatus'
+        rejectReasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerminalRejectReason'
+      description: The latest handling declaration
+    CreateHandlingResult:
+      required:
+      - handlingId
+      type: object
+      properties:
+        handlingId:
+          type: string
+          description: Unique identifier of the cargo handling which was generated on the creation of the handling.
+          example: 17fe4b13-0bb7-4623-b0e4-db6ce7cedbad
+    CargoCurrency:
+      required:
+      - description
+      - unCode
+      type: object
+      properties:
+        unCode:
+          type: string
+        description:
+          type: string
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

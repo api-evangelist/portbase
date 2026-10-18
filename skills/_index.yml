@@ -1,0 +1,82 @@
+name: Portbase agent skills
+generated: '2026-10-18'
+method: generated
+source:
+- openapi/portbase-cargo-controller-export-openapi.yml
+- openapi/portbase-cargo-controller-import-openapi.yml
+- openapi/portbase-hinterland-container-notification-openapi.yml
+- openapi/portbase-vessel-visit-openapi.yml
+notes: No provider-published skills or AGENTS.md found; skills generated from the saved OpenAPI contracts.
+skills:
+- file: portbase-track-bills-of-lading-for-import.md
+  name: track-bills-of-lading-for-import
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operations:
+  - track_1
+  - trackedBls_1
+  - nominateInlandOperators_1
+  - assignCargoDirector
+- file: portbase-subscribe-to-an-export-booking.md
+  name: subscribe-to-an-export-booking
+  api: openapi/portbase-cargo-controller-export-openapi.yml
+  operations:
+  - subscribe
+  - getBySubscriptionId
+  - getJwks
+- file: portbase-prenotify-a-road-container-visit.md
+  name: prenotify-a-road-container-visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operations:
+  - _08_getTerminals
+  - _01_createVisit_2
+  - _04_getVisitByUuid_1
+  - _02_updateRoadVisitEta_1
+  - _05_deleteRoadVisit_1
+- file: portbase-declare-a-barge-voyage.md
+  name: declare-a-barge-voyage
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operations:
+  - _03_findBarges
+  - _01_createVoyage
+  - _02_updateVoyage
+  - _06_getVoyage
+  - _01_listen
+  - _03_cancelVoyage
+- file: portbase-declare-a-vessel-visit.md
+  name: declare-a-vessel-visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operations:
+  - get01
+  - createVisit
+  - declareVisit
+  - getVisit_1
+  - updateVisit
+  - cancelVisit
+  - _01_listenForVisitUpdates
+- file: portbase-file-a-bill-of-lading-consignment.md
+  name: file-a-bill-of-lading-consignment
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operations:
+  - c01StraightBillOfLadingSingleFiling
+  - c02MasterBillOfLadingSingleFiling
+  - getConsignment
+  - c09FilingInvalidate
+- file: portbase-bookings-subscribe-and-retrieve.md
+  name: portbase-bookings-subscribe-and-retrieve
+  api: openapi/portbase-cargo-controller-export-openapi.yml
+  operations:
+  - subscribe
+  - getBySubscriptionId
+- file: portbase-forward-shipment.md
+  name: portbase-forward-shipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operations:
+  - _01_processShipments
+  - _03_forwardShipment
+  - _03b_cancelShipmentForwarding
+- file: portbase-track-cargo-import.md
+  name: portbase-track-cargo-import
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operations:
+  - track_1
+  - trackedBls_1

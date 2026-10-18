@@ -1,0 +1,35 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/portbase-cargo-controller-export-openapi.yml
+authentication:
+  style: apiKey
+  location: header
+  parameters:
+  - Portbase-access-key-id
+  - Portbase-secret-access-key
+idempotency:
+  coverage: none
+  note: Idempotency mechanisms not documented in available specifications
+pagination:
+  style: unknown
+  note: Pagination conventions not documented in available specifications
+error_handling:
+  format: custom JSON
+  envelope:
+    fields:
+    - timestamp
+    - status
+    - error
+    - message
+    - rejectedValue
+rate_limits:
+  signaling:
+    status_code: 429
+    headers: unknown
+  note: Rate limiting returns 429 status code but headers not documented
+request_tracing:
+  headers: unknown
+  note: Request ID tracing not documented
+reversibility:
+  documented: unknown
+  note: Reversal operations not documented in available specifications

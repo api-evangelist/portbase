@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements overlay for Portbase Cargo Controller Export API
+  version: 1.0.0
+extends: ../openapi/_original/portbase-cargo-controller-export-openapi.yml
+x-generated: '2026-10-18'
+x-method: derived
+x-source: openapi/portbase-cargo-controller-export-openapi.yml
+x-rationale: The spec description documents that every call requires the Portbase-access-key-id and Portbase-secret-access-key headers, but the
+  contract declares no usable security scheme. This overlay declares them and links the provider getting-started article and reference documentation.
+actions:
+- target: $.components
+  description: Ensure a components object exists for the security schemes below.
+  update:
+    securitySchemes:
+      portbaseAccessKeyId:
+        type: apiKey
+        in: header
+        name: Portbase-access-key-id
+        description: 'Portbase access key id. Documented in the API description: every API call requires the Portbase-access-key-id and Portbase-secret-access-key
+          headers; access keys are issued by Portbase.'
+      portbaseSecretAccessKey:
+        type: apiKey
+        in: header
+        name: Portbase-secret-access-key
+        description: Portbase secret access key, sent together with Portbase-access-key-id.
+- target: $
+  description: Apply both Portbase header credentials globally (both headers are required together).
+  update:
+    security:
+    - portbaseAccessKeyId: []
+      portbaseSecretAccessKey: []
+- target: $
+  description: Link the provider getting-started article for this system interface.
+  update:
+    externalDocs:
+      description: 'Portbase support: getting started with the Portbase Cargo Controller Export API'
+      url: https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+- target: $.info
+  description: Record provider reference documentation and catalog provenance.
+  update:
+    x-api-evangelist:
+      provider: portbase
+      documentation: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+      getting_started: https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+      status_page: https://status.portbase.com/

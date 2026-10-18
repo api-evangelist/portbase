@@ -1,0 +1,593 @@
+openapi: 3.2.0
+info:
+  title: Portbase Port Authority API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Port Authority API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Port Authority API
+paths:
+  /acceptHealth:
+    post:
+      tags:
+      - Port Authority API
+      summary: Accept health
+      description: This endpoint can be used to accept a health declaration as Port Authority.
+      operationId: acceptHealth
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiAcceptDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /acceptSecurity:
+    post:
+      tags:
+      - Port Authority API
+      summary: Accept security
+      description: This endpoint can be used to accept a security declaration as Port Authority.
+      operationId: acceptSecurity
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiAcceptDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /acceptVisit:
+    post:
+      tags:
+      - Port Authority API
+      summary: Accept visit
+      description: This endpoint can be used to accept a visit declaration as Port Authority.
+      operationId: acceptVisit
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiAcceptDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /acceptWaste:
+    post:
+      tags:
+      - Port Authority API
+      summary: Accept waste
+      description: This endpoint can be used to accept a waste declaration as Port Authority.
+      operationId: acceptWaste
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiAcceptDeclaration'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /addBerthVisitAfter:
+    post:
+      tags:
+      - Port Authority API
+      summary: Add berth visit
+      description: Inserts a berth visit after the given berth visit or at the start if no berthVisitId is given.
+      operationId: addBerthVisitAfter
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiProcessAddBerthVisitAfter'
+      responses:
+        '200':
+          description: successful operation, returns the id of the berth visit that was inserted.
+          content:
+            application/json:
+              schema:
+                type: string
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /changeBertVisitLocation:
+    post:
+      tags:
+      - Port Authority API
+      summary: Change berth visit location
+      description: Set the location of a berth visit to a different berth
+      operationId: changeBertVisitLocation
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiChangeBerthVisitLocation'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /acceptDangerousGoods:
+    post:
+      tags:
+      - Port Authority API
+      summary: Accept dangerous goods
+      description: This endpoint can be used to accept a dangerous goods declaration as Port Authority.
+      operationId: p07acceptDangerousGoods
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiAcceptDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /processAta:
+    post:
+      tags:
+      - Port Authority API
+      summary: Register ATA (old)
+      description: This endpoint can be used to register an ATA for a berth visit as Port Authority. Use registerAta instead
+      operationId: processAta
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiProcessAta'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /processAtd:
+    post:
+      tags:
+      - Port Authority API
+      summary: Register ATD (old)
+      description: This endpoint can be used to register an ATD for a berth visit as Port Authority. Use registerAtd instead
+      operationId: processAtd
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiProcessAtd'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /processAtdPort:
+    post:
+      tags:
+      - Port Authority API
+      summary: Register ATD port
+      description: This endpoint can be used to register an ATD for the port visit as Port Authority.
+      operationId: processAtd_1
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRegisterAtdPort'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /registerAta:
+    post:
+      tags:
+      - Port Authority API
+      summary: Register ATA
+      description: This endpoint can be used to register an ATA for a berth visit as Port Authority.
+      operationId: registerAta
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRegisterActualTime'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /registerAtd:
+    post:
+      tags:
+      - Port Authority API
+      summary: Register ATD
+      description: This endpoint can be used to register an ATD for a berth visit as Port Authority.
+      operationId: registerAtd
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRegisterActualTime'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /rejectDangerousGoods:
+    post:
+      tags:
+      - Port Authority API
+      summary: Reject dangerous goods
+      description: This endpoint can be used to reject a dangerous goods declaration as Port Authority.
+      operationId: rejectDangerousGoods
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRejectDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /rejectHealth:
+    post:
+      tags:
+      - Port Authority API
+      summary: Reject health
+      description: This endpoint can be used to reject a health declaration as Port Authority.
+      operationId: rejectHealth
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRejectDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /rejectSecurity:
+    post:
+      tags:
+      - Port Authority API
+      summary: Reject security
+      description: This endpoint can be used to reject a security declaration as Port Authority.
+      operationId: rejectSecurity
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRejectDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /rejectVisit:
+    post:
+      tags:
+      - Port Authority API
+      summary: Reject visit
+      description: This endpoint can be used to reject a visit declaration as Port Authority.
+      operationId: rejectVisit
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRejectDeclaration'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /rejectWaste:
+    post:
+      tags:
+      - Port Authority API
+      summary: Reject waste
+      description: This endpoint can be used to reject a waste declaration as Port Authority.
+      operationId: rejectWaste
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.ApiRejectDeclaration'
+      responses:
+        '204':
+          description: successful operation
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /declarationResponse:
+    post:
+      tags:
+      - Port Authority API
+      summary: Respond to declaration
+      description: This endpoint can be used to accept or reject a declaration as Port Authority.
+      operationId: respond
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.messaging.DeclarationResponse'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.adapter.ApiProcessAddBerthVisitAfter:
+      title: ProcessAddBerthVisitAfter
+      required:
+      - berthCode
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        berthVisitId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the berth visit after which the new berth visit should be inserted, or null to insert a berth visit at port arrival
+        berthCode:
+          type: string
+          description: The berth code
+        accept:
+          type: boolean
+          description: Set this to also accept the visit
+    com.portbase.bezoekschip.adapter.ApiProcessAtd:
+      title: ProcessAtd
+      required:
+      - berthCode
+      - crn
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        berthCode:
+          type: string
+          description: The berth code
+        timestamp:
+          type: string
+          description: The time of departure of the vessel from the berth
+          format: date-time
+        lastBerth:
+          type: boolean
+          description: Flag that indicates whether or not this is the last berth on the visit
+    com.portbase.bezoekschip.adapter.ApiProcessAta:
+      title: ProcessAta
+      required:
+      - berthCode
+      - crn
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        berthCode:
+          type: string
+          description: The berth code
+        timestamp:
+          type: string
+          description: The time of arrival of the vessel at the berth
+          format: date-time
+    com.portbase.bezoekschip.adapter.ApiRejectDeclaration:
+      title: RejectDeclaration
+      required:
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        reason:
+          type:
+          - string
+          - 'null'
+          description: The reason for rejection
+    com.portbase.bezoekschip.adapter.ApiAcceptDeclaration:
+      title: AcceptDeclaration
+      required:
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+    com.portbase.bezoekschip.common.api.messaging.DeclarationResponse:
+      title: DeclarationResponse
+      required:
+      - accepted
+      - crn
+      - declarationId
+      - declarationType
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        rejectionReason:
+          type:
+          - string
+          - 'null'
+        crn:
+          minLength: 1
+          type: string
+        declarationId:
+          minLength: 1
+          type: string
+        declarationType:
+          type: string
+    com.portbase.bezoekschip.adapter.ApiRegisterActualTime:
+      title: RegisterActualTime
+      required:
+      - berthVisitId
+      - crn
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        berthVisitId:
+          type: string
+          description: The berth visit ID
+        timestamp:
+          type: string
+          description: The actual time of arrival or the actual time of departure of the vessel at the berth
+          format: date-time
+    com.portbase.bezoekschip.adapter.ApiRegisterAtdPort:
+      title: RegisterAtdPort
+      required:
+      - atdPort
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        atdPort:
+          type: string
+          format: date-time
+    com.portbase.bezoekschip.adapter.ApiChangeBerthVisitLocation:
+      title: ChangeBerthVisitLocation
+      required:
+      - berthCode
+      - berthVisitId
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        berthVisitId:
+          type: string
+          description: The berth visit ID
+        berthCode:
+          type: string
+          description: The berth code of the new location for this berth visit
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

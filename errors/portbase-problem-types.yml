@@ -1,0 +1,32 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/portbase-cargo-controller-export-openapi.yml
+format: application/json
+envelope:
+  fields:
+    timestamp: date-time
+    status: integer
+    error: string
+    message: string
+    rejectedValue: any
+problems:
+- status: 400
+  title: Bad Request
+  type: ApiError
+  description: Invalid request
+  remediation: Check request parameters and format
+- status: 429
+  title: Too Many Requests
+  type: ApiError
+  description: Rate limit exceeded
+  remediation: Reduce request frequency
+- status: 500
+  title: Internal Server Error
+  type: ApiError
+  description: Server error
+  remediation: Contact Portbase support
+- status: 504
+  title: Gateway Timeout
+  type: ApiError
+  description: Request timeout
+  remediation: Retry request

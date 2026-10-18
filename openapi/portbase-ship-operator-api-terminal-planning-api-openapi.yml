@@ -1,0 +1,383 @@
+openapi: 3.2.0
+info:
+  title: Portbase Ship Operator API - terminal planning API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Ship Operator API - terminal planning across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Ship Operator API - terminal planning
+  description: 'This api can be used for settling the terminal planning with the stevedores.
+
+    The happy flow consists preferably of the next steps:
+
+
+    declare terminal plannings
+
+
+    update terminal plannings
+
+
+    approve each terminal planning
+
+
+    finish terminal planning'
+paths:
+  /planning/terminalplannings:approve/{crn}/{berthVisitId}:
+    post:
+      tags:
+      - Ship Operator API - terminal planning
+      summary: Approve terminal planning
+      description: This endpoint can be used to approve the proposals of each terminal planning.
+      operationId: approveTerminalPlanning
+      parameters:
+      - name: crn
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The call reference number of the visit
+      - name: berthVisitId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /planning/terminalplannings:declare:
+    post:
+      tags:
+      - Ship Operator API - terminal planning
+      summary: Declare terminal planning
+      description: This endpoint can be used to declare and coordinate the terminal plannings between the agents and the terminals.
+      operationId: declareTerminalPlannings
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingDeclareTerminalPlanning'
+      responses:
+        '200':
+          description: CRN of the visit on success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.ApiTerminalPlanning'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /planning/terminalplannings:finish/{crn}:
+    post:
+      tags:
+      - Ship Operator API - terminal planning
+      summary: Finish terminal planning
+      description: This endpoint can be used to finish the planning cycle between agent and terminal.
+      operationId: finishTerminalPlanning
+      parameters:
+      - name: crn
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The call reference number of the visit
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /planning/terminalplannings/{crn}:
+    get:
+      tags:
+      - Ship Operator API - terminal planning
+      summary: Get terminal planning
+      description: This endpoint can be used to load the current terminal plannings for the visit (e.g. including planning obtained from terminal).
+      operationId: getVisit
+      parameters:
+      - name: crn
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The visit with given call reference number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.ApiTerminalPlanning'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /planning/terminalplannings:declare/{crn}:
+    post:
+      tags:
+      - Ship Operator API - terminal planning
+      summary: Update terminal planning
+      description: This endpoint can be used to update terminal plannings.
+      operationId: updateTerminalPlanning
+      parameters:
+      - name: crn
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The call reference number of the visit
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingUpdateTerminalPlanning'
+      responses:
+        '200':
+          description: CRN of the visit on success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.ApiTerminalPlanning'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.visit.GetVessel:
+      title: GetVessel
+      required:
+      - imoCode
+      type: object
+      properties:
+        imoCode:
+          minLength: 1
+          type: string
+          description: The unique identification of a vessel according to Lloyds register
+      description: The identification of a vessel
+    com.portbase.bezoekschip.common.api.systeemkoppeling.ApiTerminalPlanning:
+      title: TerminalPlanning
+      type: object
+      properties:
+        crn:
+          type:
+          - string
+          - 'null'
+        portOfCall:
+          type:
+          - string
+          - 'null'
+        portEntryOrigin:
+          type:
+          - string
+          - 'null'
+          enum:
+          - SEA
+          - HINTERLAND
+        ownerShortName:
+          type:
+          - string
+          - 'null'
+        etaPort:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        vessel:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetVessel'
+        arrivalVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+        terminalVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingTerminalVisit'
+        departureVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+    com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingDeclareTerminalPlanning:
+      title: DeclareTerminalPlanning
+      required:
+      - arrivalVoyage
+      - departureVoyage
+      - etaPort
+      - portOfCall
+      - terminalVisits
+      - vessel
+      type: object
+      properties:
+        portOfCall:
+          type: string
+          description: The UN locode of the location where the port of call is located
+        ownerShortName:
+          type:
+          - string
+          - 'null'
+        etaPort:
+          type: string
+          description: The estimated time of arrival of the vessel at the pilot station or entry point
+          format: date-time
+        portEntryOrigin:
+          type:
+          - string
+          - 'null'
+          description: The origin of the port entry (SEA or HINTERLAND
+          enum:
+          - SEA
+          - HINTERLAND
+        vessel:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetVessel'
+        arrivalVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+        terminalVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingTerminalVisit'
+        departureVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+    com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingUpdateTerminalPlanning:
+      title: UpdateTerminalPlanning
+      required:
+      - arrivalVoyage
+      - departureVoyage
+      - etaPort
+      - terminalVisits
+      - vessel
+      type: object
+      properties:
+        etaPort:
+          type: string
+          description: The estimated time of arrival of the vessel at the pilot station or entry point
+          format: date-time
+        vessel:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetVessel'
+        arrivalVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+        terminalVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingTerminalVisit'
+        departureVoyage:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage'
+    com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingTerminalVisit:
+      title: TerminalVisit
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The Universal Unique Identifier (UUID) of the berth visit
+        callId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier (generated by Portbase) of this visit to the terminal. Unique over all visits and should never be updated by anyone
+        terminalQuayCode:
+          type:
+          - string
+          - 'null'
+          description: The terminal code which can be either of the stevedore or one of the N24 table quay codes
+        berthCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the berth
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The estimated time of arrival of the vessel at the berth, requested by the declarant
+          format: date-time
+        etd:
+          type:
+          - string
+          - 'null'
+          description: The estimated time of departure of the vessel at the berth, requested by the declarant
+          format: date-time
+        vesselServiceCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the vessel service linked to the organisation and carrier
+        discharge:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The amount of containers that will be discharged
+          format: int32
+        load:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The amount of containers that will be loaded
+          format: int32
+        restow:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: The amount of containers that will be restowed
+          format: int32
+      description: The terminal visit.
+    com.portbase.bezoekschip.common.api.systeemkoppeling.SysteemkoppelingVoyage:
+      title: Voyage
+      type: object
+      properties:
+        voyageNumber:
+          maxLength: 17
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The number of the voyage
+        scacCode:
+          maxLength: 4
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by the US
+        smdgCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by the SMDG
+      description: The terminal visit.
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

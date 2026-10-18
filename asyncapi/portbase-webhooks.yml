@@ -1,0 +1,18 @@
+generated: '2026-10-18'
+method: derived
+generator: derive-webhooks.py
+source:
+- openapi/portbase-cargo-controller-export-openapi.yml
+description: 'Event surface derived from the provider''s own OpenAPI: webhooks. No AsyncAPI document is published by the provider; this catalog
+  lists the events the contract names.'
+management_operations:
+- subscribe
+- getBySubscriptionId
+- _10_updateNotifications
+- _12_updateNotifications
+- _31_getNotificationPreferenceByParams
+- _31_getNotificationPreferenceByParams_1
+- c09NotifyArrival
+events:
+- event: webhook
+  declared_in: webhooks

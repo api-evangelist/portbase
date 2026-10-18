@@ -1,0 +1,476 @@
+openapi: 3.2.0
+info:
+  title: Portbase Operator API - voyages API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Operator API - voyages across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Operator API - voyages
+  description: API for the declarant to create new voyages, update or cancel them. Special operations are also available to indicate that the voyage contains visits where restrictions apply (i.e. due to reefers).
+paths:
+  /voyages:create:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Create voyage
+      description: This endpoint can be used to create a barge or rail voyage, which is also known as rotation.
+      operationId: _01_createVoyage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiVoyage'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVoyageResult'
+        '400':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages:update:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Update voyage
+      description: This endpoint can be used to update a barge, rail or road voyage, which is also known as rotation.
+      operationId: _02_updateVoyage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVoyage'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages:cancel:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Cancel voyage
+      description: 'This endpoint can be used to cancel a barge or rail voyage, which is also known as rotation.
+
+        This also cancels the individual visits within the voyage, but does not cancel the handlings. Make sure to move, detach or cancel handlings before cancelling the voyage'
+      operationId: _03_cancelVoyage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelVoyage'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages/restrictions:update:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Update restrictions
+      description: '`Integral planning` This endpoint can be used to add or change integral planning restrictions for barge voyages.'
+      operationId: _04_updateRestrictions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRestrictions'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages/restrictionGroups:update:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Update restriction groups
+      description: '`Integral planning` This endpoint can be used to add or change integral planning restriction groups for barge voyages. Unlike the restrictions endpoint, restriction groups support both ''and'' and ''or'' operators between visits within groups.'
+      operationId: _05_updateRestrictionGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRestrictionGroups'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages:get:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Get voyage
+      description: This endpoint can be used to get a barge, rail or road voyage. Does not return detached handlings.
+      operationId: _06_getVoyage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetVoyage'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /voyages/cargoDeclarants:update:
+    post:
+      tags:
+      - Operator API - voyages
+      summary: Update cargo declarants
+      description: This endpoint can be used to add or change cargo declarants for voyages.
+      operationId: _07_updateCargoDeclarants
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCargoDeclarantsRequest'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    HinterlandOrganisationRequest:
+      required:
+      - shortName
+      type: object
+      properties:
+        shortName:
+          type: string
+          description: The short name of the organisation
+    ContactPerson:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the contact person
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address of the contact person
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the contact person
+      description: The contact person of the organisation. Overrides the default organisation contact person.
+    CreateVoyageResult:
+      required:
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage
+          example: f906436c-7fae-4c37-8e0c-1fce2718720e
+    VoyageData:
+      required:
+      - modality
+      type: object
+      properties:
+        modality:
+          type: string
+          description: The way in which the transportation of the cargo takes place in the hinterland.
+          example: barge
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+      description: Containing the voyage details.
+      discriminator:
+        propertyName: modality
+        mapping:
+          barge: '#/components/schemas/BargeVoyageData'
+          road: '#/components/schemas/RoadVoyageData'
+          rail: '#/components/schemas/RailVoyageData'
+    RestrictionGroupsEntry:
+      required:
+      - restrictionGroups
+      type: object
+      properties:
+        restrictionGroups:
+          type: array
+          description: A list of restriction groups, each with a logical operator ('and' or 'or').
+          items:
+            $ref: '#/components/schemas/BargeVoyageRestrictionGroup'
+        transportingReefers:
+          type: boolean
+          description: If the restriction is due to transporting reefers, then integral planning will not change visit times.
+      description: '`Integral planning` An ordered sequence of restriction groups for this barge voyage. The planner must handle all visits in the first group before moving on to the second group, and so on. Within each group, the logicalOperator determines whether all visits must be done (''and'') or just one (''or'').'
+    ValidationException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        violations:
+          uniqueItems: true
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+        violationSummaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViolationSummary'
+    LegacyRestriction:
+      required:
+      - visitIds
+      type: object
+      properties:
+        visitIds:
+          type: array
+          description: A list of groups of visit ids. Integral planning will always first plan all the visits in the first group, then the visits in the second group, etcetera. However, integral planning will still shuffle the order of the visits within each group.
+          items:
+            type: array
+            description: A list of groups of visit ids. Integral planning will always first plan all the visits in the first group, then the visits in the second group, etcetera. However, integral planning will still shuffle the order of the visits within each group.
+            items:
+              type:
+              - string
+              - 'null'
+              description: A list of groups of visit ids. Integral planning will always first plan all the visits in the first group, then the visits in the second group, etcetera. However, integral planning will still shuffle the order of the visits within each group.
+        transportingReefers:
+          type: boolean
+          description: If the restriction is due to transporting reefers, then integral planning will not change visit times.
+      description: '`Integral planning` Forces the order of visits or groups of visits to remain a certain way.'
+    ApiModel:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Enum: `"detachedHandling"` `"bargeVoyage"` `"roadVoyage"` `"railVoyage"`'
+      discriminator:
+        propertyName: type
+        mapping:
+          detachedHandling: '#/components/schemas/ApiDetachedHandling'
+          bargeVoyage: '#/components/schemas/ApiBargeVoyage'
+          railVoyage: '#/components/schemas/ApiRailVoyage'
+          roadVoyage: '#/components/schemas/ApiRoadVoyage'
+    UpdateRestrictions:
+      required:
+      - restrictions
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+        restrictions:
+          type: array
+          description: '`Integral planning` Forces the order of visits or groups of visits to remain a certain way.'
+          items:
+            $ref: '#/components/schemas/LegacyRestriction'
+    UpdateVoyage:
+      required:
+      - voyageData
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+        voyageData:
+          allOf:
+          - $ref: '#/components/schemas/VoyageData'
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    BargeVoyageRestrictionGroup:
+      required:
+      - visitIds
+      type: object
+      properties:
+        visitIds:
+          type: array
+          description: The visit ids that form this group.
+          items:
+            type:
+            - string
+            - 'null'
+            description: The visit ids that form this group.
+        logicalOperator:
+          type:
+          - string
+          - 'null'
+          description: How the visit ids within this group are evaluated by the planner. 'and' means all visits in the group must be done; 'or' means any one visit in the group suffices. Only required when the group contains more than one visit id; omit or leave null for single-visit groups. Where a logicalOperator is used and transportingReefers is true, only 'and' is supported.
+          enum:
+          - and
+          - or
+      description: A group of visit ids that the planner must treat as a unit within the ordered sequence of restriction groups. The sequence defines the order in which groups must be planned. Within a group, the logicalOperator determines whether all visits must be done ('and') or just one ('or').
+    GetVoyage:
+      required:
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+    CancelVoyage:
+      required:
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+    ViolationSummary:
+      type: object
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+    CreateApiVoyage:
+      required:
+      - voyageData
+      type: object
+      properties:
+        voyageData:
+          allOf:
+          - $ref: '#/components/schemas/VoyageData'
+        contactPerson:
+          allOf:
+          - $ref: '#/components/schemas/ContactPerson'
+    UpdateRestrictionGroups:
+      required:
+      - restrictions
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+        restrictions:
+          type: array
+          description: '`Integral planning` An ordered sequence of restriction groups for this barge voyage. The planner must handle all visits in the first group before moving on to the second group, and so on. Within each group, the logicalOperator determines whether all visits must be done (''and'') or just one (''or'').'
+          items:
+            $ref: '#/components/schemas/RestrictionGroupsEntry'
+    UpdateCargoDeclarantsRequest:
+      required:
+      - voyageId
+      type: object
+      properties:
+        voyageId:
+          type: string
+        cargoDeclarants:
+          type: array
+          items:
+            $ref: '#/components/schemas/HinterlandOrganisationRequest'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

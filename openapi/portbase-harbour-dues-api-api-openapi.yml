@@ -1,0 +1,108 @@
+openapi: 3.2.0
+info:
+  title: Portbase Harbour Dues API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Harbour Dues API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Harbour Dues API
+paths:
+  /harbour-dues/send-invoices:
+    post:
+      tags:
+      - Harbour Dues API
+      summary: Send harbour dues invoices
+      description: Endpoint used to send invoices to PCS. The crn, statementNumber and revisionNumber are optional for no shows without a visit in PCS.
+      operationId: sendInvoices
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.external.harbourdues.ApiHarbourDuesInvoices'
+      responses:
+        '204':
+          description: Successful operation
+        '403':
+          description: Forbidden
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.external.harbourdues.ApiHarbourDuesInvoice:
+      title: HarbourDuesInvoice
+      required:
+      - invoiceNumber
+      - type
+      - url
+      type: object
+      properties:
+        invoiceNumber:
+          minLength: 1
+          type: string
+          description: The number of the invoice
+        url:
+          minLength: 1
+          type: string
+          description: The url of the invoice in the DMS
+        type:
+          type: string
+          description: The type of the invoice
+          enum:
+          - CREDIT
+          - DEBIT
+      description: A list of invoices to be added to the harbour dues declaration
+    com.portbase.bezoekschip.common.api.external.harbourdues.ApiHarbourDuesInvoices:
+      title: HarbourDuesInvoices
+      required:
+      - crn
+      - invoices
+      - portAuthorityId
+      - statementNumber
+      - versionNumber
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: CRN of the vessel visit
+        statementNumber:
+          type: integer
+          description: Identifies the declaration within the visit
+          format: int32
+          exclusiveMinimum: 0
+        versionNumber:
+          type: integer
+          description: The version number of the declaration
+          format: int32
+          exclusiveMinimum: 0
+        portAuthorityId:
+          minLength: 1
+          type: string
+          description: The unique identifier of the organisation, issued by the port authority
+        invoices:
+          minItems: 1
+          type: array
+          description: A list of invoices to be added to the harbour dues declaration
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.external.harbourdues.ApiHarbourDuesInvoice'
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

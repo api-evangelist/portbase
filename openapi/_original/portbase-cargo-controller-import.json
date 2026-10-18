@@ -1,0 +1,1974 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Cargo Controller Import API",
+    "description" : " ## Reading Guide\n Below is an explanation for implementing the Cargo Controller Import API.\n The first sections contain information about the configuration and authentication for the API and the Webhook.\n\n In the following sections, an explanation about the endpoints can be found. Those sections consist of:\n 1. An introduction (including testing possibilities)\n 2. Information (such as requirements and constraints) about the request\n 3. Information about the response. See 'Responses' and ‘Webhook events’\n 4. Request and response samples. Please refer to the sections on the right of the screen.\n\n If you want to download **example messages**, please use the 'Copy' button in the 'Response samples' in the specific sections. Do you want more information about the **JSON schemas**? All information (including these schemas) can be downloaded at the top of this page.\n\n # About this API\n The Cargo Controller Import API is used for tracking cargo and receiving real-time updates on your tracked cargo. After tracking a Bill of Lading (see <a target=\"_self\" href=\"#operation/track_1\">Track requests</a> section), you will automatically receive all updates on it. All data for that updated Bill of Lading will be sent to a special webhook endpoint configured for your organisation.\n See for more information:\n\n* <a href=\"changelog.html\">Changelog</a>\n* <a href=\"https://support.portbase.com/hc/en-gb/articles/32493593538450-Implementing-the-Cargo-Controller-Import-API#h_01KEVA0V7HJVGKMX2XTDDBZ4Z8\">Functional scenarios regarding <b>Cargo Controller Import API</b></a>\n* <a href=\"https://support.portbase.com/hc/en-gb/articles/32493593538450-Implementing-the-Cargo-Controller-Import-API#h_01KGHYB7PJCTYAZG2JKF288NSF\">Functional scenarios regarding <b>Secure Chain API</b></a>\n\n Events that trigger the webhook are summarized in the <a target=\"_self\" href=\"#operation/Webhook%20events\">Webhook events</a> section.\n\n # Configuration\n The API configuration and implementation consists of the following steps: \n 1. <a target=\"_self\" href=\"#section/Configuration/1.-Set-up\">Set up and configuration</a>\n 2. <a target=\"_self\" href=\"#section/Configuration/2.-Send-request-to-Cargo-Controller-API\">Send request to Cargo Controller Import API</a><br />using properties 'Portbase-access-key-id' and 'Portbase-secret-access-key' in the authentication headers and processing the responses\n 3. <a target=\"_self\" href=\"#section/Configuration/2.-Send-request-to-Cargo-Controller-API\">Receive and process Webhook events</a><br />(Cargo Controller POST requests to your endpoint) and validate the JSON Web Token (JWT) using property 'x-portbase-webhook' from the authentication headers\n\n ## 1. Set up\n ### API access\n Authentication is managed by using special Portbase authentication headers named 'Portbase-access-key-id' and 'Portbase-secret-access-key'. Your access keys will be emailed to the administrator of your organisation (as nominated in your service application). If you are a software supplier, then it concerns your client’s organization.\n\n ### Webhook configuration\n All webhook configuration is managed by Portbase. Please contact our sales department (sales@portbase.com) if you would like to register a webhook. Along with a url, one or more email addresses are mandatory to which we can reach out if an error on your webhook occurred. It is possible to register multiple webhooks.\n\n ## 2. Send request to Cargo Controller Import API\n Information about implementing the Cargo Controller Import API endpoints can be found at <a target=\"_self\" href=\"#tag/Cargo-Controller-API\">Cargo Controller Import API</a> section.\n You can use the <a href=\"functional-scenarios.html\">Functional scenarios</a> section to review the different message flows.\n\n ## 3. Receive and process Webhook events\n A so-called 'webhook' (also known as web callback or HTTP push API) allows you to efficiently build a custom integration with Cargo Controller. As soon as they occur, we will send updates concerning your tracked cargo to your preconfigured webhook.\n For each update on your tracked cargo, we will post an HTTP call to the URL that you specify in your configuration. Therefore, your endpoint must be open to HTTP POST-requests and able to receive the payload containing the updated cargo. The payload structure can be found at the <a target=\"_self\" href=\"#operation/Webhook%20events\">Webhook events</a> section.\n ### Webhook authentication\n Each request (message) that we post to your webhook is accompanied by a header named 'x-portbase-webhook' which contains a JSON Web Token (JWT). You can use this token to verify whether the request originated from Portbase.\n  \n *For security reasons we strongly suggest that you implement verification of this token in your webhook endpoint before handling the request*. In order to do so, our public RSA key for verification of the token signature can be found <a target=\"_blank\" href=\"public_key.pem\">here</a>.\n\n For more information on JSON Web Tokens you can see <a target=\"_blank\" href=\"https://jwt.io/\">https://jwt.io/</a> \n\n For whitelisting you can use the following IP's: 34.253.113.23, 34.249.227.133, 34.253.114.17 \n\n # Testing\n For each API endpoint there is a so called stub available. These test endpoints accept valid requests and will respond with a valid dummy response in the correct schema format. The stubs can be used for testing and the validation of credentials, since they require a valid production environment authentication token. The URL of the stubs can be found at the specific endpoint in these API docs.\n\n ## Webhook testing\n ### Track requests\n In order to test your webhook implementation for tracking cargo you can add your webhook test url to the track-requests POST stub endpoint:\n\n Example JSON:\n\n ```\n {\n   \"trackRequests\": [\n     {\n     \"blNumber\": \"SCAC2345678901\",\n     \"transportEquipmentNumber\": \"CONT9434134\",\n     \"referenceNumber\": \"RF37290523\",\n     \"labels\": []\n     }\n   ],\n   \"webhookUrl\": \"https://your.webhook.site\"\n }\n ```\n\n ### Inland operator nominations\n In order to test your webhook implementation for nominating inland operators you can add stub settings to the inland-operator-nominations PUT stub endpoint.\n You will receive a webhook update with the added inland operator nominations.\n\n Example JSON:\n\n ```\n {\n   \"stubSettings\": \n     {\n     \"webhookUrl\": \"https://your.webhook.site\", \n     \"blNumber\": \"SCAC2345678901\",\n     \"referenceNumber\": \"RF37290523\"\n     },\n   ... Rest of your request\n }\n ```\n\n ## Webhook test explained\n You will receive 5 updates per tracked trackRequest on your webhook. Any trackRequest(s) which are rejected or notTracked will not receive updates.\n The updates will be sent in intervals of 2 seconds each.\n * Update 1: Regular Bill of Lading\n * Update 2: ETA updated\n * Update 3: Inspection added\n * Update 4: ATA registered\n * Update 5: Discharge report added\n\n Understanding the impact of changed or new data, will have a significant increase in logistical value adapting our API. Therefore, please use the next section when implementing our API.\n",
+    "contact" : {
+      "name" : "Portbase - Team Import Cargo",
+      "url" : "https://www.portbase.com/services/cargo-controller-import/",
+      "email" : "importcargo@portbase.com"
+    },
+    "version" : "v1.0",
+    "x-logo" : {
+      "url" : "images/portbase-logo.png",
+      "altText" : "Portbase logo"
+    }
+  },
+  "servers" : [ {
+    "url" : "https://api.cargo-controller.pcs.portbase.com",
+    "description" : "Production"
+  }, {
+    "url" : "https://api.cargo-controller.pcs.portbase.com/stub",
+    "description" : "Test"
+  }, {
+    "url" : "https://api.cargo-controller.kt.portbase.com",
+    "description" : "KT"
+  } ],
+  "tags" : [ {
+    "name" : "Cargo Controller Import API"
+  }, {
+    "name" : "Secure Chain API"
+  }, {
+    "name" : "Webhook Events"
+  } ],
+  "paths" : {
+    "/public/track-requests/{trackRequestId}/inland-operator-nominations" : {
+      "put" : {
+        "tags" : [ "Secure Chain API" ],
+        "summary" : "Nominate inland operator",
+        "description" : "> Note that for using this endpoint additional authorisation for the Portbase Secure Chain is required. Please contact sales@portbase.com in order to obtain the authorisation.\n\nThis endpoint can be used to nominate an inland operator for transport equipment(s) listed on a Bill of Lading for which your organisation is Cargo Director.\nAfter tracking a Bill of Lading, you will receive a track request id in the response which you will need to nominate an inland operator.\nBesides nominating an inland operator it is also possible to send the transport order to the inland operator.\n\n### Withdraw inland operator nominations\nWith this endpoint it is also possible to withdraw / delete an existing inland operator nomination for a transport equipment by leaving field `inlandOperator` empty / blank.\nIn that case, the entire shipment will be withdrawn / deleted.\n",
+        "operationId" : "nominateInlandOperators_1",
+        "parameters" : [ {
+          "name" : "portbase-access-key-id",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "abcdef"
+        }, {
+          "name" : "portbase-secret-access-key",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : 1234567
+        }, {
+          "name" : "authorization",
+          "in" : "header",
+          "description" : "The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target=\"_self\" href=\"#section/Configuration/1.-Set-up-API-access\">Set up API access</a> section for authentication.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "trackRequestId",
+          "in" : "path",
+          "description" : "Track request ID, provided in the response of the track requests endpoint",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Shipment"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "504" : {
+            "description" : "Gateway Timeout",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "OK, No Content"
+          }
+        },
+        "security" : [ {
+          "${authorizer-name}" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "requestParameters" : {
+            "integration.request.header.authorization" : "context.authorizer.jwtAuthHeader",
+            "integration.request.path.trackRequestId" : "method.request.path.trackRequestId"
+          },
+          "httpMethod" : "PUT",
+          "type" : "http_proxy",
+          "uri" : "${backend-base-uri}/public/track-requests/{trackRequestId}/inland-operator-nominations"
+        }
+      }
+    },
+    "/public/track-requests/{trackRequestId}/assign-cargo-director" : {
+      "put" : {
+        "tags" : [ "Secure Chain API" ],
+        "summary" : "Assign cargo director",
+        "description" : "> Note that for using this endpoint additional authorisation for the Portbase Secure Chain is required. Please contact sales@portbase.com in order to obtain the authorisation.\n\nThis endpoint can be used to assign a cargo director for transport equipment(s) listed on a Bill of Lading for which your organisation is currently Cargo Director. After transfer you will no longer be <strong>the current</strong> Cargo director for the listed equipments. <strong>In the secure chain you will remain the former Cargo Director and, if applicable, the release-to party.</strong>\n",
+        "operationId" : "assignCargoDirector",
+        "parameters" : [ {
+          "name" : "portbase-access-key-id",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "abcdef"
+        }, {
+          "name" : "portbase-secret-access-key",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : 1234567
+        }, {
+          "name" : "authorization",
+          "in" : "header",
+          "description" : "The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target=\"_self\" href=\"#section/Configuration/1.-Set-up-API-access\">Set up API access</a> section for authentication.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "trackRequestId",
+          "in" : "path",
+          "description" : "Track request ID, provided in the response of the track requests endpoint",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TransferRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "504" : {
+            "description" : "Gateway Timeout",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "OK, No Content"
+          }
+        },
+        "security" : [ {
+          "${authorizer-name}" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "requestParameters" : {
+            "integration.request.header.authorization" : "context.authorizer.jwtAuthHeader",
+            "integration.request.path.trackRequestId" : "method.request.path.trackRequestId"
+          },
+          "httpMethod" : "PUT",
+          "type" : "http_proxy",
+          "uri" : "${backend-base-uri}/public/track-requests/{trackRequestId}/assign-cargo-director"
+        }
+      }
+    },
+    "/public/track-requests" : {
+      "post" : {
+        "tags" : [ "Cargo Controller Import API" ],
+        "summary" : "Track requests",
+        "description" : "This endpoint can be used to track cargo. After tracking cargo, it's possible to receive real-time updates through our webhook functionality.\nPlease refer to the <a target=\"_self\" href=\"#operation/Webhook%20events\">Webhook events</a> section for more information.\n\n> Please note that for testing purposes there is a stub endpoint available. The URL can be found in the dropdown above the 'Request samples' section to the right. This test endpoint bases its response on the **reference number** in your track request. The\nfollowing prefixes of the value of **reference number** can be used to control the track response:\n> * NT: will appear under 'notTrackedBLs' in the response\n> * RE: will appear under 'rejectedBLs' in the response\n> * Any other value or no value: will appear under 'trackedBLs' in the response\n**Please note**: It is possible to add an optional **webhook url** for testing purposes.\nThis url can be added on the same level as the \"trackRequests\" in the JSON and needs to be a valid url.\nPlease refer to the 'samples' sections to the right for example objects of requests and responses. For more information about the content of requests and responses, see below.\n",
+        "operationId" : "track_1",
+        "parameters" : [ {
+          "name" : "portbase-access-key-id",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "abcdef"
+        }, {
+          "name" : "portbase-secret-access-key",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : 1234567
+        }, {
+          "name" : "authorization",
+          "in" : "header",
+          "description" : "The authorization header is for internal use only. Please use the Portbase headers above or refer to the\n<a target=\"_self\" href=\"#section/Configuration/1.-Set-up-API-access\">Set up API access</a> section for authentication.\n",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/BatchTrackRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "504" : {
+            "description" : "Gateway Timeout",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TrackResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "${authorizer-name}" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "requestParameters" : {
+            "integration.request.header.authorization" : "context.authorizer.jwtAuthHeader"
+          },
+          "httpMethod" : "POST",
+          "type" : "http_proxy",
+          "uri" : "${backend-base-uri}/public/track-requests"
+        }
+      }
+    },
+    "/public/tracked-bls" : {
+      "get" : {
+        "tags" : [ "Cargo Controller Import API" ],
+        "summary" : "Tracked B/L's",
+        "description" : "Real-time updates on tracked cargo can be received through our webhook functionality (see <a target=\"_self\" href=\"#operation/Webhook%20events\">Webhook events</a> section).\nAdditionally, this trackedBls endpoint can be used to retrieve information on tracked cargo in case your system missed webhook updates and\nis in need of synchronization.\n\n***NOTE: This trackedBls endpoint is not meant for continuous synchronization and is throttled & monitored accordingly.***\n\n> For testing purposes there is a stub endpoint available. The URL can be found in the dropdown above the 'Response samples' section to the right.\nThe request parameter 'id' is required, however it will not be validated, so anything can be entered. The endpoint will always return the same dummy data\nenriched with the id in your request and adjusted to the current date and time.\n\nPlease refer to the 'Response samples' to the right for an example object. For more information about the response schema, see the 'Responses' section below.\n",
+        "operationId" : "trackedBls_1",
+        "parameters" : [ {
+          "name" : "portbase-access-key-id",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "abcdef"
+        }, {
+          "name" : "portbase-secret-access-key",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : 1234567
+        }, {
+          "name" : "authorization",
+          "in" : "header",
+          "description" : "The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target=\"_self\" href=\"#section/Configuration/1.-Set-up-API-access\">Set up API access</a> section for authentication.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "description" : "A comma separated list of Track Request IDs, provided in the response of the track endpoint",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "description" : "A comma separated list of Track Request IDs, provided in the response of the track endpoint",
+            "items" : {
+              "type" : "string",
+              "description" : "A comma separated list of Track Request IDs, provided in the response of the track endpoint"
+            },
+            "maxItems" : 100,
+            "minItems" : 1,
+            "uniqueItems" : true
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "504" : {
+            "description" : "Gateway Timeout",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiError"
+                  }
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApiOrganisationBL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "${authorizer-name}" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "requestParameters" : {
+            "integration.request.header.authorization" : "context.authorizer.jwtAuthHeader"
+          },
+          "httpMethod" : "GET",
+          "type" : "http_proxy",
+          "uri" : "${backend-base-uri}/public/tracked-bls"
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ApiError" : {
+        "type" : "object",
+        "properties" : {
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "error" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "rejectedValue" : { }
+        }
+      },
+      "StubApiShipmentDto" : {
+        "type" : "object",
+        "properties" : {
+          "stubSettings" : {
+            "$ref" : "#/components/schemas/StubSettings"
+          },
+          "deepSeaEta" : {
+            "type" : "string",
+            "description" : "Estimated time of arrival of the deepsea vessel at the terminal. Format: yyyy-MM-ddThh:mm:ssZ",
+            "example" : "2022-06-30T07:30:00Z",
+            "minLength" : 1
+          },
+          "deepSeaTerminal" : {
+            "type" : "string",
+            "description" : "Code of the terminal. Possible values: SMDGn BICS code or Portbase short name. E.g.: MDT, NLMVII, DCD, EMX, RWG, RST. This value will be provided by the API updates.",
+            "example" : "NLMVII",
+            "minLength" : 1
+          },
+          "deepSeaVesselName" : {
+            "type" : "string",
+            "description" : "Name of the deepsea vessel that is delivering the cargo",
+            "example" : "SAFMARINE MAFADI"
+          },
+          "deepSeaVesselImo" : {
+            "type" : "string",
+            "description" : "IMO code of the deepsea vessel that is delivering the cargo",
+            "example" : 9314210
+          },
+          "deepSeaVoyageNumber" : {
+            "type" : "string",
+            "description" : "Voyage number of the deepsea vessel that is delivering the cargo",
+            "example" : "VOY-123"
+          },
+          "transportEquipments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TransportEquipmentDto"
+            }
+          }
+        },
+        "required" : [ "deepSeaEta", "deepSeaTerminal" ]
+      },
+      "StubSettings" : {
+        "type" : "object",
+        "properties" : {
+          "webhookUrl" : {
+            "type" : "string"
+          },
+          "blNumber" : {
+            "type" : "string"
+          },
+          "referenceNumber" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TransportEquipmentDto" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "description" : "Transport equipment number (for example a container number)",
+            "example" : "CONT9434134",
+            "minLength" : 1
+          },
+          "sizeType" : {
+            "type" : "string",
+            "description" : "Size type code (e.g. 4230) of the container",
+            "example" : "22G1",
+            "maxLength" : 4,
+            "minLength" : 4
+          },
+          "containerOperator" : {
+            "type" : "string",
+            "description" : "Carrier (i.e. shipping company) responsible for the deep sea transport of the cargo. Possible values: A 4-letter SCAC (Standard Carrier Alpha Code) or Portbase short name.",
+            "example" : "MEFR",
+            "minLength" : 1
+          },
+          "placeOfDestination" : {
+            "type" : "string",
+            "description" : "Final destination of the cargo, preferably UN code but name is also allowed",
+            "example" : "DE",
+            "maxLength" : 2,
+            "minLength" : 2
+          },
+          "inlandTerminalLocation" : {
+            "type" : "string",
+            "description" : "Location UN code of the inland terminal",
+            "example" : "DE",
+            "maxLength" : 2,
+            "minLength" : 2
+          },
+          "inlandTerminalCode" : {
+            "type" : "string",
+            "description" : "BICS code of the inland terminal. See https://binnenvaart.org/terminal-codes/ for all the barge terminals.",
+            "example" : "0APMA"
+          },
+          "inlandOperator" : {
+            "type" : "string",
+            "description" : "Operator authorised to perform the inland transport of the cargo. Value: EAN code",
+            "example" : 8713755177848
+          },
+          "inlandModality" : {
+            "type" : "string",
+            "description" : "The modality of the inland transport. Possible values: barge, rail or road",
+            "enum" : [ "barge", "rail", "road" ],
+            "example" : "barge",
+            "pattern" : "barge|rail|road"
+          },
+          "releaseReference" : {
+            "type" : "string",
+            "description" : "Reference number (i.e. pin code) from the carrier after the cargo’s commercial release",
+            "example" : "AB1234"
+          },
+          "transportOrder" : {
+            "$ref" : "#/components/schemas/TransportOrder",
+            "description" : "Details relating to the transport order given by the cargo director to the inland operator"
+          }
+        },
+        "required" : [ "containerOperator", "equipmentNumber" ]
+      },
+      "TransportOrder" : {
+        "type" : "object",
+        "properties" : {
+          "invoiceReference" : {
+            "type" : "string",
+            "description" : "Reference to use when invoicing the inland transport",
+            "example" : "REF1234"
+          },
+          "debtorName" : {
+            "type" : "string",
+            "description" : "Name of party that owes money for the inland transport",
+            "example" : "Transport B.V."
+          },
+          "consigneeName" : {
+            "type" : "string",
+            "description" : "Name of the consignee that is importing the cargo",
+            "example" : "Importer B.V."
+          },
+          "releaseExpiration" : {
+            "type" : "string",
+            "description" : "Expiration moment of the commercial release. Format: yyyy-MM-ddThh:mm:ssZ",
+            "example" : "2022-06-30T07:30:00Z"
+          },
+          "demurrage" : {
+            "type" : "string",
+            "description" : "Number of free days at terminal. Number in whole days.",
+            "example" : 14,
+            "pattern" : "[0-9]+"
+          },
+          "detention" : {
+            "type" : "string",
+            "description" : "Number of free days to deliver equipment to inland terminal. Number in whole days.",
+            "example" : 7,
+            "pattern" : "[0-9]+"
+          },
+          "returnTerminal" : {
+            "type" : "string",
+            "description" : "The name of the terminal or depot where the empty equipment is returned. Preferably BICS or SMDG code but name is also allowed.",
+            "example" : "0KRAW"
+          },
+          "returnReference" : {
+            "type" : "string",
+            "description" : "The code that is required by terminal or depot to accept the equipment",
+            "example" : "ACC12345"
+          },
+          "destinationTargetDate" : {
+            "type" : "string",
+            "description" : "Date on which the equipment preferably should have reached the destination. Format: yyyy-MM-dd",
+            "example" : "2022-06-30"
+          },
+          "destinationReference" : {
+            "type" : "string",
+            "description" : "The code that is required by the inland terminal to accept the empty equipment",
+            "example" : "ACC12345"
+          },
+          "destinationInstructions" : {
+            "type" : "string",
+            "description" : "Instructions on how to deliver the equipment at the destination",
+            "example" : "instruction"
+          },
+          "customsCategory" : {
+            "type" : "string",
+            "description" : "Three-letter customs category code for the inland transport. Possible values: IM4,MRN,DIN,FWV,ICT,NAR,NT1,BXI,TNK,PIE,PPZ.",
+            "example" : "IM4",
+            "maxLength" : 3,
+            "minLength" : 3
+          },
+          "documentNumber" : {
+            "type" : "string",
+            "description" : "The movement reference number (MRN) from customs of the inland movement",
+            "example" : "19NL00000012345678"
+          },
+          "documentExpiration" : {
+            "type" : "string",
+            "description" : "Expiration date of MRN document. Format: yyyy-MM-dd",
+            "example" : "2022-06-30"
+          }
+        }
+      },
+      "Shipment" : {
+        "type" : "object",
+        "properties" : {
+          "deepSeaEta" : {
+            "type" : "string",
+            "description" : "Estimated time of arrival of the deepsea vessel at the terminal. Format: yyyy-MM-ddThh:mm:ssZ",
+            "example" : "2022-06-30T07:30:00Z",
+            "minLength" : 1
+          },
+          "deepSeaTerminal" : {
+            "type" : "string",
+            "description" : "Code of the terminal. Possible values: SMDGn BICS code or Portbase short name. E.g.: MDT, NLMVII, DCD, EMX, RWG, RST. This value will be provided by the API updates.",
+            "example" : "NLMVII",
+            "minLength" : 1
+          },
+          "deepSeaVesselName" : {
+            "type" : "string",
+            "description" : "Name of the deepsea vessel that is delivering the cargo",
+            "example" : "SAFMARINE MAFADI"
+          },
+          "deepSeaVesselImo" : {
+            "type" : "string",
+            "description" : "IMO code of the deepsea vessel that is delivering the cargo",
+            "example" : 9314210
+          },
+          "deepSeaVoyageNumber" : {
+            "type" : "string",
+            "description" : "Voyage number of the deepsea vessel that is delivering the cargo",
+            "example" : "VOY-123"
+          },
+          "transportEquipments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TransportEquipmentDto"
+            }
+          }
+        },
+        "required" : [ "deepSeaEta", "deepSeaTerminal" ]
+      },
+      "CargoDirector" : {
+        "type" : "object",
+        "description" : "Use either the CoC number (for Dutch organisations) or the iamConnectedId of the assigned organisation. When both are filled out, the iamConnectedId will be ignored.\nYou can use the CoC or Iam id of your own organisation when you want to 'reclaim' the role for your organisation.",
+        "properties" : {
+          "chamberOfCommerceNumber" : {
+            "type" : "string",
+            "description" : "Chamber of Commerce number of the assigned organisation. Can be used for Dutch organisations.",
+            "example" : 1234567890
+          },
+          "iamConnectedId" : {
+            "type" : "string",
+            "description" : "IamConnectedId of the assigned organisation. Can be used for non-Dutch organisations",
+            "example" : "521146bb-0399-4fbf-9a0d-d5efb9700391"
+          }
+        }
+      },
+      "TransferRequest" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumbers" : {
+            "type" : "array",
+            "description" : "A list of unique equipment number(s)",
+            "example" : [ "CONT9434134", "CONT9434135", "CONT9434136" ],
+            "items" : {
+              "type" : "string"
+            },
+            "minItems" : 1,
+            "uniqueItems" : true
+          },
+          "director" : {
+            "type" : "string",
+            "deprecated" : true,
+            "description" : "This field is deprecated. Use `cargoDirector.chamberOfCommerceNumber` instead."
+          },
+          "cargoDirector" : {
+            "$ref" : "#/components/schemas/CargoDirector"
+          }
+        },
+        "required" : [ "equipmentNumbers" ]
+      },
+      "StubBatchTrackRequestDto" : {
+        "type" : "object",
+        "properties" : {
+          "trackRequests" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TrackRequest"
+            },
+            "maxItems" : 500,
+            "minItems" : 1,
+            "uniqueItems" : true
+          },
+          "webhookUrl" : {
+            "type" : "string",
+            "description" : "Webhook url where update is sent to"
+          }
+        },
+        "required" : [ "trackRequests" ]
+      },
+      "TrackRequest" : {
+        "type" : "object",
+        "properties" : {
+          "blNumber" : {
+            "type" : "string",
+            "description" : "Bill of Lading (consignment) number",
+            "example" : "SCAC2345678901",
+            "maxLength" : 17,
+            "minLength" : 6
+          },
+          "transportEquipmentNumber" : {
+            "type" : "string",
+            "description" : "Transport equipment number (for example a container number)",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 1
+          },
+          "referenceNumber" : {
+            "type" : "string",
+            "description" : "A reference relevant to your organisation",
+            "example" : "NT37290523",
+            "maxLength" : 35,
+            "minLength" : 0
+          },
+          "labels" : {
+            "type" : "array",
+            "description" : "Categorize your cargo with self defined labels",
+            "items" : {
+              "type" : "string"
+            },
+            "uniqueItems" : true
+          },
+          "callReferenceNumber" : {
+            "type" : "string",
+            "description" : "Add a call reference number to your track request to track the visit before the manifest is registered within Portbase.",
+            "example" : "NLRTM25000001",
+            "maxLength" : 13,
+            "minLength" : 0
+          },
+          "vesselImoCode" : {
+            "type" : "string",
+            "description" : "Add the IMO code of the related vessel to track the visit before the manifest is registered within Portbase. If the CRN is filled out, the value of the IMO code will be ignored.",
+            "example" : 9850795,
+            "maxLength" : 7,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "blNumber", "transportEquipmentNumber" ]
+      },
+      "TrackResponse" : {
+        "type" : "object",
+        "properties" : {
+          "trackedBLs" : {
+            "type" : "array",
+            "description" : "If the combination of blNumber and equipmentNumber is known in our system, the Track Request will appear in this list.\nThe B/L is successfully tracked and you will automatically receive the B/L data (and every future update) on your webhook url.\n\nNB: if you are already successfully tracking this B/L (e.g. because someone already added it via the web interface),\nthe Track Request will still appear in this list. However, a reference number or labels in the (new) track request will be ignored.\n",
+            "example" : {
+              "id" : "a3dd46f6-5c29-11ec-bf63-0242ac130002",
+              "blNumber" : "SCAC1234567890",
+              "transportEquipmentNumber" : "CONT9434134",
+              "referenceNumber" : "TR37290523",
+              "labels" : [ "CARS" ]
+            },
+            "items" : {
+              "$ref" : "#/components/schemas/TrackResult"
+            }
+          },
+          "notTrackedBLs" : {
+            "type" : "array",
+            "description" : "If the combination of blNumber and equipmentNumber is not known in Cargo Controller (yet), the Track Request will appear in this list.\nWe will save the Track Request so ***you do not have to include this Track Request again in future requests to this endpoint***.\nThe saved Track Request will automatically be tracked when the B/L becomes known in our system. It will then be sent as an update to your webhook.\n",
+            "example" : {
+              "id" : "b3dd46f6-5c29-11ec-bf63-0242ac130002",
+              "blNumber" : "SCAC2234567891",
+              "transportEquipmentNumber" : "CONT9434135",
+              "referenceNumber" : "NT37290523",
+              "labels" : [ "CARS" ],
+              "vesselName" : "EVER ZEEHOND"
+            },
+            "items" : {
+              "$ref" : "#/components/schemas/TrackResult"
+            }
+          },
+          "rejectedBLs" : {
+            "type" : "array",
+            "description" : "If the handling agent has withdrawn your access to its cargo data, the Track Request will appear in this list together with the agent's name.\nPlease contact the handling agent for more information.\n",
+            "example" : {
+              "id" : "c3dd46f6-5c29-11ec-bf63-0242ac130002",
+              "blNumber" : "SCAC3234567892",
+              "transportEquipmentNumber" : "CONT9434136",
+              "referenceNumber" : "RE37290523",
+              "labels" : [ "CARS" ],
+              "rejectedBy" : "Cargo Handling Agent 1"
+            },
+            "items" : {
+              "$ref" : "#/components/schemas/TrackResult"
+            }
+          }
+        }
+      },
+      "TrackResult" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identification of your track request"
+          },
+          "blNumber" : {
+            "type" : "string",
+            "description" : "Bill of Lading (consignment) number"
+          },
+          "transportEquipmentNumber" : {
+            "type" : "string",
+            "description" : "Transport equipment number (for example a container number)"
+          },
+          "referenceNumber" : {
+            "type" : "string",
+            "description" : "The self defined reference of the track request"
+          },
+          "vesselName" : {
+            "type" : "string",
+            "description" : "The name of the vessel that was added by filling out the CRN or IMO code in the track request"
+          },
+          "labels" : {
+            "type" : "array",
+            "description" : "The self defined labels of the track request",
+            "items" : {
+              "type" : "string"
+            },
+            "uniqueItems" : true
+          }
+        }
+      },
+      "BatchTrackRequest" : {
+        "type" : "object",
+        "properties" : {
+          "trackRequests" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TrackRequest"
+            },
+            "maxItems" : 500,
+            "minItems" : 1,
+            "uniqueItems" : true
+          }
+        },
+        "required" : [ "trackRequests" ]
+      },
+      "AcceptStatus" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Broad categories of accept statuses. We categorize most accept codes under these types.  When we cannot match a code to a type, we leave the type empty (null).",
+            "enum" : [ "AVAILABLE", "BOOKING_APPROVED", "COMMERCIAL_RELEASE", "CUSTOMS_DOCUMENT", "BLOCKED", "SIZETYPE_APPROVED", "CARGO_OPENING", "MODALITY_APPROVED", "HANDLING_TYPE_APPROVED", "SHIPPING_COMPANY_APPROVED" ]
+          },
+          "code" : {
+            "type" : "string",
+            "description" : "The warning code that is sent by the terminal."
+          },
+          "remark" : {
+            "type" : "string",
+            "description" : "The optional remark sent by the terminal."
+          }
+        }
+      },
+      "ApiBerth" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "terminal" : {
+            "$ref" : "#/components/schemas/ApiTerminal"
+          }
+        }
+      },
+      "ApiBerthVisit" : {
+        "type" : "object",
+        "properties" : {
+          "berth" : {
+            "$ref" : "#/components/schemas/ApiBerth"
+          },
+          "eta" : {
+            "type" : "string"
+          },
+          "ata" : {
+            "type" : "string"
+          },
+          "etd" : {
+            "type" : "string"
+          },
+          "atd" : {
+            "type" : "string"
+          },
+          "etaTerminal" : {
+            "type" : "string",
+            "description" : "ETA reported by terminal"
+          },
+          "etdTerminal" : {
+            "type" : "string",
+            "description" : "ETD reported by terminal"
+          }
+        }
+      },
+      "ApiBillOfLading" : {
+        "type" : "object",
+        "properties" : {
+          "blNumber" : {
+            "type" : "string",
+            "description" : "Bill of Lading (consignment) number",
+            "example" : "SCAC1234567890",
+            "maxLength" : 17,
+            "minLength" : 6
+          },
+          "vesselVisit" : {
+            "$ref" : "#/components/schemas/ApiVesselVisit"
+          },
+          "handlingAgent" : {
+            "$ref" : "#/components/schemas/ApiParty",
+            "description" : "Organisation responsible for reporting the cargo on board of the vessel",
+            "example" : {
+              "name" : "Cargo Handling Agent 1",
+              "scacCode" : "CHAA"
+            }
+          },
+          "portOfLoading" : {
+            "$ref" : "#/components/schemas/ApiPort"
+          },
+          "portOfDischarge" : {
+            "$ref" : "#/components/schemas/ApiPort"
+          },
+          "dischargeTerminal" : {
+            "$ref" : "#/components/schemas/ApiTerminal",
+            "description" : "Planned discharge terminal"
+          },
+          "movementType" : {
+            "type" : "string",
+            "description" : "Identifying code of the contract of the conditions of carriage",
+            "enum" : [ "DOOR_TO_DOOR", "DOOR_TO_PIER", "PIER_TO_DOOR", "PIER_TO_PIER" ]
+          },
+          "customsStatus" : {
+            "type" : "string",
+            "description" : "Coded classification of the type of declaration that is used to declare the import of goods to customs",
+            "enum" : [ "EU_COMMUNITY_GOODS", "EU_COMMUNITY_GOODS_IN_TRANSHIPMENT", "EU_EMPTY_RETURN_PACKAGING", "EU_PROCEDURE_T", "EU_PROCEDURE_T1", "EU_PROCEDURE_T2", "EU_PROCEDURE_T2F", "GOODS_FROM_EVA_COUNTRIES" ]
+          },
+          "exchangeRate" : {
+            "$ref" : "#/components/schemas/ApiExchangeRate",
+            "description" : "Exchange rate of 1 euro"
+          },
+          "placeOfOrigin" : {
+            "$ref" : "#/components/schemas/ApiPort"
+          },
+          "placeOfDestination" : {
+            "$ref" : "#/components/schemas/ApiPort"
+          },
+          "goodsItems" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiGoodsItem"
+            }
+          },
+          "transportEquipments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiTransportEquipment"
+            }
+          },
+          "dischargeReports" : {
+            "type" : "array",
+            "description" : "Discharged transport equipments reported by terminals",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiDischargeReport"
+            }
+          },
+          "hinterlandTerminalData" : {
+            "type" : "array",
+            "description" : "Handling data reported by terminal",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiHinterlandTerminalData"
+            }
+          },
+          "inspectionItems" : {
+            "type" : "array",
+            "description" : "Inspections reported by customs",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiInspectionItem"
+            }
+          },
+          "transportEquipmentDeclarations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiTransportEquipmentDeclaration"
+            }
+          },
+          "hinterlandPreNotifications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiHinterlandPreNotification"
+            }
+          },
+          "cargoDirectors" : {
+            "type" : "array",
+            "description" : "Cargo directors per equipment, responsible for (arranging) the hinterland transport",
+            "example" : [ {
+              "equipmentNumber" : "CONT9434134",
+              "name" : "Cargo Director B.V.",
+              "scacCode" : "CD12"
+            } ],
+            "items" : {
+              "$ref" : "#/components/schemas/ApiDirector"
+            }
+          },
+          "transportDirectors" : {
+            "type" : "array",
+            "deprecated" : true,
+            "description" : "Transport directors per equipment",
+            "example" : [ {
+              "equipmentNumber" : "CONT9434134",
+              "name" : "Transport Director B.V.",
+              "scacCode" : "TD34"
+            } ],
+            "items" : {
+              "$ref" : "#/components/schemas/ApiDirector"
+            }
+          },
+          "commercialReleases" : {
+            "type" : "array",
+            "description" : "Release-to parties per equipment",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiCommercialRelease"
+            }
+          },
+          "releaseToParty" : {
+            "$ref" : "#/components/schemas/ApiParty",
+            "deprecated" : true,
+            "description" : "Organisation to which the Bill of Lading was commercially released. <strong>Deprecated</strong> - use the release-to party in the commercial releases instead.",
+            "example" : {
+              "name" : "Release-to Party B.V.",
+              "scacCode" : "RTP1"
+            }
+          },
+          "firstTrackingOrganisation" : {
+            "$ref" : "#/components/schemas/ApiParty",
+            "deprecated" : true,
+            "description" : "Organisation that first tracked the Bill of Lading; can grand access to the goods description",
+            "example" : {
+              "name" : "Release-to Party B.V.",
+              "scacCode" : "RTP1"
+            }
+          },
+          "deleted" : {
+            "type" : "boolean",
+            "description" : "When a B/L has been deleted by a cargo agent",
+            "example" : false
+          }
+        }
+      },
+      "ApiCommercialRelease" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134"
+          },
+          "releaseToParty" : {
+            "$ref" : "#/components/schemas/ApiParty",
+            "example" : {
+              "name" : "Release-to Party B.V.",
+              "scacCode" : "RTP1"
+            }
+          },
+          "releaseValidUntilDateTime" : {
+            "type" : "string",
+            "description" : "Release valid date as given by cargo handling agent",
+            "example" : "2021-02-28T07:45:00Z"
+          }
+        }
+      },
+      "ApiCommodity" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "example" : 3824
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Prepared binders for foundry moulds or cores"
+          }
+        }
+      },
+      "ApiCurrency" : {
+        "type" : "object",
+        "properties" : {
+          "unCode" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "U.S.A.-dollar"
+          }
+        }
+      },
+      "ApiDangerousGoods" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The technical name of the dangerous good",
+            "example" : "RESIN SOLUTION"
+          },
+          "unCode" : {
+            "type" : "string",
+            "description" : "The UN code of the dangerous good",
+            "example" : 1866
+          },
+          "hazardClass" : {
+            "type" : "string",
+            "description" : "The IMO hazard class of the dangerous good",
+            "example" : 3
+          },
+          "packingGroup" : {
+            "type" : "string",
+            "description" : "Indication of the level of danger",
+            "enum" : [ "MINOR_DANGER", "MEDIUM_DANGER", "GREAT_DANGER" ]
+          },
+          "flashPoint" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "The temperature in degrees Celsius at which a good will give off enough flammable vapour to be ignited. According IMDG Code DG Class 3 or subsidiary risk of Class 3.",
+            "example" : 39
+          }
+        }
+      },
+      "ApiDirector" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The full name of the organisation"
+          },
+          "scacCode" : {
+            "type" : "string",
+            "description" : "The SCAC code of the organisation"
+          }
+        }
+      },
+      "ApiDischargeReport" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "actualDischargeDateTime" : {
+            "type" : "string",
+            "example" : "2021-02-28T07:45:00Z"
+          },
+          "dischargeTerminal" : {
+            "$ref" : "#/components/schemas/ApiTerminal"
+          }
+        }
+      },
+      "ApiExchangeRate" : {
+        "type" : "object",
+        "properties" : {
+          "rate" : {
+            "type" : "number",
+            "example" : 0.855
+          },
+          "currency" : {
+            "$ref" : "#/components/schemas/ApiCurrency"
+          }
+        }
+      },
+      "ApiGoodsItem" : {
+        "type" : "object",
+        "properties" : {
+          "itemNumber" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 1
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "The goods description will be masked and replaced by 'Blocked by [organisation]' when your organisation is not the first to have tracked the B/L. Please contact the organisation displayed here to request access to the goods description.",
+            "example" : "DRUMS OF OIL"
+          },
+          "grossWeight" : {
+            "type" : "number",
+            "description" : "The gross weight of the cargo in kilograms, including package weight, excluding container weight",
+            "example" : 15820
+          },
+          "numberOfOuterPackages" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 80
+          },
+          "outerPackageType" : {
+            "$ref" : "#/components/schemas/ApiPackageType"
+          },
+          "netWeight" : {
+            "type" : "number",
+            "description" : "The total weight of the cargo in kilograms, excluding package weight, excluding container weight",
+            "example" : 11230
+          },
+          "numberOfInnerPackages" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 0
+          },
+          "innerPackageType" : {
+            "$ref" : "#/components/schemas/ApiPackageType"
+          },
+          "commodity" : {
+            "$ref" : "#/components/schemas/ApiCommodity",
+            "description" : "Goods commodity classification of the Harmonised System"
+          },
+          "dangerousGoods" : {
+            "$ref" : "#/components/schemas/ApiDangerousGoods"
+          },
+          "minimumTemperature" : {
+            "type" : "number",
+            "description" : "The minimum temperature (degrees C) on which the cooling system must be set",
+            "example" : 4
+          },
+          "maximumTemperature" : {
+            "type" : "number",
+            "description" : "The maximum temperature (degrees C) on which the cooling system must be set",
+            "example" : 88
+          },
+          "goodsItemTransportEquipments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiGoodsItemTransportEquipment"
+            }
+          }
+        }
+      },
+      "ApiGoodsItemTransportEquipment" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "numberOfPackages" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 80
+          },
+          "grossWeight" : {
+            "type" : "number",
+            "example" : 15820
+          }
+        }
+      },
+      "ApiHinterlandPreNotification" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string"
+          },
+          "dateUpdated" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "DECLARED", "ACCEPTED", "REJECTED" ]
+          },
+          "modality" : {
+            "type" : "string",
+            "enum" : [ "road", "rail", "barge", "sea", "cer" ]
+          },
+          "plannedVisit" : {
+            "$ref" : "#/components/schemas/PlannedVisit"
+          },
+          "equipmentStatus" : {
+            "$ref" : "#/components/schemas/EquipmentStatus"
+          }
+        }
+      },
+      "ApiHinterlandTerminalData" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "expectedDischargeTime" : {
+            "type" : "string",
+            "description" : "Expected discharge time reported by terminals",
+            "example" : "2021-02-28T07:45:00Z"
+          },
+          "gateOut" : {
+            "type" : "string",
+            "description" : "Departure time reported by terminal",
+            "example" : "2021-02-28T07:45:00Z"
+          }
+        }
+      },
+      "ApiInlandOperatorNominationDto" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134"
+          },
+          "inlandOperatorFullName" : {
+            "type" : "string",
+            "description" : "Full name of the nominated inland operator",
+            "example" : "Transport B.V."
+          }
+        }
+      },
+      "ApiInspectionItem" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "inspectionType" : {
+            "type" : "string",
+            "description" : "Indication of the type of inspection of the equipment to be carried out by customs",
+            "enum" : [ "UNKNOWN", "RELEASED", "BLOCK", "SCAN", "PHYSICAL_OUTLET", "PHYSICAL_CUSTOMS_WAREHOUSE" ],
+            "example" : "PHYSICAL_OUTLET"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "NOTIFIED", "RELEASED" ]
+          },
+          "dateUpdated" : {
+            "type" : "string",
+            "example" : "2021-02-26T07:45:00Z"
+          }
+        }
+      },
+      "ApiOrganisationBL" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "Unique identification of a Bill of Lading. This id corresponds with the one you received in the response of the Track Request.",
+            "example" : "a3dd46f6-5c29-11ec-bf63-0242ac130002"
+          },
+          "referenceNumber" : {
+            "type" : "string",
+            "description" : "A reference relevant to your organisation.",
+            "example" : "84923YY",
+            "maxLength" : 35,
+            "minLength" : 0
+          },
+          "labels" : {
+            "type" : "array",
+            "description" : "Labels allow you to categorize your cargo to improve collaboration within your organization",
+            "example" : [ "Rental cars", "Warehouse A" ],
+            "items" : {
+              "type" : "string"
+            },
+            "uniqueItems" : true
+          },
+          "deleted" : {
+            "type" : "boolean",
+            "description" : "Indication whether the Bill of Lading has been untracked",
+            "example" : false
+          },
+          "origin" : {
+            "type" : "string",
+            "description" : "How the Bill of Lading was tracked: via the Cargo Controller GUI (`WEB`) or via the public API (`API`), or automatically (because your organisation was authorised by the handling agent) by `COMMERCIAL_RELEASE` or `BULK_AUTHORISATION`",
+            "enum" : [ "WEB", "API", "EDI", "EVENT", "COMMERCIAL_RELEASE", "BULK_AUTHORISATION", "SECURE_CHAIN_TRANSFER" ],
+            "example" : "API"
+          },
+          "trackingType" : {
+            "type" : "string",
+            "description" : "Indication of the tracking type for this Bill of Lading",
+            "enum" : [ "BASIC", "EXTENDED" ],
+            "example" : "BASIC"
+          },
+          "billOfLading" : {
+            "$ref" : "#/components/schemas/ApiBillOfLading"
+          },
+          "nominatedInlandOperators" : {
+            "type" : "array",
+            "description" : "List of nominated inland operators",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiInlandOperatorNominationDto"
+            }
+          }
+        }
+      },
+      "ApiPackageType" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "example" : "DR"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Some package type name"
+          }
+        }
+      },
+      "ApiParty" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The full name of the organisation"
+          },
+          "scacCode" : {
+            "type" : "string",
+            "description" : "The SCAC code of the organisation"
+          }
+        }
+      },
+      "ApiPort" : {
+        "type" : "object",
+        "properties" : {
+          "locationName" : {
+            "type" : "string",
+            "description" : "The name of the port",
+            "example" : "Rotterdam"
+          },
+          "locationUnCode" : {
+            "type" : "string",
+            "description" : "The UN code of the location where the port is located",
+            "example" : "NLRTM"
+          }
+        }
+      },
+      "ApiPortVisit" : {
+        "type" : "object",
+        "properties" : {
+          "berthVisits" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApiBerthVisit"
+            }
+          },
+          "etaPort" : {
+            "type" : "string",
+            "example" : "2021-02-28T05:45:00Z"
+          },
+          "etdPort" : {
+            "type" : "string",
+            "example" : "2021-02-30T07:30:00Z"
+          },
+          "ataPort" : {
+            "type" : "string",
+            "example" : "2021-02-28T05:45:00Z"
+          },
+          "atdPort" : {
+            "type" : "string",
+            "example" : "2021-02-30T07:30:00Z"
+          }
+        }
+      },
+      "ApiSizeType" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The coded container's length, width, height, type and features",
+            "example" : "22G1",
+            "maxLength" : 4,
+            "minLength" : 0
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The descriptive name of the size type of container as specified with the code",
+            "example" : "20'x8'x8'6\" General Purpose Container – 22G1"
+          }
+        }
+      },
+      "ApiTerminal" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Code of the terminal, see Dutch Customs codebook N24 locationcodes",
+            "example" : 4810
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the terminal",
+            "example" : "AMALIAH APMT DSQ"
+          },
+          "ownerFullName" : {
+            "type" : "string",
+            "description" : "The name of the organisation that contains the terminal",
+            "example" : "APM Terminals Maasvlakte II B.V."
+          },
+          "ownerShortName" : {
+            "type" : "string",
+            "description" : "The Portbase short name of the organisation that contains the terminal",
+            "example" : "APMII"
+          }
+        }
+      },
+      "ApiTransportEquipment" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "UNKNOWN", "CONTAINER", "TRAILER", "SWAP_BODY", "CHASSIS" ]
+          },
+          "sizeType" : {
+            "$ref" : "#/components/schemas/ApiSizeType"
+          },
+          "shippersOwned" : {
+            "type" : "boolean",
+            "description" : "Indication whether the equipment number is a ISO 6346 compliant container number (apply true when it does not comply)"
+          },
+          "emptyIndicator" : {
+            "type" : "boolean",
+            "description" : "Indication whether the container is full or empty",
+            "example" : false
+          },
+          "tareWeight" : {
+            "type" : "number",
+            "description" : "The weight of the container without its content",
+            "example" : 4560
+          },
+          "shipperSealNumber" : {
+            "type" : "string",
+            "example" : "SHIP789589234",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "carrierSealNumber" : {
+            "type" : "string",
+            "example" : "CARR789589234",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "customsSealNumber" : {
+            "type" : "string",
+            "example" : "CUST789589234",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "temperature" : {
+            "type" : "number",
+            "description" : "The temperature (degrees C) on which the cooling system must be set"
+          },
+          "overlength" : {
+            "type" : "number",
+            "description" : "The extent (in centimeters) to which the contents of equipment exceeds the length of the equipment",
+            "example" : 200
+          },
+          "overheight" : {
+            "type" : "number",
+            "description" : "The extent (in centimeters) to which the contents of equipment exceeds the height of the equipment",
+            "example" : 200
+          },
+          "overwidth" : {
+            "type" : "number",
+            "description" : "The extent (in centimeters) to which the contents of equipment exceeds the width of the equipment",
+            "example" : 200
+          },
+          "oversizeRemarks" : {
+            "type" : "string",
+            "description" : "Additional information regarding the off-dimensions of a piece of equipment",
+            "example" : "NO REMARKS"
+          },
+          "initialDemurrage" : {
+            "type" : "string",
+            "description" : "First day that terminal storage charges must be paid after discharge of a equipment",
+            "example" : "2021-02-28T07:45:00Z"
+          },
+          "redeliveryAddress" : {
+            "type" : "string",
+            "description" : "Address where empty equipment must be re-delivered after delivery of the cargo",
+            "example" : "Return home"
+          },
+          "containerOperator" : {
+            "$ref" : "#/components/schemas/ApiParty",
+            "description" : "Organisation that owns the container",
+            "example" : {
+              "name" : "Cargo Handling Agent 1",
+              "scacCode" : "CHAA"
+            }
+          }
+        }
+      },
+      "ApiTransportEquipmentDeclaration" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentNumber" : {
+            "type" : "string",
+            "example" : "CONT9434134",
+            "maxLength" : 17,
+            "minLength" : 0
+          },
+          "declarations" : {
+            "type" : "array",
+            "description" : "Submitted import declarations for a transport equipment. Contains a three letter document code for a sent Import Document.",
+            "example" : [ "DIN" ],
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "ApiVessel" : {
+        "type" : "object",
+        "properties" : {
+          "flagCode" : {
+            "type" : "string",
+            "description" : "The code of the flag that defines the nationality of a vessel as reported to port and/or customs authorities",
+            "example" : "USA"
+          },
+          "flagCountryUnCode" : {
+            "type" : "string",
+            "description" : "The two letter UN code of the flag that defines the nationality of a vessel",
+            "example" : "US"
+          },
+          "imoCode" : {
+            "type" : "string",
+            "description" : "The unique identification of a vessel according to Lloyds register",
+            "example" : 9314210
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the vessel",
+            "example" : "SAFMARINE MAFADI"
+          }
+        }
+      },
+      "ApiVesselVisit" : {
+        "type" : "object",
+        "properties" : {
+          "crn" : {
+            "type" : "string",
+            "description" : "The call reference number of the visit",
+            "example" : "NLRTM21123456"
+          },
+          "portOfCall" : {
+            "$ref" : "#/components/schemas/ApiPort",
+            "description" : "The port of call for the visit"
+          },
+          "vessel" : {
+            "$ref" : "#/components/schemas/ApiVessel",
+            "description" : "The vessel that visits the port of call"
+          },
+          "visitDeclaration" : {
+            "$ref" : "#/components/schemas/ApiVisitDeclaration",
+            "description" : "The declaration of the port visit"
+          },
+          "cancelled" : {
+            "type" : "boolean",
+            "description" : "Indication whether the port visit is cancelled",
+            "example" : false
+          },
+          "visitStatus" : {
+            "type" : "string",
+            "description" : "Indication of the status of a vessel call",
+            "enum" : [ "UNKNOWN", "EXPECTED", "ARRIVED", "DEPARTED" ],
+            "example" : "DEPARTED"
+          }
+        }
+      },
+      "ApiVisitDeclaration" : {
+        "type" : "object",
+        "properties" : {
+          "portVisit" : {
+            "$ref" : "#/components/schemas/ApiPortVisit"
+          }
+        }
+      },
+      "EquipmentStatus" : {
+        "type" : "object",
+        "properties" : {
+          "acceptStatuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AcceptStatus"
+            }
+          },
+          "rejectReasons" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RejectReason"
+            }
+          }
+        }
+      },
+      "PlannedVisit" : {
+        "type" : "object",
+        "properties" : {
+          "eta" : {
+            "type" : "string",
+            "example" : "2021-02-28T09:45:00Z"
+          },
+          "ata" : {
+            "type" : "string",
+            "example" : "2021-02-28T08:45:00Z"
+          }
+        }
+      },
+      "RejectReason" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "The error code sent by the terminal"
+          },
+          "terminalDescription" : {
+            "type" : "string",
+            "description" : "The error description sent by the terminal"
+          },
+          "parsedReason" : {
+            "type" : "string",
+            "description" : "A user friendly description of the error code"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "${authorizer-name}" : {
+        "type" : "apiKey",
+        "name" : "authorizer",
+        "in" : "header",
+        "x-amazon-apigateway-authtype" : "custom",
+        "x-amazon-apigateway-authorizer" : {
+          "authorizerResultTtlInSeconds" : 0,
+          "authorizerCredentials" : "${authorizer-credentials-arn}",
+          "type" : "request",
+          "identitySource" : "method.request.header.Portbase-access-key-id,method.request.header.Portbase-secret-access-key",
+          "authorizerUri" : "${authorizer-uri-arn}"
+        }
+      }
+    }
+  },
+  "x-webhooks" : {
+    "webhook" : {
+      "description" : "webhook",
+      "post" : {
+        "tags" : [ "Webhook Events" ],
+        "description" : "After tracking a Bill of Lading (see <a target=\"_self\" href=\"#operation/track_1\">Track requests</a> section), it is possible to receive updates on this Bill of Lading through your preconfigured webhook.\n\n> NOTE: it is best practice to offload all updates as quick as possible to a queue or messaging bus and process them asynchronously. This will prevent our system to wait not longer than necessary for responses.\n      If, for some reason, a response is not received within that 10 second window, we assume the webhook has been received successfully.\n      Response bodies will be discarded and never evaluated.\n\nWe are aware that the impact of some updates in API have significant impact on the operational logistical flow. To make you aware of these events we have set out a few scenarios and what action must be taken after receiving such updates.  \n|  Event in Cargo Controller                                 | Update in API                                                                                                       | Logistical impact                                                                                                                                                                                                                                                                                                                                            |\n|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| Update of a Vessel Visit (ETA, ATA, ETD, ATD)              | the (expected) arrivel time or any information in the `billOfLading.vesselVisit` changed                            | Planned resources (transport and warehouse) must be updated with new arrival data.                                                                                                                                                                                                                                                                           |\n| Update of Manifest or Bill of Lading                       | any information in the manifest data of the `billOfLading` changed                                                  | The carrier has changed the value on which the import booking was based. B/L information is a basic value and could have a significant effect on any customs declarations.                                                                                                                                                                                   |\n| Deletion of Bill of Lading                                 | `billOfLading.deleted` will be `true`. This will be set back to `false` when the Bill of Lading is registered again.| The carrier has removed this B/L from the manifest. In most cases this implies the cargo is <u>not</u> on board of this vessel. See this <a target=\"_blank\" href=\"https://support.portbase.com/en/services/cargo-controller-en/#how-do-i-know-when-a-b-l-has-been-removed\">FAQ</a> for more information.                                                 |\n| Discharge Terminal update                                  | `dischargeTerminal` changes                                                                                         | The impact can be severe but is determined by the NID status. When the NID was already in place before the change, you must submit the NID again for the new terminal. See this <a target=\"_blank\" href=\"https://support.portbase.com/en/services/cargo-controller-en/#how-do-i-know-if-the-discharge-terminal-has-changed\">FAQ</a> for more information.|\n| Inspection notification/update of a Transport Equipment    | an item will be added to the `inspectionItem` list with status `NOTIFIED`                                           | Customs have determined that your cargo will be inspected and will not be available until customs gives a release.                                                                                                                                                                                                                                           |\n| Release of an Inspection                                   | `inspectionItem.status` will be `RELEASED`                                                                          | When an inspection notification is lifted by customs, the pickup of said equipment can be planned (if all other mandatory actions have been carried out).                                                                                                                                                                                                    |\n| Discharge Confirmation of a Transport Equipment            | an item will be added to the `dischargeReports` list                                                                | A confirmation for <u>each</u> container/equipment on the B/L that is unloaded on the terminal.                                                                                                                                                                                                                                                              |\n| Import Document Notification sent to the Terminal          | the document code will be added to the `transportEquipmentDeclarations` list (see example in 'Request samples')     | A confirmation of the type of NID and the list of equipment’s that is involved. This list should be equal to the list of equipment’s registered on the B/L. Otherwise the missing equipment is not ready for pickup.                                                                                                                                         |\n| Update of inland operator nominations                      | `nominatedInlandOperators` will be added add root level                                                             | For each equipment, an Inland Operator must be registered. If not, the pickup will <u>not</u> be possible as the Inland Operator will be verified for said container at the terminal gate.                                                                                                                                                                   |\n| Update of Hinterland Pre Notifications by inland operators | an item will be added to the `hinterlandPreNotifications` list                                                      | For each equipment, we will confirm a valid preNotification for pickup by the inland operator on the terminal. If not, the pickup is not planned by the inland operator.                                                                                                                                                                                     |\n| Additional handling data from terminal                     | an item will be added to the `hinterlandTerminalData` list                                                          | This additional information is helpful to optimize the logistics planning. Some terminals require an additional subscription.\n\n\n> Please note that all timestamps are in ISO format with Zulu time, identified by a 'Z' at the end, e.g \"2022-09-20T14:30:59Z\". Zulu time is equal to UTC+0.\n\n\nFor configuration details, please see <a target=\"_self\" href=\"#section/Configuration/3.-Receive-and-process-Webhook-events\">Receive and process Webhook events</a> section\n",
+        "operationId" : "Webhook events",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "$ref" : "#/components/schemas/ApiOrganisationBL",
+                "exampleSetFlag" : false,
+                "types" : [ "object" ]
+              },
+              "exampleSetFlag" : false
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK - Please return this code if our call to your webhook was received and processed successfully."
+          },
+          "5xx" : {
+            "description" : "Server error - Will trigger a retry (3 times)."
+          },
+          "default" : {
+            "description" : "All other response codes that we receive will not trigger a retry."
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "Accept",
+        "in" : "header",
+        "description" : "application/json",
+        "schema" : {
+          "type" : "string",
+          "exampleSetFlag" : false
+        }
+      }, {
+        "name" : "Content-Type",
+        "in" : "header",
+        "description" : "application/json",
+        "schema" : {
+          "type" : "string",
+          "exampleSetFlag" : false
+        }
+      }, {
+        "name" : "x-portbase-webhook",
+        "in" : "header",
+        "description" : "See <a target=\"_self\" href=\"#section/Configuration/3.-Receive-and-process-Webhook-events\">webhook authentication\n</a>",
+        "schema" : {
+          "type" : "JWT",
+          "exampleSetFlag" : false
+        }
+      } ]
+    }
+  }
+}

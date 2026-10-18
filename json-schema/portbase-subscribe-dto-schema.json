@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-subscribe-dto-schema.json",
+  "title": "SubscribeDto",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/SubscribeDto",
+  "type": "object",
+  "properties": {
+    "bookingNumber": {
+      "type": "string",
+      "minLength": 1
+    },
+    "callReferenceNumber": {
+      "type": "string",
+      "description": "Add a call reference number to your booking subscription to get ETA information of the visit before the manifest is registered within Portbase.",
+      "maxLength": 13,
+      "minLength": 0
+    },
+    "imoCode": {
+      "type": "string",
+      "description": "Add the IMO code of the related vessel to get ETA information before the manifest is registered within Portbase.\nIf the CRN is filled out, the value of the IMO code will be ignored.\n",
+      "maxLength": 7,
+      "minLength": 0
+    }
+  },
+  "required": [
+    "bookingNumber"
+  ]
+}

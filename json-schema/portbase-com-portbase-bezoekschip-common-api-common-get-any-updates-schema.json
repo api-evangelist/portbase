@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json",
+  "title": "GetAnyUpdates",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-vessel-visit-openapi.yml#/components/schemas/com.portbase.bezoekschip.common.api.common.GetAnyUpdates",
+  "required": [
+    "clientId",
+    "maxSize",
+    "maxTimeout",
+    "updateTypes",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "minLength": 1,
+      "type": "string",
+      "description": "Identifies different clients within a consumer. Unless you want to loadbalance, send the same clientId in every API request. If you do wish to use multiple clients to loadbalance, each client should send a different clientId. Updates will be loadbalanced between the active clientIds."
+    },
+    "version": {
+      "maximum": 6,
+      "minimum": 0,
+      "type": "integer",
+      "description": "Version of the Updates that will be received.",
+      "format": "int32"
+    },
+    "maxSize": {
+      "maximum": 64,
+      "minimum": 1,
+      "type": "integer",
+      "description": "Limits the amount of updates received in each update batch.",
+      "format": "int32"
+    },
+    "maxTimeout": {
+      "maximum": 55000,
+      "minimum": 10000,
+      "type": "integer",
+      "description": "Limits how long the api request will wait for new updates before returning the request in milliseconds. A value of 50000 is recommended, but make sure your infrastructure can handle the selected timeout value.",
+      "format": "int64"
+    },
+    "updateTypes": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "visit",
+            "refData",
+            "terminalUpdates",
+            "pilotUpdates",
+            "commercialRelease",
+            "accountManagement",
+            "consignmentUpdates",
+            "containerUpdates",
+            "harbourDuesUpdates",
+            "transitUpdates"
+          ]
+        }
+      }
+    },
+    "pathFilters": {
+      "type": "array",
+      "description": "Paths of a visit (starting with /) this tracker cares about, e.g. ['/importDeclarations', '/visitDeclaration']. If something changes outside of these paths the tracker will not get the update. Note that the tracker will still always get the entire visit returned (not just the selected paths).",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Paths of a visit (starting with /) this tracker cares about, e.g. ['/importDeclarations', '/visitDeclaration']. If something changes outside of these paths the tracker will not get the update. Note that the tracker will still always get the entire visit returned (not just the selected paths)."
+      }
+    },
+    "consignmentTypes": {
+      "type": "array",
+      "description": "The type of cargo data you want to track. Can be 'import' and 'export', when not configured the default is 'import' only",
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "The type of cargo data you want to track. Can be 'import' and 'export', when not configured the default is 'import' only",
+        "enum": [
+          "Import",
+          "Export"
+        ]
+      }
+    }
+  }
+}

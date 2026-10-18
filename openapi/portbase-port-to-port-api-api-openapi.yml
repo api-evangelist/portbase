@@ -1,0 +1,191 @@
+openapi: 3.2.0
+info:
+  title: Portbase Port to Port API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Port to Port API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Port to Port API
+paths:
+  /port-to-port/v1/cancelCall:
+    post:
+      tags:
+      - Port to Port API
+      summary: To cancel the vessel call
+      description: To cancel the vessel call.
+      operationId: cancelCall
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.messaging.port2port.CancelCall'
+      responses:
+        '204':
+          description: Successful operation
+        '403':
+          description: Forbidden
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /port-to-port/v1/submitTimestamps:
+    post:
+      tags:
+      - Port to Port API
+      summary: For Port A to send timestamp data to Port B
+      description: For Port A to send timestamp data to Port B.
+      operationId: submitTimestamps
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.messaging.port2port.SubmitTimestamps'
+      responses:
+        '204':
+          description: No content
+        '403':
+          description: Forbidden
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /port-to-port/v1/subscribe:
+    post:
+      tags:
+      - Port to Port API
+      summary: Subscribe to port to port events
+      description: API for a port to subscribe to be notified of a vessel’s timestamps when relevant. The caller will provide the callback API, which will be invoked when conditions are satisfied, i.e., event triggered.
+      operationId: subscribe
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.port2port.SubscriptionRequest'
+      responses:
+        '204':
+          description: No content
+        '403':
+          description: Forbidden
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.port2port.SubscriptionRequest:
+      title: SubscriptionRequest
+      required:
+      - callbackUrl
+      - portUnloCode
+      type: object
+      properties:
+        portUnloCode:
+          type: string
+          description: Identification of which port the information is from.
+        callbackUrl:
+          type: string
+          description: URL of the endpoint that the port to port data should be sent to.
+        authorization:
+          type:
+          - string
+          - 'null'
+          description: String that will be sent in the “Authorization” field in the message header.
+        messageId:
+          type:
+          - string
+          - 'null'
+          description: String that will be sent in the “messageID” field in the message header.
+    com.portbase.bezoekschip.common.api.messaging.port2port.CancelCall:
+      title: CancelCall
+      type: object
+      properties:
+        shipStayReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: Port call identifier of the vessel call at the previous port.
+        portUnloCode:
+          type:
+          - string
+          - 'null'
+          description: For identification of which port the information is from.
+    com.portbase.bezoekschip.common.api.messaging.port2port.SubmitTimestamps:
+      title: SubmitTimestamps
+      type: object
+      properties:
+        shipStayReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: Port call identifier of the vessel call at the previous vessel.
+        etaPbp:
+          type:
+          - string
+          - 'null'
+          description: ETA of the vessel at the PBP
+          format: date-time
+        ptaPbp:
+          type:
+          - string
+          - 'null'
+          description: PTA of the vessel at the PBP
+          format: date-time
+        ataPbp:
+          type:
+          - string
+          - 'null'
+          description: ATA of the vessel at the PBP
+          format: date-time
+        etdLastBerth:
+          type:
+          - string
+          - 'null'
+          description: ETD of the vessel from the Berth
+          format: date-time
+        ptdLastBerth:
+          type:
+          - string
+          - 'null'
+          description: PTD of the vessel from the Berth
+          format: date-time
+        atdLastBerth:
+          type:
+          - string
+          - 'null'
+          description: ATD of the vessel from the Berth
+          format: date-time
+        vesselImoNumber:
+          type:
+          - string
+          - 'null'
+          description: IMO number of vessel
+        portUnloCode:
+          type:
+          - string
+          - 'null'
+          description: For identification of which port the information is from.
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

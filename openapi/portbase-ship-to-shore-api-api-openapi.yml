@@ -1,0 +1,375 @@
+openapi: 3.2.0
+info:
+  title: Portbase Ship to Shore API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Ship to Shore API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Ship to Shore API
+paths:
+  /shiptoshore/v1/cancel:
+    post:
+      tags:
+      - Ship to Shore API
+      summary: Cancel the submitted port clearance data
+      description: This endpoint currently does not contain any functionality.
+      operationId: cancel
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.ShipToShoreCancelRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request. Record not found
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /shiptoshore/v1/submitPortClearanceData:
+    post:
+      tags:
+      - Ship to Shore API
+      summary: Submit port clearance data
+      description: This endpoint can be used by to submit a vessel's port clearance data.
+      operationId: submit
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.ShipToShoreSubmitRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '503':
+          description: Service Unavailable (MVP unavailable)
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShorePortCallSecurity:
+      title: ShipToShorePortCallSecurity
+      type: object
+      properties:
+        security_other_matters_to_report:
+          type:
+          - string
+          - 'null'
+          description: Declare additional security declaration information.
+      description: Object containing additional security declaration information.
+    com.portbase.bezoekschip.common.api.ship2shore.ShipToShoreCancelRequest:
+      title: ShipToShoreCancelRequest
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: CRN of the vessel visit that should be cancelled.
+        authenticatorToken:
+          type:
+          - string
+          - 'null'
+          description: Contains the token used to validate whether this vessel sending the information is identical to the vessel the data will be applied to.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreItinerarySecurity:
+      title: ShipToShoreItinerarySecurity
+      type: object
+      properties:
+        previous_ports_of_call:
+          type: array
+          description: A list of the vessel's previous ports. When less than 10 previous port facilities are being declared, a reason is mandatory.
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShorePreviousPortsOfCall'
+        ship_to_ship_activities:
+          type: array
+          description: A list of the vessel's previous ship to ship activities.
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipToShipActivity'
+      description: Object containing the previous ports and ship to ship activities.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreSecurityOfficer:
+      title: ShipToShoreSecurityOfficer
+      required:
+      - company_security_officer_name
+      type: object
+      properties:
+        company_security_officer_email:
+          type:
+          - string
+          - 'null'
+          description: Email of the Company Security Officer. An email and/or phone number is required. If unknownplease fill in "UNKNOWN".
+        company_security_officer_landline_number:
+          type:
+          - string
+          - 'null'
+          description: Landline phone number of Company Security Officer. An email and/or phone number is required. If unknown, please fill in "UNKNOWN".
+        company_security_officer_mobile_number:
+          type:
+          - string
+          - 'null'
+          description: Mobile phone number of Company Security Officer. An email and/or phone number is required. If unknown, please fill in "UNKNOWN".
+        company_security_officer_name:
+          minLength: 1
+          type: string
+          description: Name of the Company Security Officer. If unknown, please fill in "UNKNOWN".
+      description: Object containing the security officer details.
+    com.portbase.bezoekschip.common.api.ship2shore.ShipToShoreSubmitRequest:
+      title: ShipToShoreSubmitRequest
+      required:
+      - ship
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Id of the request, this field is not used for anything.
+        port_call:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShorePortCallSecurity'
+        ship:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipSecurity'
+        security_officer:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreSecurityOfficer'
+        itinerary:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreItinerarySecurity'
+        extra_port_requirements:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreExtraPortRequirements'
+        authenticatorToken:
+          type:
+          - string
+          - 'null'
+          description: Contains the token used to validate whether this vessel sending the information is identical to the vessel the data will be applied to.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShorePreviousPortsOfCall:
+      title: ShipToShorePreviousPortsOfCall
+      required:
+      - previous_port_facility_call_end_date
+      - previous_port_facility_call_start_date
+      - previous_port_of_call_coded
+      - ship_security_level_in_a_previous_port_coded
+      type: object
+      properties:
+        port_of_call_sequence_number:
+          type:
+          - integer
+          - 'null'
+          description: Indicates the sequence of previous port visits. The value is not used for ordering previous ports.
+          format: int32
+        previous_port_of_call_name:
+          type:
+          - string
+          - 'null'
+          description: Name of previous port.
+        previous_port_of_call_coded:
+          minLength: 1
+          type: string
+          description: UN/LOCODE of previous port.
+        previous_port_facility_name:
+          type:
+          - string
+          - 'null'
+          description: Facility name of previous port.
+        previous_port_facility_coded:
+          type:
+          - string
+          - 'null'
+          description: UN/LOCODE of previous port facility.
+        previous_port_facility_call_start_date:
+          minLength: 1
+          type: string
+          description: Start date of previous port facility call.
+        previous_port_facility_call_end_date:
+          minLength: 1
+          type: string
+          description: End date of previous port facility call.
+        ship_security_level_in_a_previous_port_coded:
+          minLength: 1
+          type: string
+          description: Vessel security level in the previous port.
+        ship_additional_security_measures_coded:
+          type:
+          - string
+          - 'null'
+          description: Code of additional security measure.
+        ship_additional_security_measures_description:
+          type:
+          - string
+          - 'null'
+          description: Description of the vessel's additional security measures.
+      description: A list of the vessel's previous ports. When less than 10 previous port facilities are being declared, a reason is mandatory.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipToShipActivity:
+      title: ShipToShoreShipToShipActivity
+      required:
+      - ship_to_ship_activity_end_date
+      - ship_to_ship_activity_start_date
+      type: object
+      properties:
+        ship_to_ship_activity_coded:
+          type:
+          - integer
+          - 'null'
+          description: 'Ship to ship activity coded according to "UN/EDIFACT 8025 Conveyance call purpose" description code. Options are: ["2", "3", "4", "6", "7", "10", "11", "14", "16", "17", "20", "22", "23", "9999"]'
+          format: int32
+        ship_to_ship_activity:
+          type:
+          - string
+          - 'null'
+          description: 'Ship to ship activity description. Options are: ["PASSENGER_MOVEMENT", "TAKING_BUNKERS", "CHANGING_CREW", "TAKING_SUPPLIES", "REPAIR", "MISCELLANEOUS", "CREW_MOVEMENT", "QUARANTINE_INSPECTION", "UNLOADING_CARGO", "LOADING_CARGO", "CARGO_TANK_CLEANING", "DE_GASSING", "WASTE_DISPOSAL", "UNKNOWN"]'
+        ship_to_ship_activity_start_date:
+          minLength: 1
+          type: string
+          description: Start date of the ship to ship activity.
+        ship_to_ship_activity_end_date:
+          minLength: 1
+          type: string
+          description: End date of the ship to ship activity.
+        ship_to_ship_activity_location_name:
+          type:
+          - string
+          - 'null'
+          description: Location name of the ship to ship activity.
+        ship_to_ship_activity_location_coded:
+          type:
+          - string
+          - 'null'
+          description: UN/LOCODE of port where the ship to ship activity took place.
+        ship_to_ship_activity_location_latitude:
+          type:
+          - number
+          - 'null'
+          description: Latitude of the ship to ship activity.
+          format: double
+        ship_to_ship_activity_location_longitude:
+          type:
+          - number
+          - 'null'
+          description: Longitude of the ship to ship activity
+          format: double
+        ship_security_measures_coded:
+          type:
+          - string
+          - 'null'
+          description: Ship security measure code.
+        ship_security_measures:
+          type:
+          - string
+          - 'null'
+          description: Description of the security measure.
+      description: A list of the vessel's previous ship to ship activities.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipCertificate:
+      title: ShipToShoreShipCertificate
+      required:
+      - certificate_expiry_date
+      - certificate_issuer_flag_state_coded
+      - certificate_issuer_name
+      - certificate_type_acronym
+      type: object
+      properties:
+        certificate_type_acronym:
+          minLength: 1
+          type: string
+          description: Acronym of certificate type. There must be one certificate with acronym "ISSC"
+        valid_certificate_indicator:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the certificate is valid.
+        certificate_identifier:
+          type:
+          - string
+          - 'null'
+          description: Identifier of the certificate.
+        certificate_expiry_date:
+          minLength: 1
+          type: string
+          description: The expiry date of the certificate.
+        certificate_issuer_flag_state_coded:
+          minLength: 1
+          type: string
+          description: The IMO GISIS maritime security code of the certifying organisation.
+        certificate_issuer_name:
+          minLength: 1
+          type: string
+          description: The IMO GISIS maritime security name of the certifying organisation.
+        reason_for_invalid_ISSC_coded:
+          type:
+          - string
+          - 'null'
+          description: A code explaining the reason for the invalid ISSC during the vessel visit.
+        reason_for_invalid_ISSC_desc:
+          type:
+          - string
+          - 'null'
+          description: The reason for the ISSC being invalid during the vessel visit.
+      description: Vessel certificates. Needs to contain a ISSC certificate.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreExtraPortRequirements:
+      title: ShipToShoreExtraPortRequirements
+      required:
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The CRN of the visit the ship to shore information is related to.
+        owner_name_change_indicator:
+          type:
+          - string
+          - 'null'
+          description: Indicates the reason for heaving less than 10 previous ports. N = new vessel, Y = new owner.
+      description: Object containing extra information specific to Portbase.
+    com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipSecurity:
+      title: ShipToShoreShipSecurity
+      required:
+      - security_plan_approval_indicator
+      - ship_current_security_level
+      - ship_imo_number
+      type: object
+      properties:
+        ship_imo_number:
+          minLength: 1
+          pattern: \d+
+          type: string
+          description: IMO number of the vessel the ship to shore information relates to.
+        ship_current_security_level:
+          minLength: 1
+          type: string
+          description: The security level at which the vessel is currently operating.
+        security_plan_approval_indicator:
+          type: boolean
+          description: Indicate if the vessel has an approved Ship Security Plan on board.
+        ship_certificates:
+          type: array
+          description: Vessel certificates. Needs to contain a ISSC certificate.
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.ship2shore.request.security.ShipToShoreShipCertificate'
+      description: Object containing the vessel's security information.
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-batch-track-request-schema.json",
+  "title": "BatchTrackRequest",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/BatchTrackRequest",
+  "type": "object",
+  "properties": {
+    "trackRequests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TrackRequest"
+      },
+      "maxItems": 500,
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "trackRequests"
+  ],
+  "$defs": {
+    "TrackRequest": {
+      "type": "object",
+      "properties": {
+        "blNumber": {
+          "type": "string",
+          "description": "Bill of Lading (consignment) number",
+          "maxLength": 17,
+          "minLength": 6
+        },
+        "transportEquipmentNumber": {
+          "type": "string",
+          "description": "Transport equipment number (for example a container number)",
+          "maxLength": 17,
+          "minLength": 1
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "A reference relevant to your organisation",
+          "maxLength": 35,
+          "minLength": 0
+        },
+        "labels": {
+          "type": "array",
+          "description": "Categorize your cargo with self defined labels",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "callReferenceNumber": {
+          "type": "string",
+          "description": "Add a call reference number to your track request to track the visit before the manifest is registered within Portbase.",
+          "maxLength": 13,
+          "minLength": 0
+        },
+        "vesselImoCode": {
+          "type": "string",
+          "description": "Add the IMO code of the related vessel to track the visit before the manifest is registered within Portbase. If the CRN is filled out, the value of the IMO code will be ignored.",
+          "maxLength": 7,
+          "minLength": 0
+        }
+      },
+      "required": [
+        "blNumber",
+        "transportEquipmentNumber"
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+generated: '2026-10-18'
+method: searched
+source: https://support.portbase.com/hc/en-gb/articles/34470451557010
+events:
+- name: TerminalSubscribed
+  description: One or more terminals has indicated that it expects the booking number/reference.
+  impact: Terminal expects the booking
+- name: DocumentAdded
+  description: A document notification consists of a booking number containing at least 1 equipment and at least 1 document.
+  impact: Document notification to terminal completed
+- name: DocumentRemoved
+  description: A document is deleted from the equipment.
+  impact: Document removed, must always have at least 1 document for terminal access
+- name: DocumentNumberUpdated
+  description: The document number has been updated.
+  impact: Document number updated
+- name: DocumentTypeUpdated
+  description: The document type has been updated.
+  impact: Document type updated
+- name: TransportEquipmentGateIn
+  description: The equipment (container or trailer) has arrived at the terminal.
+  impact: Arrival step 1 - equipment arrived at terminal
+- name: DocumentReported
+  description: All equipment(s) related to the document have arrived at the same terminal.
+  impact: Arrival step 2 - arrival reported to Customs
+- name: DocumentAccepted
+  description: Arrival/discharge notification for export cargo or transit cargo has been accepted by Customs.
+  impact: Arrival step 3 - Customs block resolved
+- name: DocumentRejected
+  description: Arrival/discharge notification for export cargo or transit cargo was not successful.
+  impact: Cargo will not be loaded onto vessel
+- name: DocumentReleased
+  description: Customs does not indicate that the cargo is being reviewed.
+  impact: Cargo can be loaded onto vessel
+authentication:
+  method: JWT
+  header: X-Webhook-Signature
+  verification: Public key available via JSON Web Key Set endpoint
+  note: Each webhook request includes a JWT in X-Webhook-Signature header for verification
+configuration:
+  method: Managed by Portbase
+  contact: sales@portbase.com
+  requirements: URL and email addresses for error notifications
+  ip_whitelist:
+  - 34.253.113.23
+  - 34.249.227.133
+  - 34.253.114.17

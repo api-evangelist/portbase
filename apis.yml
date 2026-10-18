@@ -1,23 +1,2626 @@
 aid: portbase
+
 name: Portbase
-description: 'Portbase is a company surfaced via the API Evangelist harvest backlog (source: kin-score-markets)
-  and added to the network as a stub for full-pipeline profiling.'
+
+description: Portbase is the Port Community System (PCS) organisation of the Port of Rotterdam Authority and the Port of Amsterdam, digitally
+  connecting the Dutch port community - terminals, shipping companies, transporters, forwarders and government - so that goods and data flows
+  through the Dutch ports and connected chains run efficiently, sustainably and securely. It offers web services and system interfaces (APIs,
+  AS2, sFTP, SMTP and webhooks) for services such as Cargo Controller Import/Export, notifications and cargo declarations, documented in its support
+  centre.
+
 url: https://raw.githubusercontent.com/api-evangelist/portbase/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:kin-score-markets
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-18 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-18'
+
 modified: '2026-10-18'
+
 tags:
 - Company
-apis: []
+- Port Community System
+- Logistics
+- Maritime
+- Shipping
+- Supply Chain
+- Customs
+- Netherlands
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
+image: https://www.portbase.com/wp-content/uploads/2024/04/20180206-_H4A8907-1-scaled.jpg
+
 common:
+- type: AgenticAccess
+  url: agentic-access/portbase-agentic-access.yml
+- type: Spectral
+  url: rules/portbase-rules.yml
+- type: JSONLD
+  url: json-ld/portbase-context.jsonld
+- type: Vocabulary
+  url: vocabulary/portbase-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/portbase-webhooks.yml
+- type: DataModel
+  url: data-model/portbase-data-model.yml
+- type: ChangeLog
+  url: changelog/portbase-changelog.yml
+- type: Conventions
+  url: conventions/portbase-conventions.yml
+- type: Security
+  url: security/portbase-vulnerability-disclosure.yml
+- type: Lifecycle
+  url: lifecycle/portbase-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/portbase-problem-types.yml
+- type: Conformance
+  url: conformance/portbase-conformance.yml
+- type: Overlay
+  url: overlays/portbase-cargo-controller-export-overlay.yaml
+- type: SecurityTxt
+  url: well-known/portbase-status-security.txt
+- type: WellKnown
+  url: well-known/portbase-well-known.yml
+- type: Hosts
+  url: hosts/portbase-hosts.yml
+- type: Vendors
+  url: vendors/portbase-vendors.yml
+- type: Newsroom
+  url: https://www.portbase.com/en/news/interview-goreefers/
+- type: Authentication
+  url: authentication/portbase-authentication.yml
 - type: Website
-  url: https://portbase.com
+  url: https://www.portbase.com/en/
+- type: VulnerabilityDisclosure
+  url: security/portbase-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/portbase-domain-security.yml
+- type: DeveloperPortal
+  url: https://developer.portbase.com/
+- type: GettingStarted
+  url: https://www.portbase.com/en/community-solutions/getting-started-with-portbase/system-links/
+- type: Support
+  url: https://support.portbase.com/hc/en-gb
+- type: StatusPage
+  url: https://status.portbase.com/
+- type: ChangeLog
+  url: https://www.portbase.com/en/release-notes/
+- type: Blog
+  url: https://www.portbase.com/en/news-knowledge/
+- type: Pricing
+  url: https://www.portbase.com/en/community-solutions/costs/
+- type: SignUp
+  url: https://www.portbase.com/en/register/
+- type: Login
+  url: https://login.pcs.portbase.com/?lang=en
+- type: TermsOfService
+  url: https://www.portbase.com/en/general-terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://www.portbase.com/en/privacy-statement/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/portbase
+- type: Contact
+  url: https://www.portbase.com/en/contact/
+
+apis:
+- aid: portbase:portbase-bookings-api
+  name: Portbase Bookings API
+  description: Manage and retrieve bookings for an organisation
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-bookings-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-cargo-controller-import-api-api
+  name: Portbase Cargo Controller Import API
+  description: >-
+    The Cargo Controller Import API API from Portbase — 2 operation(s) for cargo controller import api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Cargo Controller Import API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-cargo-controller-import-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-commercial-release-api-api
+  name: Portbase Commercial Release API
+  description: >-
+    The Commercial Release API API from Portbase — 6 operation(s) for commercial release api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Commercial Release API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-commercial-release-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-consignments-api-api
+  name: Portbase Consignments API
+  description: This is a API for sending Bill of Ladings.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Consignments API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-consignments-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-event-api-api
+  name: Portbase Event API
+  description: The Event API API from Portbase — 1 operation(s) for event api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Event API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-event-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-forwarder-api-api
+  name: Portbase Forwarder API
+  description: The Forwarder API API from Portbase — 3 operation(s) for forwarder api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Forwarder API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-forwarder-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-harbour-dues-api-api
+  name: Portbase Harbour Dues API
+  description: The Harbour Dues API API from Portbase — 1 operation(s) for harbour dues api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Harbour Dues API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-harbour-dues-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-integral-planning-api-api
+  name: Portbase Integral Planning API
+  description: >-
+    This endpoint can be used by the integral planner Nextlogic to update the planning information.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Integral Planning API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-integral-planning-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-operator-api-handlings-api
+  name: Portbase Operator API - handlings API
+  description: >-
+    API for the declarant to create, update, move, detach or cancel attached handlings (handlings that
+    are connected to a visit and voyage).
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Operator API - handlings
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-operator-api-handlings-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-operator-api-rail-only-api
+  name: Portbase Operator API - rail-only API
+  description: >-
+    The Operator API - rail-only API from Portbase — 1 operation(s) for operator api - rail-only.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Operator API - rail-only
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-operator-api-rail-only-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-operator-api-road-only-api
+  name: Portbase Operator API - road-only API
+  description: >-
+    The Operator API - road-only API from Portbase — 4 operation(s) for operator api - road-only.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Operator API - road-only
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-operator-api-road-only-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-operator-api-visits-api
+  name: Portbase Operator API - visits API
+  description: >-
+    Endpoint to create new visits by a declarant, update, move or cancel them. A special operation to
+    indicate the load-discharge list is finalized is also available, to let the terminal know that after
+    reopening the load-discharge list after cut-off time, you are done with adding/removing handlings.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Operator API - visits
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-operator-api-visits-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-operator-api-voyages-api
+  name: Portbase Operator API - voyages API
+  description: >-
+    API for the declarant to create new voyages, update or cancel them. Special operations are also available
+    to indicate that the voyage contains visits where restrictions apply (i.e. due to reefers).
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Operator API - voyages
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-operator-api-voyages-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-organisation-data-api-api
+  name: Portbase Organisation Data API
+  description: >-
+    Api defining the operations a terminal/barge operator can do to retrieve organisation configuration.
+    Basically these operations retrieve configuration data such as bollards, fixedwindows etc.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Organisation Data API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-organisation-data-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-port-authority-api-api
+  name: Portbase Port Authority API
+  description: The Port Authority API API from Portbase — 18 operation(s) for port authority api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Port Authority API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-port-authority-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-port-call-optimization-api-api
+  name: Portbase Port Call Optimization API
+  description: >-
+    The Port Call Optimization API API from Portbase — 1 operation(s) for port call optimization api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Port Call Optimization API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-port-call-optimization-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-port-to-port-api-api
+  name: Portbase Port to Port API
+  description: The Port to Port API API from Portbase — 3 operation(s) for port to port api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Port to Port API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-port-to-port-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-reference-data-api-api
+  name: Portbase Reference Data API
+  description: >-
+    Portbase uses reference data within the API calls for instance barges, shipping companies, container
+    sizetypes etc. With this Reference Data API you can retrieve the data to be used in the API calls
+    for voyages, visits and handlings. This way you make sure you do not send unknown or invalid information.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Reference Data API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-reference-data-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-road-api-v1-api
+  name: Portbase Road API V1 API
+  description: Deprecated Road API. Please upgrade to Operator API endpoints.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Road API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-road-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-road-api-v2-api
+  name: Portbase Road API V2 API
+  description: Deprecated Road API. Please upgrade to Operator API endpoints.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Road API V2
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-road-api-v2-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-secure-chain-api-api
+  name: Portbase Secure Chain API
+  description: The Secure Chain API API from Portbase — 2 operation(s) for secure chain api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Secure Chain API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-secure-chain-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-ship-operator-api-other-api
+  name: Portbase Ship Operator API - other API
+  description: >-
+    The Ship Operator API - other API from Portbase — 5 operation(s) for ship operator api - other.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Ship Operator API - other
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-ship-operator-api-other-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-ship-operator-api-terminal-planning-api
+  name: Portbase Ship Operator API - terminal planning API
+  description: >-
+    This api can be used for settling the terminal planning with the stevedores. <br>The happy flow consists
+    preferably of the next steps:<ul>  <li>declare terminal plannings</li>  <li>update terminal plannings</li>  <li>approve
+    each terminal planning</li><li>finish terminal planning</li></ul>
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Ship Operator API - terminal planning
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-ship-operator-api-terminal-planning-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-ship-operator-api-visit-api
+  name: Portbase Ship Operator API - visit API
+  description: >-
+    The Ship Operator API - visit API from Portbase — 6 operation(s) for ship operator api - visit.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Ship Operator API - visit
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-ship-operator-api-visit-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-ship-to-shore-api-api
+  name: Portbase Ship to Shore API
+  description: The Ship to Shore API API from Portbase — 2 operation(s) for ship to shore api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Ship to Shore API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-ship-to-shore-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-terminal-api-api
+  name: Portbase Terminal API
+  description: The Terminal API API from Portbase — 1 operation(s) for terminal api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Terminal API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-terminal-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-terminal-api-handlings-api
+  name: Portbase Terminal API - handlings API
+  description: >-
+    Api defining the operations a terminal can do for handlings. Basically these operations supply feedback
+    to the declarant about the status of the handling.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Terminal API - handlings
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-terminal-api-handlings-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-terminal-api-visits-api
+  name: Portbase Terminal API - visits API
+  description: >-
+    Api defining the operations a terminal can do to respond on visit requests from the declarant. The
+    terminal supplies feedback if a visit is accepted and can be planned, rejected or completed.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Terminal API - visits
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-terminal-api-visits-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-tracking-api-api
+  name: Portbase Tracking API
+  description: "This API can be used to receive **real-time** updates about the voyages, visits and (detached)\
+    \ handlings. \nTo achieve these real-time updates the API uses a mechanism called 'long polling'.\n\
+    When you send a request to listen for updates, you will receive an update immediately when it happened\
+    \ since your last request. \nOr when there is no update, it will wait until there is, or timeout when\
+    \ the maxTimeout you specified is reached.\nAfter the api response has returned, and your client has\
+    \ finished processing the updates, you should always update your position. \nThis way the next time\
+    \ you ask for updates, the API will look for updates after that position in the event log.\nThis mechanism\
+    \ also enables batching, since you will receive all updates as fast as you can process them.\n\nImportant\
+    \ to realize is that you will receive updates with a _before_ and _after_ situation in which only\
+    \ the changes are incorporated. \nSo when only one handling is changed, you will receive only that\
+    \ handling within the visit within the voyage and not all containers and visits!\nThe same per-item\
+    \ delta applies to the `trainLocationReports` on a rail voyage: each update contains only the reports\
+    \ that were added or changed, not the reports you already received in earlier updates.\n\n## Usage\n\
+    Using the Tracking API should be a continuous process, running 24/7, looping through the following\
+    \ sequence of API calls\n1. Call `/listen`\n2. Process the updates that were returned\n3. Immediately\
+    \ after 2., call `/updatePosition` when done with your updates (even if the `/listen` response was\
+    \ empty, the index was null etc.)\n4. Keep repeating step 1-3\n5. When your process needs to stop,\
+    \ restart or redeploy, call `/disconnectClient`\n\n**Important:** \n- Implement this as a continuous\
+    \ loop where `/listen` is called immediately after `/updatePosition`. Do not use scheduled tasks (cron\
+    \ jobs), as this causes updates to accumulate faster than they can be processed, preventing real-time\
+    \ tracking.    \n- Keep the timeout as high as possible (we recommend the default of 95000 ms). Results\
+    \ are returned immediately when available, but a higher timeout reduces connection overhead when updates\
+    \ are less frequent.\n\n\nDisconnecting the client makes sure that other connecting clients will receive\
+    \ the updates that were meant for this client. That is because you can connect multiple clients and\
+    \ each client is assigned a segment (range). Updates for a voyage will always be handled by the same\
+    \ segment. So when you do not disconnect your client, the other connected clients will not receive\
+    \ the updates for your segment(s) for a while. After a while when a client does not ask for updates,\
+    \ those segments are released to the other client(s).\n\n## Things to consider when receiving updates\n\
+    In some situations you may receive multiple updates for one logical change. This happens when the\
+    \ change involves two voyages or a voyage and a detached handling. The order in which the updates\
+    \ for the different entities are received is not guaranteed. \nThis may pose a challenge, depending\
+    \ on the structure of the data model used on the client side. The following sections describe the\
+    \ situations where this can occur and how to mitigate challenges caused by out-of-order updates.\n\
+    \n### 1. A handling was attached\nAttaching a detached handling to a visit or voyage will result in\
+    \ two updates: \n- The detached handling will be marked as attached (`attached=true`)\n- The handling\
+    \ will appear as a new item in the array of handlings of the visit.\n\nIf your data model only has\
+    \ a single copy of a handling (i.e. it does not store attached and detached handlings separately),\
+    \ then ignore the update of the detached handling and only process the update of the visit the handling\
+    \ was attached to.\nSubsequent updates of the handling will appear on the now attached handling on\
+    \ the visit.\n\n### 2. A handling was detached\nDetaching a handling from a visit or voyage will result\
+    \ in two updates: \n- The handling will be marked as detached (`attached=false`)\n- The handling will\
+    \ disappear from the array of handlings of the visit it was attached to.\n\nIf your data model only\
+    \ has a single copy of a handling (i.e. it does not store attached and detached handlings separately),\
+    \ then ignore the update of the visit the handling was detached from and only process the update/creation\
+    \ of the detached handling.\nSubsequent updates of the handling will appear on the now detached handling.\n\
+    \n### 3. A handling was moved\nMoving a handling from one visit to another visit in a different voyage\
+    \ will result in two updates:\n- The handling will disappear from the array of handlings of the visit\
+    \ it was previously attached to.\n- The handling will appear as a new item in the array of handlings\
+    \ of the visit it's moved to\n\nAs mentioned earlier, these updates may be received out-of-order.\
+    \ If your data model only has a single copy of a handling (i.e. it does not store a copy per visit\
+    \ it is attached to) then the handling may end up in the wrong state (not attached to any visit).\
+    \ \nTo prevent this:\n- Ignore updates where a handling is removed from a visit it is not attached\
+    \ to according to your data model.\n- Process updates where a handling is attached to a visit, even\
+    \ though the handling is attached to another visit according to your data model\n\nSubsequent updates\
+    \ of the handling will appear on the visit it was moved to.\n\n### 4. A visit was moved\nThis scenario\
+    \ is almost identical to the previous one, where a handling was moved to a visit of another voyage.\
+    \ The difference is that in this case the voyage data is changed, such as the transportation vehicle,\
+    \ instead of the visit data. \nThe challenges in this scenario are also similar and the same strategies\
+    \ to mitigate them should be followed. \nSubsequent updates of handlings will appear on the voyage\
+    \ the visit was moved to."
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Tracking API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-tracking-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-traction-supplier-api-api
+  name: Portbase Traction Supplier API
+  description: The Traction Supplier API API from Portbase — 1 operation(s) for traction supplier api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Traction Supplier API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-traction-supplier-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-waste-collector-api-api
+  name: Portbase Waste Collector API
+  description: The Waste Collector API API from Portbase — 4 operation(s) for waste collector api.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Waste Collector API
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-waste-collector-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+- aid: portbase:portbase-webhook-events-api
+  name: Portbase Webhook Events API
+  description: The Webhook Events API from Portbase — 0 operation(s) for webhook events.
+  humanURL: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  baseURL: https://api.cargo-controller-export.pcs.portbase.com/api
+  tags:
+  - Webhook Events
+  properties:
+  - type: OpenAPI
+    url: openapi/portbase-webhook-events-api-openapi.yml
+  - type: Documentation
+    url: https://api.cargo-controller-export.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/34948493768466-Creating-a-system-interface-API-with-Cargo-Controller-Export
+  - type: JSONSchema
+    url: json-schema/portbase-booking-dossier-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscribe-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-subscription-id-schema.json
+  - type: Documentation
+    url: https://cargo-controller.pcs.portbase.com/api/public/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29522670809746-Create-a-system-interface-API-with-Cargo-Controller-Import
+  - type: JSONSchema
+    url: json-schema/portbase-track-response-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-api-organisation-bl-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-shipment-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-transfer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-batch-track-request-schema.json
+  - type: Documentation
+    url: https://hcn.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950155564562-Create-a-system-interface-API-with-Hinterland-Container-Notification-Barge-Rail-or-Road
+  - type: JSONSchema
+    url: json-schema/portbase-terminal-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-equipment-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-container-list-item-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-road-voyage-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-get-hinterland-updates-schema.json
+  - type: Documentation
+    url: https://portvisit.pcs.portbase.com/api-documentation/index.html
+  - type: GettingStarted
+    url: >-
+      https://support.portbase.com/hc/en-gb/articles/29950455304594-Create-system-interface-with-Vessel-Notification
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-external-visit-api-visit-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-authentication-bezoekschip-organisation-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-common-get-any-updates-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/portbase-com-portbase-bezoekschip-common-api-visit-get-visit-updates-schema.json
+  - type: JSONSchema
+    url: json-schema/portbase-import-consignment-schema.json
+x-coverage:
+  state: covered
+  reason: identity-verified
+  detail: Identity from www.portbase.com About us page naming Portbase as PCS organisation of Port of Rotterdam and Port of Amsterdam. developer.portbase.com
+    redirects to support centre category "API's and system links" (Cloudflare challenges plain curl; browser fetch 200). GitHub org github.com/portbase
+    exists but is empty with no profile linking to portbase.com, so not recorded.
+  evidence:
+  - url: https://www.portbase.com/en/
+    status: 200
+  - url: https://www.portbase.com/en/about-us/
+    status: 200
+  - url: https://developer.portbase.com/
+    status: 200
+  - url: https://support.portbase.com/hc/en-gb
+    status: 403
+    note: Cloudflare bot challenge to curl; page served via browser fetch
+x-enrichment:
+  date: '2026-10-18'
+  status: enriched
+  artifacts_added: 74
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=deepseek,regulatory=anthropic

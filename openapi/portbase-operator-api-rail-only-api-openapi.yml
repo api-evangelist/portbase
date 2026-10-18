@@ -1,0 +1,381 @@
+openapi: 3.2.0
+info:
+  title: Portbase Operator API - rail-only API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Operator API - rail-only across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Operator API - rail-only
+paths:
+  /rail:train-composition:
+    post:
+      tags:
+      - Operator API - rail-only
+      summary: Register train composition
+      description: 'This endpoint can be used to register the train composition for a rail visit.
+
+        **[pilot]** Only available on test environments.'
+      operationId: _01_registerTrainComposition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTrainComposition'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: incorrect data sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    SizeType:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The coded container's length, width, height, type and features.
+          example: 22G1
+        name:
+          type:
+          - string
+          - 'null'
+          description: The descriptive name of the size type of container as specified with the code.
+          readOnly: true
+          example: 20'x8'x8'6\" General Purpose Container
+      description: The classification of the container's length, width, height, type and features.<br>Use a size type retrieved with find size types via the Reference Data API '[Find SizeTypes](#operation/_06_findSizeTypes)'.
+    TrainComposition:
+      required:
+      - wagons
+      type: object
+      properties:
+        wagons:
+          type: array
+          description: 'The wagons the train is composed of.
+
+            Per wagon one entry in the array is expected.
+
+            The `position` of a wagon **must** be unique in the array of wagons'
+          items:
+            $ref: '#/components/schemas/WagonComposition'
+      description: Describes the planned composition of the train
+    Slot:
+      required:
+      - number
+      type: object
+      properties:
+        number:
+          maximum: 9
+          minimum: 1
+          type: integer
+          description: The number of the slot on a wagon
+          format: int32
+        incomingCargo:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The cargo that is on the slot when arriving for a visit
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/PlannedCargo'
+        outgoingCargo:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The cargo that is on the slot when departing from a visit
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/PlannedCargo'
+        remarks:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+      description: 'The cargo on the used slots of the wagon.
+
+        Per slot one entry in the array is expected.
+
+        The `number` of a slot **must** be unique in the array of slots'
+    WagonComposition:
+      required:
+      - position
+      - slots
+      - wagonNumber
+      type: object
+      properties:
+        position:
+          maximum: 99
+          minimum: 1
+          type: integer
+          description: The position of the wagon in a train
+          format: int32
+        wagonNumber:
+          maxLength: 12
+          minLength: 0
+          pattern: \d{12}
+          type: string
+          description: The identification number of the wagon
+        numberOfSlots:
+          maximum: 9
+          minimum: 1
+          type: integer
+          description: The total number of slots the wagon has
+          format: int32
+        slots:
+          type: array
+          description: 'The cargo on the used slots of the wagon.
+
+            Per slot one entry in the array is expected.
+
+            The `number` of a slot **must** be unique in the array of slots'
+          items:
+            $ref: '#/components/schemas/Slot'
+        remarks:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+      description: 'The wagons the train is composed of.
+
+        Per wagon one entry in the array is expected.
+
+        The `position` of a wagon **must** be unique in the array of wagons'
+    ValidationException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        violations:
+          uniqueItems: true
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+        violationSummaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViolationSummary'
+    UpdateTrainComposition:
+      required:
+      - trainComposition
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        trainComposition:
+          allOf:
+          - $ref: '#/components/schemas/TrainComposition'
+    PlannedCargo:
+      required:
+      - cargoData
+      - dischargeTerminal
+      - loadingTerminal
+      type: object
+      properties:
+        loadingTerminal:
+          type: string
+          description: The 5 digit UNLoCode (e.g. DEDUI, FRLLE) of the terminal where the cargo was loaded. In case of a Rotterdam terminal; include the SMDG/BICS code (e.g., NLRTM00RWG, NLRTM00DDE)
+        dischargeTerminal:
+          type: string
+          description: The 5 digit UNLoCode (e.g. DEDUI, FRLLE) of the terminal where the cargo will be discharged. In case of a Rotterdam terminal; include the SMDG/BICS code (e.g., NLRTM00RWG, NLRTM00DDE)
+        type:
+          type:
+          - string
+          - 'null'
+          description: Indication whether the cargo is loaded onto, unloaded from, shifts or remains on the rail transport.
+          readOnly: true
+          enum:
+          - discharge
+          - shift
+          - loading
+          - remain
+        cargoData:
+          allOf:
+          - $ref: '#/components/schemas/CargoData'
+      description: Planned cargo on a slot on a wagon
+    CargoData:
+      type: object
+      properties:
+        handlingId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the handling which was generated on the creation of the handling
+        equipmentNumber:
+          maxLength: 11
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the container.
+          example: BICU1234565
+        sizeType:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+        full:
+          type:
+          - boolean
+          - 'null'
+          description: Indication whether the container is full or empty.
+        shippingCompany:
+          allOf:
+          - $ref: '#/components/schemas/ShippingCompany'
+        grossWeight:
+          maximum: 99999
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: The gross weight in kilograms meaning total weight of goods and container together
+        dangerousGood:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The specification of dangerous goods in this container, if present
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DangerousGood'
+        dangerousGoods:
+          type: array
+          description: The specification of dangerous goods in this container, if present
+          items:
+            $ref: '#/components/schemas/DangerousGood'
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Remarks regarding this container.
+          example: Connected reefer
+      description: 'The information about the cargo.
+
+        When sending the data to MCA there are two options:
+
+
+        1. If the container is loaded or discharged, there should be a `handlingId` that is available to you: send that identifier. MCA will automatically fill equipment details.
+
+        2. If the container will remain on the train, you do not have a handlingId. Send the four properties `equipmentNumber`, `sizeType`, `full`, ''grossWeight''.
+
+        '
+    ShippingCompany:
+      required:
+      - name
+      - scacCode
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the shipping company.
+        scacCode:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The Standard Carrier Alpha Code (SCAC) which is a privately controlled US code used as identifier for the shipping company.
+        smdgCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the shipping company, issued by the SMDG.
+      description: 'Also called carrier (dutch: rederij). The organisation that arranges the transport of the goods.<br>Use a carrier retrieved with find carriers via the ref Data API.. Two fields required'
+    DangerousGood:
+      required:
+      - hazardClass
+      - unCode
+      type: object
+      properties:
+        unCode:
+          type: string
+          description: The UN code of the container good
+          example: '1150'
+        hazardClass:
+          type: string
+          description: The IMO hazard class of the container good
+          example: '1'
+        gevi:
+          type:
+          - string
+          - 'null'
+          description: The hazard identification number of the container good
+          example: X839
+        limitedQuantity:
+          type:
+          - string
+          - 'null'
+          description: Limited Quantities are dangerous goods that have a reduced risk of harm when presented in smaller quantities (Yes/No)
+          example: 'Yes'
+        packingGroup:
+          type:
+          - string
+          - 'null'
+          description: The packing group is a grouping according to the degree of danger presented by hazardous materials or dangerous goods (I/II/III)
+          example: I
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of this dangerous good
+          example: Articles containing a pyrotechnic substance.
+      description: Dangerous goods information for the container
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    ViolationSummary:
+      type: object
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

@@ -1,0 +1,31 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/portbase-cargo-controller-import-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: No OAuth2 security schemes found in OpenAPI specifications
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect security schemes found in OpenAPI specifications
+- id: json:api
+  conforms: false
+  evidence: API uses custom JSON schemas, not JSON:API specification
+- id: rfc9457
+  conforms: false
+  evidence: Error responses use custom ApiError schema, not RFC 9457 problem+json format
+- id: pagination
+  conforms: unknown
+  evidence: Pagination conventions not documented in available OpenAPI specifications
+- id: idempotency
+  conforms: unknown
+  evidence: Idempotency mechanisms not documented in available OpenAPI specifications
+- id: openapi-3.0
+  conforms: true
+  evidence: the document declares 3.0.1
+- id: openapi-3.1
+  conforms: true
+  evidence: the document declares 3.1.0
+- id: ratelimit-headers
+  conforms: true
+  evidence: responses declare Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Scope

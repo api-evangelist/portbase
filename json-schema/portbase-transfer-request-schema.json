@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-transfer-request-schema.json",
+  "title": "TransferRequest",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TransferRequest",
+  "type": "object",
+  "properties": {
+    "equipmentNumbers": {
+      "type": "array",
+      "description": "A list of unique equipment number(s)",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "director": {
+      "type": "string",
+      "deprecated": true,
+      "description": "This field is deprecated. Use `cargoDirector.chamberOfCommerceNumber` instead."
+    },
+    "cargoDirector": {
+      "$ref": "#/$defs/CargoDirector"
+    }
+  },
+  "required": [
+    "equipmentNumbers"
+  ],
+  "$defs": {
+    "CargoDirector": {
+      "type": "object",
+      "description": "Use either the CoC number (for Dutch organisations) or the iamConnectedId of the assigned organisation. When both are filled out, the iamConnectedId will be ignored.\nYou can use the CoC or Iam id of your own organisation when you want to 'reclaim' the role for your organisation.",
+      "properties": {
+        "chamberOfCommerceNumber": {
+          "type": "string",
+          "description": "Chamber of Commerce number of the assigned organisation. Can be used for Dutch organisations."
+        },
+        "iamConnectedId": {
+          "type": "string",
+          "description": "IamConnectedId of the assigned organisation. Can be used for non-Dutch organisations"
+        }
+      }
+    }
+  }
+}

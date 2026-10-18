@@ -1,0 +1,361 @@
+openapi: 3.2.0
+info:
+  title: Portbase Operator API - visits API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Operator API - visits across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Operator API - visits
+  description: Endpoint to create new visits by a declarant, update, move or cancel them. A special operation to indicate the load-discharge list is finalized is also available, to let the terminal know that after reopening the load-discharge list after cut-off time, you are done with adding/removing handlings.
+paths:
+  /visits:create:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Create visit
+      description: This endpoint can be used to create a barge or rail visit.
+      operationId: _01_createVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVisit'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVisitResult'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:update:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Update visit
+      description: This endpoint can be used to update a barge, rail or road visit.
+      operationId: _02_updateVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVisit'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+        '429':
+          description: Rate limit exceeded (too many road DeclareVisit commands for this visit within the clock hour)
+          headers:
+            X-RateLimit-Scope:
+              description: The rate-limit scope that was exceeded (always VISIT)
+              style: simple
+              schema:
+                type: string
+            X-RateLimit-Remaining:
+              description: The number of commands remaining in the current window (0 when limited)
+              style: simple
+              schema:
+                type: integer
+            Retry-After:
+              description: Number of seconds to wait until the top of the next clock hour before retrying
+              style: simple
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: The maximum number of commands allowed for this visit within the window
+              style: simple
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error message describing the rate-limit breach
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:cancel:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Cancel visit
+      description: 'This endpoint can be used to cancel a barge, rail or road visit.
+
+        This does not cancel the handlings in this visit. Make sure to move, detach or cancel handlings before cancelling the voyage
+
+        When a barge visit is cancelled on an integrally planned voyage, the visit will be removed from the restrictions.'
+      operationId: _03_cancelVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:move:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Move visit
+      description: 'This endpoint can be used to move a visit to a different voyage. It is currently available for barge and road transport only; rail is not yet supported.
+
+        When a barge visit is moved from an integrally planned voyage, the visit will be removed from the restrictions.'
+      operationId: _04_moveVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveVisit'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:finalize:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Finalize load-discharge list
+      description: This endpoint can be used to finalize the load-discharge list after it was reopened by the terminal.
+      operationId: _05_finalizeLoadDischargeList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:send:
+    post:
+      tags:
+      - Operator API - visits
+      summary: Send load-discharge list
+      description: This endpoint can be used to send the load-discharge list before cargo cut-off. Only available for visits to ECT owned terminals!
+      operationId: _06_sendLoadDischargeList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendLoadDischargeList'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    CancelVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    SendLoadDischargeList:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    CloseVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        ignoreMinimumCallsize:
+          type: boolean
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    CreateVisit:
+      required:
+      - terminal
+      - voyageId
+      type: object
+      properties:
+        visitData:
+          allOf:
+          - $ref: '#/components/schemas/EndpointVisitData'
+        voyageId:
+          type: string
+          description: Unique identifier of the voyage which was generated on the creation of the voyage
+        terminal:
+          title: ''
+          type: ''
+          description: The terminal location at which the containers are loaded and discharged.<br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to get a list of known Terminals and its attributes.<br>Only one subfield is required.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/GetTerminal'
+    CreateVisitResult:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit
+          example: '75111204'
+    MoveVisit:
+      required:
+      - nextVoyageId
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        nextVoyageId:
+          type: string
+          description: Id of destination voyage.
+    UpdateVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitData:
+          allOf:
+          - $ref: '#/components/schemas/EndpointVisitData'
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    GetTerminal:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the Terminal organisation.
+          example: PB_TERMINAL
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+          example: '8713712345678'
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+          example: PBT
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: PBT01
+        quayName:
+          type:
+          - string
+          - 'null'
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: Rotterdam Oudehaven
+      description: Terminal query. Only one field required
+    EndpointVisitData:
+      required:
+      - modality
+      type: object
+      properties:
+        eta:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        modality:
+          type: string
+          description: The way in which the transportation of the cargo takes place in the hinterland.
+          example: barge
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+      description: Containing the terminal visit details.<br>RequestedVisitData is the latest VisitData requested by the declarant.
+      discriminator:
+        propertyName: modality
+        mapping:
+          barge: '#/components/schemas/BargeVisitData'
+          road: '#/components/schemas/RoadVisitData'
+          rail: '#/components/schemas/RailEndpointVisitData'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

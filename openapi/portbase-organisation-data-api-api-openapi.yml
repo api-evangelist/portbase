@@ -1,0 +1,115 @@
+openapi: 3.2.0
+info:
+  title: Portbase Organisation Data API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Organisation Data API across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Organisation Data API
+  description: Api defining the operations a terminal/barge operator can do to retrieve organisation configuration. Basically these operations retrieve configuration data such as bollards, fixedwindows etc.
+paths:
+  /bollards:
+    post:
+      tags:
+      - Organisation Data API
+      summary: Get bollards
+      description: '''Terminal only''. Endpoint used to get bollards for a terminal. Only bollards for your organisation are returned!'
+      operationId: _01_getBollards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetBollards'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bollard'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    Coordinates:
+      required:
+      - latitude
+      - longitude
+      type: object
+      properties:
+        latitude:
+          maximum: 90
+          minimum: -90
+          type: number
+          description: The decimal degrees from the equator
+        longitude:
+          maximum: 180
+          minimum: -180
+          type: number
+          description: The decimal degrees from the Prime Meridian (Greenwich)
+      description: The geographical position of the bollard.
+      readOnly: true
+      deprecated: true
+    Bollard:
+      required:
+      - bicsCode
+      - metersToNextBollard
+      - number
+      type: object
+      properties:
+        bicsCode:
+          type: string
+          description: The Binnenvaart Informatie- en Communicatie Systeem (BICS) code for the Terminal.
+        number:
+          type: string
+          description: Distinct bollard description, unique per quay. Can be just the bollard number or a text prefix with the bollard number.
+          example: DDE-59
+        coordinates:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The geographical position of the bollard.
+          readOnly: true
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/Coordinates'
+        metersToNextBollard:
+          type: number
+          description: The number of meters to the next bollard in the sequence.
+          readOnly: true
+        mooringSide:
+          type:
+          - string
+          - 'null'
+          description: A ship’s mooring side for mooring near this bollard.
+          readOnly: true
+          enum:
+          - port
+          - starboard
+      description: '`Integral planning` Physical location on the quay.'
+    GetBollards:
+      type: object
+      description: Retrieve the bollards for your organisation.
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

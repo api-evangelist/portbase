@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-subscription-id-schema.json",
+  "title": "SubscriptionId",
+  "description": "The subscription id for an organisation to a booking",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/SubscriptionId",
+  "type": "object",
+  "properties": {
+    "subscriptionId": {
+      "type": "string"
+    }
+  }
+}

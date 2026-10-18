@@ -1,0 +1,184 @@
+openapi: 3.2.0
+info:
+  title: Portbase Traction Supplier API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Traction Supplier API across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Traction Supplier API
+paths:
+  /visits:update-transport-status:
+    post:
+      tags:
+      - Traction Supplier API
+      summary: Update Transport Status
+      description: This endpoint can be used update the transport status of a rail visit.
+      operationId: _01_updateTransportVisitStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTransportVisitStatus'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationException'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    TransportVisitStatus:
+      type: object
+      properties:
+        eta:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        etd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ata:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        arrivalDelayReason:
+          type:
+          - object
+          - 'null'
+          properties:
+            description:
+              type: string
+            name:
+              type: string
+              enum:
+              - CUSTOMER
+              - HANDLING_TIME
+              - LOAD_CORRECTIONS
+              - CRANE_DEFECT
+              - NO_TRACK_AVAILABLE
+              - DANGEROUS_GOODS_EMERGENCY
+              - DANGEROUS_GOODS_STICKERS
+              - DANGEROUS_GOODS_CONSIGNMENT_INFO
+              - LOADING_DATA_LIST
+              - TIMETABLE
+              - TRACK_IN_USE
+              - INFRASTRUCTURE
+              - WEATHER_CONDITIONS
+              - LOCOMOTIVE_DEFECT
+              - RRF
+              - OTHER
+        atd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        departureDelayReason:
+          type:
+          - object
+          - 'null'
+          properties:
+            description:
+              type: string
+            name:
+              type: string
+              enum:
+              - CUSTOMER
+              - HANDLING_TIME
+              - LOAD_CORRECTIONS
+              - CRANE_DEFECT
+              - NO_TRACK_AVAILABLE
+              - DANGEROUS_GOODS_EMERGENCY
+              - DANGEROUS_GOODS_STICKERS
+              - DANGEROUS_GOODS_CONSIGNMENT_INFO
+              - LOADING_DATA_LIST
+              - TIMETABLE
+              - TRACK_IN_USE
+              - INFRASTRUCTURE
+              - WEATHER_CONDITIONS
+              - LOCOMOTIVE_DEFECT
+              - RRF
+              - OTHER
+      description: The latest visit status as provided by the traction supplier.
+    ValidationException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        violations:
+          uniqueItems: true
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+        violationSummaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ViolationSummary'
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    UpdateTransportVisitStatus:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        transportVisitStatus:
+          allOf:
+          - $ref: '#/components/schemas/TransportVisitStatus'
+    ViolationSummary:
+      type: object
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

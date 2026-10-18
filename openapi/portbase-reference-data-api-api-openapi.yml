@@ -1,0 +1,2770 @@
+openapi: 3.2.0
+info:
+  title: Portbase Reference Data API
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  version: '1.0'
+  description: 'Operations tagged Reference Data API across 4 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-portvisit-v6.json, portbase-hinterland-container-notification-openapi.yml, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Reference Data API
+  description: Portbase uses reference data within the API calls for instance barges, shipping companies, container sizetypes etc. With this Reference Data API you can retrieve the data to be used in the API calls for voyages, visits and handlings. This way you make sure you do not send unknown or invalid information.
+paths:
+  /refdata/findShippingCompanies:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find shipping companies
+      description: Endpoint used to find shipping companies/carriers for the incoming or outgoing visit.
+      operationId: _01_findShippingCompanies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindShippingCompanies'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingCompany'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getShippingCompany:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get shipping company
+      description: Endpoint used to get a specific shipping company/carrier for the incoming or outgoing visit.Only one field required.
+      operationId: _02_getShippingCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetShippingCompany'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingCompany'
+        '204':
+          description: No shipping company found
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getShippingCompanies:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get shipping companies
+      description: Endpoint used to get all shipping companies/carriers for the incoming or outgoing visit.
+      operationId: _02b_getShippingCompanies
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingCompany'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findBarges:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find barges
+      description: Endpoint used to find barges.
+      operationId: _03_findBarges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindBarges'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Barge'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getBarge:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get barge
+      description: Endpoint used to get a specific barge.
+      operationId: _04_getBarge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetBarge'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Barge'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findLocations:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find locations
+      description: Endpoint used to find locations.
+      operationId: _05_findLocations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindLocations'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getLocation:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get location
+      description: Endpoint used to get a single location.
+      operationId: _05b_getLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLocation'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findSizeTypes:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find size types
+      description: Endpoint used to find container size types.
+      operationId: _06_findSizeTypes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindSizeTypes'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SizeType'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getSizeType:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get size type
+      description: Endpoint used to get a single container size type.
+      operationId: _06b_getSizeTypes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSizeType'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SizeType'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getSizeTypes:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get all size types
+      description: Endpoint used to get all known container size types.
+      operationId: _06c_getSizeTypes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SizeType'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getBargeAccessPoints:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get barge access points
+      description: Endpoint used to get barge access points / scope-in and scope-out locations.
+      operationId: _07_getBargeAccessPoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetBargeAccessPoints'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BargeAccessPoint'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTerminals:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get terminals
+      description: Endpoint used to get terminals and their custom settings.
+      operationId: _08_getTerminals
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Terminal'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTerminal:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get terminal
+      description: Endpoint used to get a specific terminal. Only one field required.
+      operationId: _09_getTerminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTerminal'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTerminalByCode:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get terminal by BICS or SMDG code
+      description: Endpoint used to get a specific terminal by matching either BICS, SMDG or organisation short name code of the terminal to the provided code.
+      operationId: _09b_getTerminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTerminalByCode'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getForwarder:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get forwarder
+      description: Endpoint used to get a specific forwarder organisation. Only one field required.
+      operationId: _10_getForwarder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetForwarder'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTractionSupplier:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get traction supplier
+      description: Endpoint used to get a specific traction supplier. Only one field required.
+      operationId: _11_getTractionSupplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTractionSupplier'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTractionSuppliers:
+    get:
+      tags:
+      - Reference Data API
+      summary: Get traction suppliers
+      description: Endpoint used to get a list of all traction suppliers.
+      operationId: _11b_getTractionSuppliers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getRailInterTerminals:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get rail inter-terminals
+      description: Endpoint used to get all valid inter-terminals for rail handlings.
+      operationId: _12_getRailInterTerminals
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RailInterTerminal'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getRailInterTerminal:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get rail inter-terminal
+      description: Endpoint used to get a specific valid inter-terminal for rail handlings. Only one field required.
+      operationId: _13_getRailInterTerminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRailInterTerminal'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RailInterTerminal'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getFixedWindowsForDeclarant:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get Fixed Windows for Declarant
+      description: Get all Fixed Windows for a terminal for the declarant which are valid now. Fixed Windows can be queried by quay specific properties (e.g. bicsCode, quayName), though the response will be for the all quays of the terminal
+      operationId: _14_getFixedWindowsForDeclarant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetFixedWindowsForDeclarant'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedWindow'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getFixedWindowsForTerminal:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get Fixed Windows for Terminal
+      description: Get all Fixed Windows for the terminal organisation
+      operationId: _14b_getFixedWindowsForTerminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetFixedWindowsForTerminal'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedWindow'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getFixedWindowsForIntegralPlanning:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get Fixed Windows for Integral Planning
+      description: Get all Fixed Windows for the integral planning
+      operationId: _14c_getFixedWindowsForIntegralPlanning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetFixedWindowsForIntegralPlanning'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedWindow'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getOrganisation:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get Organisation
+      description: Endpoint used to get a specific organisation.
+      operationId: _15_getOrganisation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrganisation'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findOrganisations:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find Organisations
+      description: Endpoint used to find organisations (max 20).
+      operationId: _15b_findOrganisations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindMatchingOrganisations'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findInlandOperators:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find Inland Operators
+      description: Endpoint used to find inland operator organisations (max 20).
+      operationId: _15c_findInlandOperators
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindInlandOperators'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HinterlandOrganisation'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getTimeTablesForDeclarant:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get Timetable Entries for Declarant
+      description: Get all Timetable Entries for a terminal for the declarant.
+      operationId: _16_getTimeTablesForDeclarant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAvailableTimetableSlots'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimetableEntry'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/getBarges:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get barges
+      description: Endpoint used to retrieve barges, optionally filtered by a search term. Results are sorted by name and capped at 10,000 entries.
+      operationId: _17_getBarges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetBarges'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Barge'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /refdata/findVessels:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find vessels
+      description: Endpoint used to find vessels by name or imo code for backwards compatibility. Only returns name and imo code
+      operationId: get01
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindVessels'
+      responses:
+        '200':
+          description: List of vessels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.adapter.refdata.ApiVessel'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getEntryPoints:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get entry points
+      description: Endpoint used to get entry (and exit) points for port with given port unlo code.
+      operationId: get02
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetEntryPoints'
+      responses:
+        '200':
+          description: List of entry points
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.EntryPoint'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getPilotStations:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get pilot boarding places
+      description: Endpoint used to get pilot boarding places for port with given port unlo code. If the port has 1 or more pilot station it is required to select a pilot station when declaring a visit.
+      operationId: get03
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetPilotStations'
+      responses:
+        '200':
+          description: List of pilot stations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.PilotStation'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getBoatmen:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get boatmen
+      description: Endpoint used to get boatmen for port with given port unlo code.
+      operationId: get04
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetBoatmen'
+      responses:
+        '200':
+          description: List of boatmen service providers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.ServiceProvider'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getPilots:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get pilots
+      description: Endpoint used to get pilots for port with given port unlo code.
+      operationId: get05
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetPilots'
+      responses:
+        '200':
+          description: List of pilot service providers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.ServiceProvider'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getTugboats:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get tugboats
+      description: Endpoint used to get tugboats for port with given port unlo code.
+      operationId: get06
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetTugboats'
+      responses:
+        '200':
+          description: List of tugboat service providers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.ServiceProvider'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findCarriers:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find carriers
+      description: Endpoint used to find carriers for the incoming or outgoing visit.
+      operationId: get07
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindCarriers'
+      responses:
+        '200':
+          description: List of carriers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Carrier'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findBerths:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find berths or buoys
+      description: Endpoint used to find berths or buoys in port with given port unlo code.
+      operationId: get08
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindBerthsAndBuoys'
+      responses:
+        '200':
+          description: List of berths and buoys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Berth'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findPilotExemptions:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find pilot exemption holders
+      description: Endpoint used to get pilot exemption holders for port with given port unlo code.
+      operationId: get09
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindPilotExemptions'
+      responses:
+        '200':
+          description: List of pilot exemption holders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.PilotExemption'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findPorts:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find ports
+      description: Endpoint used to find ports known with the UN and Safe Sea Net. Note that way points are NOT included. Use this to declare previous ports.
+      operationId: get10
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindPorts'
+      responses:
+        '200':
+          description: List of ports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Port'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findPortsOrWayPoints:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find ports or way points
+      description: Endpoint used to find ports or way points known with the UN and Safe Sea Net. Way points are included. Use this to declare next ports.
+      operationId: get11
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindPortsOrWayPoints'
+      responses:
+        '200':
+          description: List of ports and way points
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.Port'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getCustomsOffices:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get customs offices
+      description: Endpoint used to get customs offices for a country with given un code.
+      operationId: get12
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.GetCustomsOffices'
+      responses:
+        '200':
+          description: List of customs offices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.CustomsOffice'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/getWasteCollectors:
+    post:
+      tags:
+      - Reference Data API
+      summary: Get waste collectors
+      description: Endpoint used to get waste collectors.
+      operationId: get13
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.GetWasteCollectors'
+      responses:
+        '200':
+          description: List of waste collectors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.authentication.BezoekschipOrganisation'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findLinerServices:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find liner services
+      description: Endpoint used to get liner services.
+      operationId: get14
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindLinerServices'
+      responses:
+        '200':
+          description: List of liner services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.LinerService'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findVesselServices:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find liner services
+      description: Renamed to /findLinerServices.
+      operationId: get14deprecated
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindLinerServices'
+      responses:
+        '200':
+          description: List of liner services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.LinerService'
+      deprecated: true
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /refdata/findWasteMaterials:
+    post:
+      tags:
+      - Reference Data API
+      summary: Find waste types
+      description: Endpoint used to find waste types given the waste type code.
+      operationId: get15
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.FindWasteMaterials'
+      responses:
+        '200':
+          description: List of waste types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.WasteMaterial'
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    GetBarges:
+      type: object
+      properties:
+        term:
+          type:
+          - string
+          - 'null'
+          description: Optional. Filters barges by name or ENI number (European Number of Identification). The search is case-insensitive and matches on the start of a word. Leave empty to retrieve all barges (up to 10,000).
+      description: Retrieve barges, optionally filtered by a search term. Results are sorted by name and capped at 10,000 entries.
+    GetTerminalByCode:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+        modality:
+          type:
+          - string
+          - 'null'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+    TimetableEntry:
+      required:
+      - code
+      - declarant
+      - id
+      - startDate
+      - terminal
+      - totalDischarge
+      - totalLoading
+      - window
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique code that identifies the timetable entry for the declarant and terminal.
+          readOnly: true
+        code:
+          type: string
+          description: The business code used by the declarant and terminal to identify this timetable entry.
+        terminal:
+          title: ''
+          type: ''
+          description: The terminal for this timetable entry.
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TerminalOrganisation'
+        declarant:
+          title: ''
+          type: ''
+          description: The declarant for which this timetable entry is used.
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DeclarantOrganisation'
+        window:
+          title: ''
+          type: ''
+          description: ''
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DayAndTimeRange'
+        operations:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: ''
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DayAndTimeRange'
+        startDate:
+          type: string
+          description: The start date on which this timetable entry becomes active. Of all timetable entries with an identical code and of the same declarant for a specific terminal, the one with the most recent start date is the active timetable entry.
+          format: partial-date
+          readOnly: true
+        terminated:
+          type: boolean
+          description: Indicates that this timetable entry is no longer active since the startDate. A timetable entry with a later startDate can make the slot active again starting on the this new startDate.
+          readOnly: true
+        totalDischarge:
+          type: integer
+          description: The number of discharge handlings agreed upon for this timetable entry.
+          format: int32
+          readOnly: true
+        totalLoading:
+          type: integer
+          description: The number of loading handlings agreed upon for this timetable entry.
+          format: int32
+          readOnly: true
+      description: Recurring appointment for a rail visit
+    FindLocations:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+          description: Search with this keyword in the fields below to find the needed item(s). The search query is not case sensitive.
+    GetRailInterTerminal:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the organisation.
+        interTerminalCode:
+          type:
+          - string
+          - 'null'
+          description: Inter terminal specific code, recognised by the terminals.
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: 00DDE
+      description: Terminal query. Only one field required
+    GetBargeAccessPoints:
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          type: string
+          description: UN/LOCODE where the port is located; the United Nations Code for Trade and Transport Locations of this location.
+    FixedWindow:
+      required:
+      - code
+      - declarant
+      - handlings
+      - id
+      - periodOfValidity
+      - terminal
+      - window
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique code that identifies the fixed window for the declarant and terminal.
+          readOnly: true
+        code:
+          type: string
+          description: The business code used by the declarant and terminal to identify this fixed window.
+        terminal:
+          title: ''
+          type: ''
+          description: The terminal for this fixed window.
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TerminalOrganisation'
+        declarant:
+          title: ''
+          type: ''
+          description: The declarant for which this fixedwindow is used.
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DeclarantOrganisation'
+        window:
+          title: ''
+          type: ''
+          description: ''
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DayAndTimeRange'
+        periodOfValidity:
+          title: ''
+          type: ''
+          description: ''
+          readOnly: true
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/DateRange'
+        handlings:
+          type: integer
+          description: The number of handlings agreed upon for this fixed window.
+          format: int32
+          readOnly: true
+        minimumCallSize:
+          type:
+          - integer
+          - 'null'
+          description: The minimum number of handlings allowed for this fixed window.
+          format: int32
+          readOnly: true
+      description: '`Integral planning` Declarant can indicate to the terminal that they use one of their fixed windows.'
+    HinterlandOrganisation:
+      required:
+      - fullName
+      - shortName
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: The full name of the organisation
+        shortName:
+          type: string
+          description: The short name of the organisation
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address of the organisation
+        address:
+          type:
+          - string
+          - 'null'
+          description: The address of the organisation
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city where the organisation is located
+        countryUnCode:
+          type:
+          - string
+          - 'null'
+          description: The UN code of the country where the organisation is located
+        countryName:
+          type:
+          - string
+          - 'null'
+          description: The name of the country where the organisation is located
+        zipCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code of the organisation
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the organisation
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number of the organisation
+        contact:
+          type:
+          - string
+          - 'null'
+          description: The contact person of the organisation
+        customsEORINumber:
+          type:
+          - string
+          - 'null'
+          description: The EORI number of the organisation, issued by customs
+        ean:
+          type:
+          - string
+          - 'null'
+          description: The EAN code of the organisation
+        chamberOfCommerceNumber:
+          type:
+          - string
+          - 'null'
+          description: The chamber of commerce number of the organisation
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: The SCAC code of the organisation
+      description: Party that will receive the commercial release.
+    DeclarantOrganisation:
+      required:
+      - ean
+      - fullName
+      - shortName
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: The full name of the organisation
+        ean:
+          type: string
+          description: The EAN code of the organisation
+        shortName:
+          type: string
+          description: Code issued by Portbase to identify the Declarant organisation.
+      description: The declarant for which this timetable entry is used.
+      readOnly: true
+    FindInlandOperators:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+        modality:
+          type:
+          - string
+          - 'null'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+    GetFixedWindowsForDeclarant:
+      type: object
+      properties:
+        terminalShortName:
+          type:
+          - string
+          - 'null'
+          description: '`Deprecated` Use field `terminal` instead.'
+        terminal:
+          allOf:
+          - $ref: '#/components/schemas/Terminal'
+        periodOfValidity:
+          allOf:
+          - $ref: '#/components/schemas/DateTimeRange'
+    Terminal:
+      required:
+      - allowedModalities
+      - bicsCode
+      - location
+      - quayName
+      - shortName
+      - terminalSettings
+      type: object
+      properties:
+        shortName:
+          type: string
+          description: Code issued by Portbase to identify the Terminal organisation.
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+        bicsCode:
+          type: string
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: 00DDE
+        quayName:
+          type: string
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: DDE
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        displayNameOverrides:
+          title: ''
+          type: ''
+          description: Quay name override per modality
+          deprecated: false
+          allOf:
+          - type: object
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              description: Quay name override per modality
+            description: Quay name override per modality
+        requiredDataAuthorisations:
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - deepSeaEta
+            - cargoOpening
+            - expectedDischargeTime
+        allowedModalities:
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        tarRequired:
+          type: boolean
+          description: Only relevant for road. Indicates whether the terminal uses TAR codes or not.
+        roadStatusRequestAllowed:
+          type: boolean
+          description: Only relevant for road. Indicates whether the terminal can process road status requests.
+        bargeStatusRequestForbidden:
+          type: boolean
+          description: Only relevant for barge. Indicates whether the terminal can process barge status requests. Default is false.
+        cutoffPeriod:
+          type:
+          - string
+          - 'null'
+          description: Only relevant for rail. Indicates the cutoff period for the train composition upload (relative to the eta) for this terminal.
+          format: duration
+        loadDischargeListSettings:
+          allOf:
+          - $ref: '#/components/schemas/LoadDischargeListSettings'
+        quaySelectByDeclarantForbidden:
+          type: boolean
+          description: Indicates whether the terminal can be used by the Declarant to send a visit declaration. Some terminals can only be selected by the terminal organisation or Nextlogic, if so this option is set to true.
+        updateAllowed:
+          type: boolean
+          description: Indicates whether the terminal allows updates on pre-notifications, only for *barge*. Status requests can always be updated. Deprecated, use the handlingUpdateForbidden setting to see for which modality updates are forbidden
+          deprecated: true
+        handlingUpdateForbidden:
+          type: array
+          description: Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support updates on pre-notifications. When this list contains a modality, updates are not supported for this terminal for that modality only. Status requests can always be updated.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        handlingUpdateBypassAllowed:
+          type: array
+          description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass whereby a handling is first cancelled at the terminal and then declared as a new pre-notification.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        handlingMoveBypassAllowed:
+          type: array
+          description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Indicates whether the terminal does not support standard updates on pre-notifications, but allows the update bypass for MoveHandlings only. Update bypass means that a handling is first cancelled at the terminal and then declared as a new pre-notification.
+            enum:
+            - road
+            - rail
+            - barge
+            - cer
+            - sea
+        maxSealNumberLength:
+          type:
+          - integer
+          - 'null'
+          description: Maximum length of the seal number.
+          format: int32
+        acceptAfterRejectForbidden:
+          type: boolean
+          description: Indicates whether the terminal does not allow a handling accept after a handling reject.
+        terminalSettings:
+          type: array
+          description: Terminal settings restricting handling declarations depending on the type of declaration.
+          items:
+            $ref: '#/components/schemas/TerminalSettings'
+        nextlogicParticipant:
+          type: boolean
+          description: Setting that indicates this terminal is a Nextlogic Integral Planning participant.
+        prenotificationRestrictedToDeclarants:
+          title: ''
+          type: ''
+          description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+          deprecated: false
+          allOf:
+          - type: object
+            additionalProperties:
+              type: array
+              description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+              items:
+                type:
+                - string
+                - 'null'
+                description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+            description: List of declarants per modality for which declaration declaring handlings is allowed. When there is no list for a modality all declarants are allowed, otherwise it is restricted to this list of declarant shortnames.
+      description: The terminal location at which the containers are loaded onto and discharged from the barge. <br>Please refer to Reference Data API '[Get terminals](#operation/_08_getTerminals)' to resolve a valid Terminal and its attributes
+    FindSizeTypes:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+          description: Search with this keyword in the fields below to find the needed item(s). The search query is not case sensitive.
+    FindMatchingOrganisations:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+    RailInterTerminal:
+      required:
+      - bicsCode
+      - interTerminalCode
+      - shortName
+      type: object
+      properties:
+        shortName:
+          type: string
+          description: Code issued by Portbase to identify the organisation.
+        interTerminalCode:
+          type: string
+          description: Inter terminal specific code, recognised by the terminals.
+        bicsCode:
+          type: string
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: 00DDE
+        name:
+          type:
+          - string
+          - 'null'
+          description: Terminal name
+    GetFixedWindowsForTerminal:
+      type: object
+    GetTractionSupplier:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the Terminal organisation.
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+      description: Terminal query. Only one field required
+    SizeType:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The coded container's length, width, height, type and features.
+          example: 22G1
+        name:
+          type:
+          - string
+          - 'null'
+          description: The descriptive name of the size type of container as specified with the code.
+          readOnly: true
+          example: 20'x8'x8'6\" General Purpose Container
+      description: The classification of the container's length, width, height, type and features.<br>Use a size type retrieved with find size types via the Reference Data API '[Find SizeTypes](#operation/_06_findSizeTypes)'.
+    Location:
+      required:
+      - locationUnCode
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the location
+        locationUnCode:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: UN/LOCODE; the United Nations Code for Trade and Transport Locations of the location
+      description: Use a location retrieved with find locations via the Reference Data API wiht the operation [findLocations](#operation/_05_findLocations).
+    TerminalOrganisation:
+      required:
+      - bicsCode
+      - location
+      - quayName
+      - shortName
+      type: object
+      properties:
+        shortName:
+          type: string
+          description: Code issued by Portbase to identify the Terminal organisation.
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+        bicsCode:
+          type: string
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: 00DDE
+        quayName:
+          type: string
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: DDE
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+        displayNameOverrides:
+          title: ''
+          type: ''
+          description: Quay name override per modality
+          deprecated: false
+          allOf:
+          - type: object
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              description: Quay name override per modality
+            description: Quay name override per modality
+        requiredDataAuthorisations:
+          type: array
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - deepSeaEta
+            - cargoOpening
+            - expectedDischargeTime
+      description: The terminal for this timetable entry.
+      readOnly: true
+    FindShippingCompanies:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+          description: Search with this keyword in the fields below to find the needed item(s). The search query is not case sensitive.
+    ShippingCompany:
+      required:
+      - name
+      - scacCode
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the shipping company.
+        scacCode:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The Standard Carrier Alpha Code (SCAC) which is a privately controlled US code used as identifier for the shipping company.
+        smdgCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the shipping company, issued by the SMDG.
+      description: 'Also called carrier (dutch: rederij). The organisation that arranges the transport of the goods.<br>Use a carrier retrieved with find carriers via the ref Data API.. Two fields required'
+    DateRange:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          type: string
+          format: partial-date
+        end:
+          type: string
+          format: partial-date
+    Barge:
+      required:
+      - europeId
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 35
+          minLength: 0
+          type: string
+          description: The name of the barge.
+          readOnly: true
+          example: GOUDVIS
+        europeId:
+          maxLength: 11
+          minLength: 0
+          type: string
+          description: The ENI number (European Number of Identification or European Vessel Identification Number) which is a registration for the barge, which is capable of navigating on inland European waters. It is a unique identifier that is attached to a hull for its entire lifetime, independent of the vessel's current name or flag.
+          example: 06105081
+        flagCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The nationality of the barge.
+          readOnly: true
+          example: NLD
+        teuCapacity:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The maximum physical amount of TEU that can fit on the barge.'
+          format: int32
+          readOnly: true
+          example: 200
+        mmsi:
+          maxLength: 9
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: '`Integral planning` The Maritime Mobile Service Identity (MMSI) to identify a ship as used by i.e. AIS (Automatic Identification System).'
+          readOnly: true
+          example: '244790279'
+        length:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` The barge length in meters. Value between 35 and 250.'
+          readOnly: true
+          example: 110
+        width:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` The barge width in meters. Value between 5 and 40.'
+          readOnly: true
+          example: 26
+        downStreamSpeed:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` Average speed of the barge when loaded from hinterland in km/h. Value between 5 and 30.'
+          readOnly: true
+          example: 23
+        upstreamSpeed:
+          type:
+          - number
+          - 'null'
+          description: '`Integral planning` Average speed of the barge when empty to the hinterland in km/h. Value between 5 and 30.'
+          readOnly: true
+          example: 23
+        canBeHandledByNrOfCranes:
+          maximum: 5
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: '`Integral planning` The number of cranes that can simultaneously load/discharge the ship.'
+          format: int32
+          readOnly: true
+          example: 2
+      description: The means of transport that is used for the inland transport of cargo by water
+    LoadDischargeListSettings:
+      type: object
+      properties:
+        autoRejectEnabled:
+          type: boolean
+          description: Indicates whether non-green handlings are rejected automatically after visit closing.
+        handlingUpdateBypassAllowed:
+          type: boolean
+          description: Indicates whether updates are allowed for handlings after load-discharge-list is reopend or sent before cargo cutoff.
+      description: The settings for the configuration of the load-discharge-list.
+    DayAndTimeRange:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          allOf:
+          - $ref: '#/components/schemas/DayAndTime'
+        end:
+          allOf:
+          - $ref: '#/components/schemas/DayAndTime'
+      readOnly: true
+    GetAvailableTimetableSlots:
+      type: object
+      properties:
+        firstDepartureDate:
+          type:
+          - string
+          - 'null'
+          description: First departure date of the discharge train. Empty if querying available timetable slots for a rail voyage template
+          format: partial-date
+        terminalShortName:
+          type:
+          - string
+          - 'null'
+          description: Terminal for which to get the available Timetable slots.
+    FindBarges:
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          type: string
+          description: Search with this keyword in the fields below to find the needed item(s). The search query is not case sensitive.
+    GetTerminal:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the Terminal organisation.
+          example: PB_TERMINAL
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the Terminal organisation.
+          example: '8713712345678'
+        smdgCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal facility code according to the Shipplanning Message Development Group.
+          example: PBT
+        bicsCode:
+          type:
+          - string
+          - 'null'
+          description: Terminal code according to the Terminal code table of Binnenvaart Informatie- en Communicatie Systeem managed by Rijkswaterstaat.
+          example: PBT01
+        quayName:
+          type:
+          - string
+          - 'null'
+          description: The name of the quay where a vessel can moor for loading, unloading or e.g. awaiting orders.
+          example: Rotterdam Oudehaven
+      description: Terminal query. Only one field required
+    TerminalSettings:
+      required:
+      - modality
+      type: object
+      properties:
+        loading:
+          type: boolean
+          description: Does the setting apply to loading or discharge.
+        full:
+          type: boolean
+          description: Does the setting apply to full or empty.
+        modality:
+          type: string
+          description: Does the setting apply to rail, road or barge.
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+        sealNumberAllowed:
+          type: boolean
+          description: Is the seal number required.
+        reeferAllowed:
+          type: boolean
+          description: Is reefer information required.
+        grossWeightAllowed:
+          type: boolean
+          description: Is gross weight required.
+        outOfGaugeAllowed:
+          type: boolean
+          description: Is out of gauge required.
+        dangerousGoodsAllowed:
+          type: boolean
+          description: Is dangerous goods information required.
+        cargoCutOffInMinutes:
+          type:
+          - integer
+          - 'null'
+          description: The minimum amount of time (in minutes) before visit arrival when operators are still allowed to submit changes to the cargo list.
+          format: int32
+        lossenOpRichtlijnAllowed:
+          type: boolean
+          description: Are equipment numbers optional for empty discharge handlings.
+      description: Contains restrictions on handling declarations, depending on the type of declaration.
+    DateTimeRange:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+    GetOrganisation:
+      type: object
+      properties:
+        term:
+          type:
+          - string
+          - 'null'
+    GetFixedWindowsForIntegralPlanning:
+      type: object
+      properties:
+        periodOfValidity:
+          allOf:
+          - $ref: '#/components/schemas/DateRange'
+    GetForwarder:
+      type: object
+      properties:
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Code issued by Portbase to identify the organisation.
+        ean:
+          type:
+          - string
+          - 'null'
+          description: European Article Numbering issued by Secure Logistics to identify the organisation.
+        modality:
+          type:
+          - string
+          - 'null'
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+      description: Forwarder query. Only one field required
+    GetSizeType:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+    GetBarge:
+      required:
+      - europeId
+      type: object
+      properties:
+        europeId:
+          type: string
+    GetLocation:
+      required:
+      - unCode
+      type: object
+      properties:
+        unCode:
+          type: string
+    GetShippingCompany:
+      type: object
+      properties:
+        scacCode:
+          type:
+          - string
+          - 'null'
+        smdgCode:
+          type:
+          - string
+          - 'null'
+      description: Shipping company query. Only one field required
+    BargeAccessPoint:
+      required:
+      - code
+      - name
+      type: object
+      properties:
+        code:
+          maxLength: 2
+          minLength: 0
+          type: string
+          description: Code of a barge scope in or scope out accesspoint.
+          example: BR
+        name:
+          type: string
+          description: Name of a barge scope in or scope out accesspoint.
+          example: Brienenoordbrug
+      description: 'Entrypoint: The location at which the port visit starts. Also known as scope in.<br> Exitpoint: The location at which the port visit ends. Also known as scope out.'
+    DayAndTime:
+      required:
+      - day
+      - time
+      type: object
+      properties:
+        day:
+          type: string
+          enum:
+          - MONDAY
+          - TUESDAY
+          - WEDNESDAY
+          - THURSDAY
+          - FRIDAY
+          - SATURDAY
+          - SUNDAY
+        time:
+          type: string
+          format: partial-time
+    com.portbase.bezoekschip.common.api.visit.GetTugboats:
+      title: GetTugboats
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.visit.GetBoatmen:
+      title: GetBoatmen
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.common.authentication.BezoekschipOrganisation:
+      title: BezoekschipOrganisation
+      required:
+      - fullName
+      - shortName
+      type:
+      - object
+      - 'null'
+      properties:
+        fullName:
+          minLength: 1
+          type: string
+          description: The full name of the organisation
+        shortName:
+          minLength: 1
+          type: string
+          description: The short name of the organisation
+        iamConnectedId:
+          type:
+          - string
+          - 'null'
+          description: The IAM Connected id of the organisation
+        portAuthorityId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the organisation, issued by the port authority
+        creditNumber:
+          type:
+          - string
+          - 'null'
+          description: The credit number of the organisation, issued by the port for harbour dues declarations
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address of the organisation
+        address:
+          type:
+          - string
+          - 'null'
+          description: The address of the organisation
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city where the organisation is located
+        zipCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code of the organisation
+        countryUnCode:
+          type:
+          - string
+          - 'null'
+          description: The UN code of the country where the organisation is located
+        countryName:
+          type:
+          - string
+          - 'null'
+          description: The name of the country where the organisation is located
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the organisation
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number of the organisation
+        contact:
+          type:
+          - string
+          - 'null'
+          description: The contact person of the organisation
+        customsEORINumber:
+          type:
+          - string
+          - 'null'
+          description: The EORI number of the organisation, issued by customs
+        ean:
+          type:
+          - string
+          - 'null'
+          description: The EAN number of the organisation
+        chamberOfCommerceNumber:
+          type:
+          - string
+          - 'null'
+          description: The chamber of commerce number of the organisation
+        scacCode:
+          type:
+          - string
+          - 'null'
+          description: The SCAC code of the organisation
+        rtoNumber:
+          type:
+          - string
+          - 'null'
+          description: The warehouse license id
+      description: 'Owner: The organisation that is accountable for reporting the port visit
+
+        Declarant: The organisation that is responsible for reporting the port visit
+
+        CargoDeclarant: The organisation that is responsible for reporting the cargo on board of the vessel
+
+        FinancialDeclarant: The organisation that is responsible for reporting the harbour dues for a visit'
+    com.portbase.bezoekschip.common.api.common.visit.ServiceProvider:
+      title: ServiceProvider
+      required:
+      - name
+      - portAuthorityId
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the service provider
+        portAuthorityId:
+          minLength: 1
+          type: string
+          description: The identifier of the service provider, issued by the port authority
+      description: The organisation that provides the service
+    com.portbase.bezoekschip.common.api.common.visit.Carrier:
+      title: Carrier
+      type: object
+      properties:
+        customsId:
+          maxLength: 17
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by Customs (EORI or TCUIN)
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the carrier
+        scacCode:
+          maxLength: 4
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by the US
+        smdgCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by the SMDG
+        bicCode:
+          maxLength: 3
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The identifier of the carrier, issued by the BIC
+        cargoDeclarantShortName:
+          type:
+          - string
+          - 'null'
+          description: The main cargo agent of the carrier
+        boxOperators:
+          uniqueItems: true
+          type: array
+          description: All the cargo agents allowed to process cargo for this carrier
+          items:
+            type:
+            - string
+            - 'null'
+            description: All the cargo agents allowed to process cargo for this carrier
+      description: The organisation that arranges the transport of the goods and performs the port visit
+    com.portbase.bezoekschip.common.api.visit.GetEntryPoints:
+      title: GetEntryPoints
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          minLength: 1
+          type: string
+        atSea:
+          type:
+          - boolean
+          - 'null'
+    com.portbase.bezoekschip.common.api.visit.GetCustomsOffices:
+      title: GetCustomsOffices
+      required:
+      - countryCode
+      type: object
+      properties:
+        countryCode:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.common.visit.CustomsOffice:
+      title: CustomsOffice
+      required:
+      - name
+      - unCode
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        unCode:
+          minLength: 1
+          type: string
+        ics:
+          type:
+          - boolean
+          - 'null'
+      description: The customs office geographically competent for the place where the goods are brought into the customs territory
+    com.portbase.bezoekschip.common.api.common.visit.PilotExemption:
+      title: PilotExemption
+      required:
+      - number
+      type: object
+      properties:
+        holderName:
+          maxLength: 35
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The name of the pilotage exemption holder
+        number:
+          maxLength: 10
+          minLength: 0
+          type: string
+          description: The number of the pilotage exemption
+      description: The exemption from the pilotage requirement
+    com.portbase.bezoekschip.common.api.waste.GetWasteCollectors:
+      title: GetWasteCollectors
+      type: object
+      properties:
+        portUnCode:
+          type:
+          - string
+          - 'null'
+        annex:
+          type: integer
+          format: int32
+    com.portbase.bezoekschip.adapter.refdata.ApiVessel:
+      title: Vessel
+      required:
+      - imoCode
+      - name
+      type: object
+      properties:
+        imoCode:
+          minLength: 1
+          type: string
+          description: The unique identification of a vessel according to Lloyds register
+        name:
+          minLength: 1
+          type: string
+          description: The name of the vessel
+      description: The vessel that visits the port of call
+    com.portbase.bezoekschip.common.api.visit.FindCarriers:
+      title: FindCarriers
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+        withCustomsId:
+          type: boolean
+    com.portbase.bezoekschip.common.api.common.visit.EntryPoint:
+      title: EntryPoint
+      required:
+      - code
+      - name
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: The code of the entry point
+        name:
+          minLength: 1
+          type: string
+          description: The name of the entry point
+        atSea:
+          type:
+          - boolean
+          - 'null'
+          description: Indicator if the entry point is accessible from sea or hinterland
+      description: The location where the vessel enters the port of call
+    com.portbase.bezoekschip.common.api.visit.GetPilotStations:
+      title: GetPilotStations
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.visit.FindBerthsAndBuoys:
+      title: FindBerthsAndBuoys
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+        portUnCode:
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.visit.FindLinerServices:
+      title: FindLinerServices
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.common.visit.PilotStation:
+      title: PilotStation
+      required:
+      - code
+      - name
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: The code of the pilot boarding place
+        name:
+          minLength: 1
+          type: string
+          description: The name of the pilot boarding place
+        atSea:
+          type: boolean
+          description: Indicator if the pilot boarding place is located on sea or in hinterland
+      description: The location where the pilot boards the vessel
+    com.portbase.bezoekschip.common.api.common.visit.WasteTypeSsn:
+      title: WasteTypeSsn
+      required:
+      - code
+      - description
+      - marpolCategory
+      - specificationRequired
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: The code of the waste type in the Maritime Single Window.
+        description:
+          minLength: 1
+          type: string
+          description: The description of the waste type in the Maritime Single Window.
+        marpolCategory:
+          minLength: 1
+          type: string
+          description: The MARPOL category of the waste type.
+        specificationRequired:
+          type: boolean
+          description: Indication whether a specification is required.
+      description: The waste type in the Maritime Single Window.
+    com.portbase.bezoekschip.common.api.visit.GetPilots:
+      title: GetPilots
+      required:
+      - portUnCode
+      type: object
+      properties:
+        portUnCode:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.visit.FindPortsOrWayPoints:
+      title: FindPortsOrWayPoints
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.visit.FindPilotExemptions:
+      title: FindPilotExemptions
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+        portUnCode:
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.common.visit.Port:
+      title: Port
+      required:
+      - countryUnCode
+      - locationUnCode
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the port
+        locationUnCode:
+          minLength: 1
+          type: string
+          description: The UN locode of the location where the port is located
+        countryUnCode:
+          minLength: 1
+          type: string
+          description: The UN code of the country where the port is located
+        euPort:
+          type: boolean
+          description: Indication whether the port is located in the EU
+    com.portbase.bezoekschip.common.api.common.visit.LinerService:
+      title: LinerService
+      required:
+      - carrierOrganisationsEoriNumbers
+      - carrierOrganisationsShortNames
+      - code
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+        code:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        stevedoreOrganisationShortName:
+          type:
+          - string
+          - 'null'
+        carrierOrganisationsShortNames:
+          uniqueItems: true
+          type: array
+          items:
+            minLength: 1
+            type:
+            - string
+            - 'null'
+        carrierOrganisationsEoriNumbers:
+          uniqueItems: true
+          type: array
+          items:
+            minLength: 1
+            type:
+            - string
+            - 'null'
+        harbourDuesPort:
+          type:
+          - string
+          - 'null'
+    com.portbase.bezoekschip.common.api.visit.FindVessels:
+      title: FindVessels
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.common.visit.WasteMaterial:
+      title: WasteMaterial
+      required:
+      - ssn
+      type: object
+      properties:
+        typeCode:
+          type: string
+          description: The code of the waste type.
+        euralCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the waste type in the european list of waste.
+        iltCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the waste type for Human Environment and Transport Inspectorate (Dutch IL&T)
+        ssn:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.common.visit.WasteTypeSsn'
+        start:
+          type:
+          - string
+          - 'null'
+          description: The start date that the entry becomes valid.
+          format: partial-date
+        end:
+          type:
+          - string
+          - 'null'
+          description: The end date until which the entry stays valid.
+          format: partial-date
+        nameNL:
+          type:
+          - string
+          - 'null'
+          description: The name in dutch of the substance.
+        nameEN:
+          type:
+          - string
+          - 'null'
+          description: The name in english of the substance.
+        unitOfMeasure:
+          type:
+          - string
+          - 'null'
+          description: The unit of measure.
+          enum:
+          - kg
+          - m3
+          - units
+        unitConversionToCubicMeters:
+          type:
+          - number
+          - 'null'
+          description: The conversion from the value in the unit of measure to cubic meters.
+      description: The waste that is aboard the vessel and can be collected
+    com.portbase.bezoekschip.common.api.visit.FindPorts:
+      title: FindPorts
+      required:
+      - term
+      type: object
+      properties:
+        term:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.common.visit.Berth:
+      title: Berth
+      required:
+      - buoy
+      - code
+      - name
+      - terminalCode
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the berth
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: The short name of the berth
+        code:
+          minLength: 1
+          type: string
+          description: The code of the berth
+        terminalCode:
+          minLength: 1
+          type: string
+          description: The code of the terminal that contains the berth
+        ownPosition:
+          type:
+          - string
+          - 'null'
+          description: The only position that maps to this specific berth
+        terminalName:
+          type:
+          - string
+          - 'null'
+          description: The name of the terminal that contains the berth
+        organisationShortName:
+          type:
+          - string
+          - 'null'
+          description: The short name of the organisation that contains the berth
+        organisationName:
+          type:
+          - string
+          - 'null'
+          description: The name of the organisation that contains the terminal
+        berthGroupCode:
+          type:
+          - string
+          - 'null'
+          description: The code of the berth group that contains the berth
+        buoy:
+          type: boolean
+          description: Indication whether the berth is a buoy
+        partyToNotify:
+          type:
+          - string
+          - 'null'
+          description: The organisation that must be notified about the visit
+          deprecated: true
+      description: The berth that is visited by the vessel
+    com.portbase.bezoekschip.common.api.visit.FindWasteMaterials:
+      title: FindWasteMaterials
+      type: object
+      properties:
+        term:
+          type:
+          - string
+          - 'null'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-portvisit-v6.json
+- portbase-hinterland-container-notification-openapi.yml
+- portbase-vessel-visit-openapi.yml

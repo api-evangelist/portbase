@@ -1,0 +1,568 @@
+openapi: 3.2.0
+info:
+  title: Portbase Bookings API
+  version: v1
+  contact:
+    name: Portbase - Team Import Cargo
+    url: https://www.portbase.com/services/cargo-controller-export
+    email: importcargo@portbase.com
+  x-logo:
+    url: images/portbase-logo.png
+    altText: Portbase logo
+  description: 'Operations tagged Bookings across 2 of this provider''s published API definitions: portbase-cargo-controller-export-v1.json, portbase-cargo-controller-export-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.cargo-controller-export.pcs.portbase.com/api
+  description: Production
+- url: https://api.cargo-controller-export.kt.portbase.com/api
+  description: KT
+tags:
+- name: Bookings
+  description: Manage and retrieve bookings for an organisation
+paths:
+  /v1/bookings:
+    post:
+      tags:
+      - Bookings
+      summary: Subscribe to a booking
+      description: Subscribes the authenticated user's organisation to a booking by booking number
+      operationId: subscribe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeDto'
+        required: true
+      responses:
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '200':
+          description: Subscription accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionId'
+    servers:
+    - url: https://api.cargo-controller-export.pcs.portbase.com/api
+      description: Production
+    - url: https://api.cargo-controller-export.kt.portbase.com/api
+      description: KT
+  /v1/bookings/{subscriptionId}:
+    get:
+      tags:
+      - Bookings
+      summary: Get booking dossier by subscriptionId
+      description: Returns the booking dossier for the given subscriptionId
+      operationId: getBySubscriptionId
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '200':
+          description: Booking dossier found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDossier'
+        '404':
+          description: Booking dossier not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    servers:
+    - url: https://api.cargo-controller-export.pcs.portbase.com/api
+      description: Production
+    - url: https://api.cargo-controller-export.kt.portbase.com/api
+      description: KT
+components:
+  schemas:
+    DocumentType:
+      description: The type classification of a document
+      properties:
+        forwarderCode:
+          type: string
+          description: The forwarder code identifying the document type
+          example: EXA
+      required:
+      - forwarderCode
+    BerthVisit:
+      description: A visit to a specific berth within a port
+      properties:
+        id:
+          type: string
+          description: The unique berth visit identifier
+          example: BV-2024-001
+        berth:
+          $ref: '#/components/schemas/Berth'
+      required:
+      - berth
+      - id
+    SubscriptionId:
+      type: object
+      description: The subscription id for an organisation to a booking
+      properties:
+        subscriptionId:
+          type: string
+    GateIn:
+      description: Gate-in information for equipment at a terminal
+      properties:
+        terminalFullName:
+          type: string
+          description: The full name of the terminal where the equipment was gated in
+          example: APM Terminals Rotterdam
+        gatedInDateTime:
+          type: string
+          format: date-time
+          description: The date and time the equipment was gated in
+          example: '2024-01-16T06:30:00Z'
+        dateUpdated:
+          type: string
+          format: date-time
+          description: The date and time this gate-in record was last updated
+          example: '2024-01-16T06:35:00Z'
+      required:
+      - dateUpdated
+      - gatedInDateTime
+      - terminalFullName
+    EquipmentStatus:
+      description: Aggregated status overview of an equipment across all process steps
+      properties:
+        customsInspectionStatus:
+          $ref: '#/components/schemas/Status'
+        exportDocumentClearanceStatus:
+          $ref: '#/components/schemas/Status'
+        exportDocumentStatus:
+          $ref: '#/components/schemas/Status'
+        exportDocumentCustomsStatus:
+          $ref: '#/components/schemas/Status'
+        exportDocumentPrenotificationStatus:
+          $ref: '#/components/schemas/Status'
+        terminalBookingSubscriptionStatus:
+          $ref: '#/components/schemas/Status'
+        transportEquipmentGateInStatus:
+          $ref: '#/components/schemas/Status'
+        transportEquipmentLoadStatus:
+          $ref: '#/components/schemas/Status'
+        vesselArrivalStatus:
+          $ref: '#/components/schemas/Status'
+        vesselDepartureStatus:
+          $ref: '#/components/schemas/Status'
+      required:
+      - customsInspectionStatus
+      - exportDocumentClearanceStatus
+      - exportDocumentCustomsStatus
+      - exportDocumentPrenotificationStatus
+      - exportDocumentStatus
+      - terminalBookingSubscriptionStatus
+      - transportEquipmentGateInStatus
+      - transportEquipmentLoadStatus
+      - vesselArrivalStatus
+      - vesselDepartureStatus
+    Terminal:
+      description: A terminal at a port
+      properties:
+        name:
+          type: string
+          description: The name of the terminal
+          example: Euromax Terminal
+        code:
+          type: string
+          description: The terminal code
+          example: EMX
+        ownerFullName:
+          type: string
+          description: The full name of the terminal owner organisation
+          example: ECT Delta Terminal B.V.
+      required:
+      - code
+      - name
+      - ownerFullName
+    Berth:
+      description: A berth at a terminal
+      properties:
+        name:
+          type: string
+          description: The name of the berth
+          example: Euromax Berth 1
+        code:
+          type: string
+          description: The berth code
+          example: EMX1
+        terminalCode:
+          type: string
+          description: The terminal code the berth belongs to
+          example: EMX
+        terminal:
+          $ref: '#/components/schemas/Terminal'
+      required:
+      - code
+      - name
+      - terminal
+      - terminalCode
+    SubscribedTerminal:
+      description: A terminal that is subscribed to a booking
+      properties:
+        orgFullName:
+          type: string
+          description: The full name of the subscribed organisation
+          example: APM Terminals Rotterdam
+        subscriptionDateTime:
+          type: string
+          format: date-time
+          description: The date and time the terminal subscribed
+          example: '2024-01-15T08:00:00Z'
+      required:
+      - orgFullName
+      - subscriptionDateTime
+    Status:
+      description: A status value with its filter classification, timestamp, and optional parameters
+      properties:
+        value:
+          type: string
+          description: The human-readable status value
+          example: Cleared
+        timestamp:
+          type: string
+          format: date-time
+          description: The date and time the status was recorded
+          example: '2024-01-16T10:00:00Z'
+        params:
+          type: object
+          additionalProperties:
+            type: string
+            description: Additional key-value parameters providing context for the status
+            example: '{"reason":"approved"}'
+          description: Additional key-value parameters providing context for the status
+          example:
+            reason: approved
+      required:
+      - timestamp
+      - value
+    PortOfCall:
+      description: The port of call for a vessel visit
+      properties:
+        port:
+          $ref: '#/components/schemas/Port'
+      required:
+      - port
+    VisitDeclaration:
+      description: The visit declaration containing port visit details
+      properties:
+        portVisit:
+          $ref: '#/components/schemas/PortVisit'
+      required:
+      - portVisit
+    Vessel:
+      description: A vessel
+      properties:
+        name:
+          type: string
+          description: The name of the vessel
+          example: MSC Oscar
+        imoCode:
+          type: string
+          description: The IMO code of the vessel
+          example: '9703291'
+      required:
+      - imoCode
+      - name
+    BookingEquipment:
+      description: Equipment associated with a booking
+      properties:
+        equipmentNumber:
+          type: string
+          description: The container or equipment number
+          example: MSCU1234567
+        empty:
+          type: boolean
+          description: Whether the container is empty
+          example: false
+        manifest:
+          $ref: '#/components/schemas/Manifest'
+        gateIn:
+          $ref: '#/components/schemas/GateIn'
+        loadConfirmation:
+          $ref: '#/components/schemas/LoadConfirmation'
+        documents:
+          type: array
+          description: List of export documents associated with this equipment
+          items:
+            $ref: '#/components/schemas/Document'
+        equipmentStatus:
+          $ref: '#/components/schemas/EquipmentStatus'
+    LoadConfirmation:
+      description: Confirmation that equipment has been loaded onto a vessel
+      properties:
+        equipmentNumber:
+          type: string
+          description: The container or equipment number
+          example: MSCU1234567
+        callReferenceNumber:
+          type: string
+          description: The call reference number
+          example: CRN-2024-5678
+        terminalFullName:
+          type: string
+          description: The full name of the terminal where loading occurred
+          example: APM Terminals Rotterdam
+        loadedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the equipment was loaded
+          example: '2024-01-17T14:00:00Z'
+        dateUpdated:
+          type: string
+          format: date-time
+          description: The date and time this load confirmation was last updated
+          example: '2024-01-17T14:05:00Z'
+      required:
+      - callReferenceNumber
+      - dateUpdated
+      - equipmentNumber
+      - loadedDateTime
+    SubscribeDto:
+      type: object
+      properties:
+        bookingNumber:
+          type: string
+          minLength: 1
+        callReferenceNumber:
+          type: string
+          description: Add a call reference number to your booking subscription to get ETA information of the visit before the manifest is registered within Portbase.
+          example: NLRTM25000001
+          maxLength: 13
+          minLength: 0
+        imoCode:
+          type: string
+          description: 'Add the IMO code of the related vessel to get ETA information before the manifest is registered within Portbase.
+
+            If the CRN is filled out, the value of the IMO code will be ignored.
+
+            '
+          example: '9850795'
+          maxLength: 7
+          minLength: 0
+      required:
+      - bookingNumber
+    BookingDossier:
+      description: A booking dossier belonging to an organisation
+      properties:
+        bookingNumber:
+          type: string
+          description: The booking number
+          example: BOOKING-12345
+        dateCreated:
+          type: string
+          format: date-time
+          description: The date and time the dossier was created
+          example: '2024-01-15T10:30:00Z'
+        bookingEquipments:
+          type: array
+          description: List of equipment associated with this booking
+          items:
+            $ref: '#/components/schemas/BookingEquipment'
+        subscribedTerminals:
+          type: array
+          description: List of terminals subscribed to this booking
+          items:
+            $ref: '#/components/schemas/SubscribedTerminal'
+        vesselVisit:
+          $ref: '#/components/schemas/VesselVisit'
+        callReferenceNumber:
+          type: string
+          description: The call reference number registered on the booking subscription
+      required:
+      - bookingEquipments
+      - bookingNumber
+      - dateCreated
+    Port:
+      description: A port location
+      properties:
+        name:
+          type: string
+          description: The name of the port
+          example: Rotterdam
+        unCode:
+          type: string
+          description: The UN/LOCODE of the port
+          example: NLRTM
+        countryUnCode:
+          type: string
+          description: The UN country code
+          example: NL
+      required:
+      - countryUnCode
+      - name
+      - unCode
+    VesselVisit:
+      description: A vessel visit to a port
+      properties:
+        callReferenceNumber:
+          type: string
+          description: The call reference number
+          example: CRN-2024-5678
+        dateRegistered:
+          type: string
+          description: The date the vessel visit was registered
+          example: '2024-01-10'
+        cancelled:
+          type: boolean
+          description: Whether the vessel visit has been cancelled
+          example: false
+        portOfCall:
+          $ref: '#/components/schemas/PortOfCall'
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        visitDeclaration:
+          $ref: '#/components/schemas/VisitDeclaration'
+      required:
+      - callReferenceNumber
+      - cancelled
+      - dateRegistered
+      - portOfCall
+      - vessel
+      - visitDeclaration
+    PortVisit:
+      description: A port visit containing berth visit information
+      properties:
+        berthVisits:
+          type: array
+          description: List of berth visits during this port visit
+          items:
+            $ref: '#/components/schemas/BerthVisit'
+    ApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        rejectedValue: {}
+    Document:
+      description: An export document associated with equipment
+      properties:
+        documentId:
+          type: string
+          description: The unique document identifier
+          example: DOC-2024-001
+        documentNumber:
+          type: string
+          description: The document number
+          example: NL123456789
+        createdByOrgFullName:
+          type: string
+          description: The full name of the organisation that created the document
+          example: Forwarding Company B.V.
+        registrationTime:
+          type: string
+          format: date-time
+          description: The date and time the document was registered
+          example: '2024-01-14T09:00:00Z'
+        transhipment:
+          type: boolean
+          description: Whether this document is for transhipment cargo
+          example: false
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        dateUpdated:
+          type: string
+          format: date-time
+          description: The date and time this document was last updated
+          example: '2024-01-14T10:00:00Z'
+      required:
+      - createdByOrgFullName
+      - dateUpdated
+      - documentId
+      - documentNumber
+      - documentType
+      - registrationTime
+      - transhipment
+    Manifest:
+      description: Manifest information linking equipment to a vessel visit
+      properties:
+        manifestId:
+          type: string
+          description: The unique manifest identifier
+          example: MAN-2024-001
+        voyageNumber:
+          type: string
+          description: The voyage number
+          example: VOY-1234
+        callReferenceNumber:
+          type: string
+          description: The call reference number of the vessel visit
+          example: CRN-2024-5678
+        dateUpdated:
+          type: string
+          format: date-time
+          description: The date and time the manifest was last updated
+          example: '2024-01-15T12:00:00Z'
+      required:
+      - callReferenceNumber
+      - dateUpdated
+      - manifestId
+      - voyageNumber
+x-refined-from:
+- portbase-cargo-controller-export-v1.json
+- portbase-cargo-controller-export-openapi.yml

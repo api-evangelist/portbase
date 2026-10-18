@@ -1,0 +1,191 @@
+generated: '2026-10-18'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 14
+  own: 13
+  other_domain: 0
+  platform: 1
+  roles:
+  - api
+  - identity
+  - other
+  - portal
+  - status
+  - support
+  - website
+hosts:
+- host: api.cargo-controller-export.pcs.portbase.com
+  found_by:
+  - apis[]
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - docs
+  - cdn
+  vendor: cloudflare
+  registrable_domain: portbase.com
+  role: api
+  relation: own
+- host: api.cargo-controller.pcs.portbase.com
+  found_by:
+  - apis[]
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - api-gateway
+  vendor: aws-api-gateway
+  registrable_domain: portbase.com
+  role: api
+  relation: own
+- host: api.portbase.com
+  found_by:
+  - apis[]
+  - contract-discovery
+  types: []
+  serves:
+  - api
+  registrable_domain: portbase.com
+  role: api
+  relation: own
+- host: cargo-controller.pcs.portbase.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - docs
+  registrable_domain: portbase.com
+  role: other
+  relation: own
+- host: developer.portbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types:
+  - DeveloperPortal
+  serves: []
+  title: API&#39;s and system links &ndash; Portbase Support
+  status: 200
+  registrable_domain: portbase.com
+  role: portal
+  relation: own
+- host: hcn.pcs.portbase.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - docs
+  registrable_domain: portbase.com
+  role: other
+  relation: own
+- host: login.pcs.portbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Login
+  serves: []
+  registrable_domain: portbase.com
+  role: identity
+  relation: own
+- host: portbase.com
+  found_by:
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: portbase.com
+  role: other
+  relation: own
+- host: portvisit.pcs.portbase.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - docs
+  registrable_domain: portbase.com
+  role: other
+  relation: own
+- host: status.portbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: portbase.com
+  role: status
+  relation: own
+- host: support.portbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - docs
+  - support
+  vendor: zendesk
+  registrable_domain: portbase.com
+  role: support
+  relation: own
+- host: werkenbij.portbase.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: portbase.com
+  role: other
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.portbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types:
+  - Newsroom
+  - Website
+  - GettingStarted
+  - ChangeLog
+  - Blog
+  - Pricing
+  - SignUp
+  - TermsOfService
+  - PrivacyPolicy
+  - Contact
+  serves:
+  - docs
+  registrable_domain: portbase.com
+  role: website
+  relation: own

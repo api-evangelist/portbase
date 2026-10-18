@@ -1,0 +1,863 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-api-organisation-bl-schema.json",
+  "title": "ApiOrganisationBL",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiOrganisationBL",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identification of a Bill of Lading. This id corresponds with the one you received in the response of the Track Request."
+    },
+    "referenceNumber": {
+      "type": "string",
+      "description": "A reference relevant to your organisation.",
+      "maxLength": 35,
+      "minLength": 0
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels allow you to categorize your cargo to improve collaboration within your organization",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "deleted": {
+      "type": "boolean",
+      "description": "Indication whether the Bill of Lading has been untracked"
+    },
+    "origin": {
+      "type": "string",
+      "description": "How the Bill of Lading was tracked: via the Cargo Controller GUI (`WEB`) or via the public API (`API`), or automatically (because your organisation was authorised by the handling agent) by `COMMERCIAL_RELEASE` or `BULK_AUTHORISATION`",
+      "enum": [
+        "WEB",
+        "API",
+        "EDI",
+        "EVENT",
+        "COMMERCIAL_RELEASE",
+        "BULK_AUTHORISATION",
+        "SECURE_CHAIN_TRANSFER"
+      ]
+    },
+    "trackingType": {
+      "type": "string",
+      "description": "Indication of the tracking type for this Bill of Lading",
+      "enum": [
+        "BASIC",
+        "EXTENDED"
+      ]
+    },
+    "billOfLading": {
+      "$ref": "#/$defs/ApiBillOfLading"
+    },
+    "nominatedInlandOperators": {
+      "type": "array",
+      "description": "List of nominated inland operators",
+      "items": {
+        "$ref": "#/$defs/ApiInlandOperatorNominationDto"
+      }
+    }
+  },
+  "$defs": {
+    "AcceptStatus": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Broad categories of accept statuses. We categorize most accept codes under these types.  When we cannot match a code to a type, we leave the type empty (null).",
+          "enum": [
+            "AVAILABLE",
+            "BOOKING_APPROVED",
+            "COMMERCIAL_RELEASE",
+            "CUSTOMS_DOCUMENT",
+            "BLOCKED",
+            "SIZETYPE_APPROVED",
+            "CARGO_OPENING",
+            "MODALITY_APPROVED",
+            "HANDLING_TYPE_APPROVED",
+            "SHIPPING_COMPANY_APPROVED"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "description": "The warning code that is sent by the terminal."
+        },
+        "remark": {
+          "type": "string",
+          "description": "The optional remark sent by the terminal."
+        }
+      }
+    },
+    "ApiBerth": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "terminal": {
+          "$ref": "#/$defs/ApiTerminal"
+        }
+      }
+    },
+    "ApiBerthVisit": {
+      "type": "object",
+      "properties": {
+        "berth": {
+          "$ref": "#/$defs/ApiBerth"
+        },
+        "eta": {
+          "type": "string"
+        },
+        "ata": {
+          "type": "string"
+        },
+        "etd": {
+          "type": "string"
+        },
+        "atd": {
+          "type": "string"
+        },
+        "etaTerminal": {
+          "type": "string",
+          "description": "ETA reported by terminal"
+        },
+        "etdTerminal": {
+          "type": "string",
+          "description": "ETD reported by terminal"
+        }
+      }
+    },
+    "ApiBillOfLading": {
+      "type": "object",
+      "properties": {
+        "blNumber": {
+          "type": "string",
+          "description": "Bill of Lading (consignment) number",
+          "maxLength": 17,
+          "minLength": 6
+        },
+        "vesselVisit": {
+          "$ref": "#/$defs/ApiVesselVisit"
+        },
+        "handlingAgent": {
+          "$ref": "#/$defs/ApiParty",
+          "description": "Organisation responsible for reporting the cargo on board of the vessel"
+        },
+        "portOfLoading": {
+          "$ref": "#/$defs/ApiPort"
+        },
+        "portOfDischarge": {
+          "$ref": "#/$defs/ApiPort"
+        },
+        "dischargeTerminal": {
+          "$ref": "#/$defs/ApiTerminal",
+          "description": "Planned discharge terminal"
+        },
+        "movementType": {
+          "type": "string",
+          "description": "Identifying code of the contract of the conditions of carriage",
+          "enum": [
+            "DOOR_TO_DOOR",
+            "DOOR_TO_PIER",
+            "PIER_TO_DOOR",
+            "PIER_TO_PIER"
+          ]
+        },
+        "customsStatus": {
+          "type": "string",
+          "description": "Coded classification of the type of declaration that is used to declare the import of goods to customs",
+          "enum": [
+            "EU_COMMUNITY_GOODS",
+            "EU_COMMUNITY_GOODS_IN_TRANSHIPMENT",
+            "EU_EMPTY_RETURN_PACKAGING",
+            "EU_PROCEDURE_T",
+            "EU_PROCEDURE_T1",
+            "EU_PROCEDURE_T2",
+            "EU_PROCEDURE_T2F",
+            "GOODS_FROM_EVA_COUNTRIES"
+          ]
+        },
+        "exchangeRate": {
+          "$ref": "#/$defs/ApiExchangeRate",
+          "description": "Exchange rate of 1 euro"
+        },
+        "placeOfOrigin": {
+          "$ref": "#/$defs/ApiPort"
+        },
+        "placeOfDestination": {
+          "$ref": "#/$defs/ApiPort"
+        },
+        "goodsItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiGoodsItem"
+          }
+        },
+        "transportEquipments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiTransportEquipment"
+          }
+        },
+        "dischargeReports": {
+          "type": "array",
+          "description": "Discharged transport equipments reported by terminals",
+          "items": {
+            "$ref": "#/$defs/ApiDischargeReport"
+          }
+        },
+        "hinterlandTerminalData": {
+          "type": "array",
+          "description": "Handling data reported by terminal",
+          "items": {
+            "$ref": "#/$defs/ApiHinterlandTerminalData"
+          }
+        },
+        "inspectionItems": {
+          "type": "array",
+          "description": "Inspections reported by customs",
+          "items": {
+            "$ref": "#/$defs/ApiInspectionItem"
+          }
+        },
+        "transportEquipmentDeclarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiTransportEquipmentDeclaration"
+          }
+        },
+        "hinterlandPreNotifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiHinterlandPreNotification"
+          }
+        },
+        "cargoDirectors": {
+          "type": "array",
+          "description": "Cargo directors per equipment, responsible for (arranging) the hinterland transport",
+          "items": {
+            "$ref": "#/$defs/ApiDirector"
+          }
+        },
+        "transportDirectors": {
+          "type": "array",
+          "deprecated": true,
+          "description": "Transport directors per equipment",
+          "items": {
+            "$ref": "#/$defs/ApiDirector"
+          }
+        },
+        "commercialReleases": {
+          "type": "array",
+          "description": "Release-to parties per equipment",
+          "items": {
+            "$ref": "#/$defs/ApiCommercialRelease"
+          }
+        },
+        "releaseToParty": {
+          "$ref": "#/$defs/ApiParty",
+          "deprecated": true,
+          "description": "Organisation to which the Bill of Lading was commercially released. <strong>Deprecated</strong> - use the release-to party in the commercial releases instead."
+        },
+        "firstTrackingOrganisation": {
+          "$ref": "#/$defs/ApiParty",
+          "deprecated": true,
+          "description": "Organisation that first tracked the Bill of Lading; can grand access to the goods description"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "When a B/L has been deleted by a cargo agent"
+        }
+      }
+    },
+    "ApiCommercialRelease": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string"
+        },
+        "releaseToParty": {
+          "$ref": "#/$defs/ApiParty"
+        },
+        "releaseValidUntilDateTime": {
+          "type": "string",
+          "description": "Release valid date as given by cargo handling agent"
+        }
+      }
+    },
+    "ApiCommodity": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiCurrency": {
+      "type": "object",
+      "properties": {
+        "unCode": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiDangerousGoods": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The technical name of the dangerous good"
+        },
+        "unCode": {
+          "type": "string",
+          "description": "The UN code of the dangerous good"
+        },
+        "hazardClass": {
+          "type": "string",
+          "description": "The IMO hazard class of the dangerous good"
+        },
+        "packingGroup": {
+          "type": "string",
+          "description": "Indication of the level of danger",
+          "enum": [
+            "MINOR_DANGER",
+            "MEDIUM_DANGER",
+            "GREAT_DANGER"
+          ]
+        },
+        "flashPoint": {
+          "type": "number",
+          "format": "double",
+          "description": "The temperature in degrees Celsius at which a good will give off enough flammable vapour to be ignited. According IMDG Code DG Class 3 or subsidiary risk of Class 3."
+        }
+      }
+    },
+    "ApiDirector": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the organisation"
+        },
+        "scacCode": {
+          "type": "string",
+          "description": "The SCAC code of the organisation"
+        }
+      }
+    },
+    "ApiDischargeReport": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "actualDischargeDateTime": {
+          "type": "string"
+        },
+        "dischargeTerminal": {
+          "$ref": "#/$defs/ApiTerminal"
+        }
+      }
+    },
+    "ApiExchangeRate": {
+      "type": "object",
+      "properties": {
+        "rate": {
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/ApiCurrency"
+        }
+      }
+    },
+    "ApiGoodsItem": {
+      "type": "object",
+      "properties": {
+        "itemNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string",
+          "description": "The goods description will be masked and replaced by 'Blocked by [organisation]' when your organisation is not the first to have tracked the B/L. Please contact the organisation displayed here to request access to the goods description."
+        },
+        "grossWeight": {
+          "type": "number",
+          "description": "The gross weight of the cargo in kilograms, including package weight, excluding container weight"
+        },
+        "numberOfOuterPackages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "outerPackageType": {
+          "$ref": "#/$defs/ApiPackageType"
+        },
+        "netWeight": {
+          "type": "number",
+          "description": "The total weight of the cargo in kilograms, excluding package weight, excluding container weight"
+        },
+        "numberOfInnerPackages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "innerPackageType": {
+          "$ref": "#/$defs/ApiPackageType"
+        },
+        "commodity": {
+          "$ref": "#/$defs/ApiCommodity",
+          "description": "Goods commodity classification of the Harmonised System"
+        },
+        "dangerousGoods": {
+          "$ref": "#/$defs/ApiDangerousGoods"
+        },
+        "minimumTemperature": {
+          "type": "number",
+          "description": "The minimum temperature (degrees C) on which the cooling system must be set"
+        },
+        "maximumTemperature": {
+          "type": "number",
+          "description": "The maximum temperature (degrees C) on which the cooling system must be set"
+        },
+        "goodsItemTransportEquipments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiGoodsItemTransportEquipment"
+          }
+        }
+      }
+    },
+    "ApiGoodsItemTransportEquipment": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "numberOfPackages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "grossWeight": {
+          "type": "number"
+        }
+      }
+    },
+    "ApiHinterlandPreNotification": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string"
+        },
+        "dateUpdated": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "DECLARED",
+            "ACCEPTED",
+            "REJECTED"
+          ]
+        },
+        "modality": {
+          "type": "string",
+          "enum": [
+            "road",
+            "rail",
+            "barge",
+            "sea",
+            "cer"
+          ]
+        },
+        "plannedVisit": {
+          "$ref": "#/$defs/PlannedVisit"
+        },
+        "equipmentStatus": {
+          "$ref": "#/$defs/EquipmentStatus"
+        }
+      }
+    },
+    "ApiHinterlandTerminalData": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "expectedDischargeTime": {
+          "type": "string",
+          "description": "Expected discharge time reported by terminals"
+        },
+        "gateOut": {
+          "type": "string",
+          "description": "Departure time reported by terminal"
+        }
+      }
+    },
+    "ApiInlandOperatorNominationDto": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string"
+        },
+        "inlandOperatorFullName": {
+          "type": "string",
+          "description": "Full name of the nominated inland operator"
+        }
+      }
+    },
+    "ApiInspectionItem": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "inspectionType": {
+          "type": "string",
+          "description": "Indication of the type of inspection of the equipment to be carried out by customs",
+          "enum": [
+            "UNKNOWN",
+            "RELEASED",
+            "BLOCK",
+            "SCAN",
+            "PHYSICAL_OUTLET",
+            "PHYSICAL_CUSTOMS_WAREHOUSE"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "NOTIFIED",
+            "RELEASED"
+          ]
+        },
+        "dateUpdated": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiPackageType": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiParty": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The full name of the organisation"
+        },
+        "scacCode": {
+          "type": "string",
+          "description": "The SCAC code of the organisation"
+        }
+      }
+    },
+    "ApiPort": {
+      "type": "object",
+      "properties": {
+        "locationName": {
+          "type": "string",
+          "description": "The name of the port"
+        },
+        "locationUnCode": {
+          "type": "string",
+          "description": "The UN code of the location where the port is located"
+        }
+      }
+    },
+    "ApiPortVisit": {
+      "type": "object",
+      "properties": {
+        "berthVisits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApiBerthVisit"
+          }
+        },
+        "etaPort": {
+          "type": "string"
+        },
+        "etdPort": {
+          "type": "string"
+        },
+        "ataPort": {
+          "type": "string"
+        },
+        "atdPort": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiSizeType": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The coded container's length, width, height, type and features",
+          "maxLength": 4,
+          "minLength": 0
+        },
+        "name": {
+          "type": "string",
+          "description": "The descriptive name of the size type of container as specified with the code"
+        }
+      }
+    },
+    "ApiTerminal": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Code of the terminal, see Dutch Customs codebook N24 locationcodes"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the terminal"
+        },
+        "ownerFullName": {
+          "type": "string",
+          "description": "The name of the organisation that contains the terminal"
+        },
+        "ownerShortName": {
+          "type": "string",
+          "description": "The Portbase short name of the organisation that contains the terminal"
+        }
+      }
+    },
+    "ApiTransportEquipment": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "UNKNOWN",
+            "CONTAINER",
+            "TRAILER",
+            "SWAP_BODY",
+            "CHASSIS"
+          ]
+        },
+        "sizeType": {
+          "$ref": "#/$defs/ApiSizeType"
+        },
+        "shippersOwned": {
+          "type": "boolean",
+          "description": "Indication whether the equipment number is a ISO 6346 compliant container number (apply true when it does not comply)"
+        },
+        "emptyIndicator": {
+          "type": "boolean",
+          "description": "Indication whether the container is full or empty"
+        },
+        "tareWeight": {
+          "type": "number",
+          "description": "The weight of the container without its content"
+        },
+        "shipperSealNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "carrierSealNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "customsSealNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "temperature": {
+          "type": "number",
+          "description": "The temperature (degrees C) on which the cooling system must be set"
+        },
+        "overlength": {
+          "type": "number",
+          "description": "The extent (in centimeters) to which the contents of equipment exceeds the length of the equipment"
+        },
+        "overheight": {
+          "type": "number",
+          "description": "The extent (in centimeters) to which the contents of equipment exceeds the height of the equipment"
+        },
+        "overwidth": {
+          "type": "number",
+          "description": "The extent (in centimeters) to which the contents of equipment exceeds the width of the equipment"
+        },
+        "oversizeRemarks": {
+          "type": "string",
+          "description": "Additional information regarding the off-dimensions of a piece of equipment"
+        },
+        "initialDemurrage": {
+          "type": "string",
+          "description": "First day that terminal storage charges must be paid after discharge of a equipment"
+        },
+        "redeliveryAddress": {
+          "type": "string",
+          "description": "Address where empty equipment must be re-delivered after delivery of the cargo"
+        },
+        "containerOperator": {
+          "$ref": "#/$defs/ApiParty",
+          "description": "Organisation that owns the container"
+        }
+      }
+    },
+    "ApiTransportEquipmentDeclaration": {
+      "type": "object",
+      "properties": {
+        "equipmentNumber": {
+          "type": "string",
+          "maxLength": 17,
+          "minLength": 0
+        },
+        "declarations": {
+          "type": "array",
+          "description": "Submitted import declarations for a transport equipment. Contains a three letter document code for a sent Import Document.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ApiVessel": {
+      "type": "object",
+      "properties": {
+        "flagCode": {
+          "type": "string",
+          "description": "The code of the flag that defines the nationality of a vessel as reported to port and/or customs authorities"
+        },
+        "flagCountryUnCode": {
+          "type": "string",
+          "description": "The two letter UN code of the flag that defines the nationality of a vessel"
+        },
+        "imoCode": {
+          "type": "string",
+          "description": "The unique identification of a vessel according to Lloyds register"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the vessel"
+        }
+      }
+    },
+    "ApiVesselVisit": {
+      "type": "object",
+      "properties": {
+        "crn": {
+          "type": "string",
+          "description": "The call reference number of the visit"
+        },
+        "portOfCall": {
+          "$ref": "#/$defs/ApiPort",
+          "description": "The port of call for the visit"
+        },
+        "vessel": {
+          "$ref": "#/$defs/ApiVessel",
+          "description": "The vessel that visits the port of call"
+        },
+        "visitDeclaration": {
+          "$ref": "#/$defs/ApiVisitDeclaration",
+          "description": "The declaration of the port visit"
+        },
+        "cancelled": {
+          "type": "boolean",
+          "description": "Indication whether the port visit is cancelled"
+        },
+        "visitStatus": {
+          "type": "string",
+          "description": "Indication of the status of a vessel call",
+          "enum": [
+            "UNKNOWN",
+            "EXPECTED",
+            "ARRIVED",
+            "DEPARTED"
+          ]
+        }
+      }
+    },
+    "ApiVisitDeclaration": {
+      "type": "object",
+      "properties": {
+        "portVisit": {
+          "$ref": "#/$defs/ApiPortVisit"
+        }
+      }
+    },
+    "EquipmentStatus": {
+      "type": "object",
+      "properties": {
+        "acceptStatuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AcceptStatus"
+          }
+        },
+        "rejectReasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RejectReason"
+          }
+        }
+      }
+    },
+    "PlannedVisit": {
+      "type": "object",
+      "properties": {
+        "eta": {
+          "type": "string"
+        },
+        "ata": {
+          "type": "string"
+        }
+      }
+    },
+    "RejectReason": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The error code sent by the terminal"
+        },
+        "terminalDescription": {
+          "type": "string",
+          "description": "The error description sent by the terminal"
+        },
+        "parsedReason": {
+          "type": "string",
+          "description": "A user friendly description of the error code"
+        }
+      }
+    }
+  }
+}

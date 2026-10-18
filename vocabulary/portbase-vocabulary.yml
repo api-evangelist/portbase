@@ -1,0 +1,435 @@
+generated: '2026-10-18'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/portbase-cargo-controller-export-openapi.yml
+- openapi/portbase-cargo-controller-import-openapi.yml
+- openapi/portbase-hinterland-container-notification-openapi.yml
+- openapi/portbase-vessel-visit-openapi.yml
+vocabulary:
+  name: Portbase Domain Vocabulary
+  description: 'Terms declared by Portbase''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-18'
+  terms:
+  - term: Bookings
+    definition: Manage and retrieve bookings for an organisation
+    tags:
+    - Resource Group
+    source: openapi/portbase-cargo-controller-export-openapi.yml
+  - term: Road API V1
+    definition: Deprecated Road API. Please upgrade to Operator API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Road API V2
+    definition: Deprecated Road API. Please upgrade to Operator API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Tracking API
+    definition: This API can be used to receive **real-time** updates about the voyages, visits and (detached) handlings. To achieve these real-time
+      updates the API uses a mechanism called 'long polling'. When you send a request to listen for updates, you will receive an update immediately
+      when it happened since your last request. Or when there is no update, it will wait until there is, or timeout when the maxTim
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Integral Planning API
+    definition: This endpoint can be used by the integral planner Nextlogic to update the planning information.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Operator API - handlings
+    definition: API for the declarant to create, update, move, detach or cancel attached handlings (handlings that are connected to a visit and
+      voyage).
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Operator API - visits
+    definition: Endpoint to create new visits by a declarant, update, move or cancel them. A special operation to indicate the load-discharge
+      list is finalized is also available, to let the terminal know that after reopening the load-discharge list after cut-off time, you are done
+      with adding/removing handlings.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Operator API - voyages
+    definition: API for the declarant to create new voyages, update or cancel them. Special operations are also available to indicate that the
+      voyage contains visits where restrictions apply (i.e. due to reefers).
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Organisation Data API
+    definition: Api defining the operations a terminal/barge operator can do to retrieve organisation configuration. Basically these operations
+      retrieve configuration data such as bollards, fixedwindows etc.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Reference Data API
+    definition: Portbase uses reference data within the API calls for instance barges, shipping companies, container sizetypes etc. With this
+      Reference Data API you can retrieve the data to be used in the API calls for voyages, visits and handlings. This way you make sure you do
+      not send unknown or invalid information.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Terminal API - handlings
+    definition: Api defining the operations a terminal can do for handlings. Basically these operations supply feedback to the declarant about
+      the status of the handling.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Terminal API - visits
+    definition: Api defining the operations a terminal can do to respond on visit requests from the declarant. The terminal supplies feedback
+      if a visit is accepted and can be planned, rejected or completed.
+    tags:
+    - Resource Group
+    source: openapi/portbase-hinterland-container-notification-openapi.yml
+  - term: Consignments API
+    definition: This is a API for sending Bill of Ladings.
+    tags:
+    - Resource Group
+    source: openapi/portbase-vessel-visit-openapi.yml
+  - term: Ship Operator API - terminal planning
+    definition: 'This api can be used for settling the terminal planning with the stevedores. The happy flow consists preferably of the next steps:
+      declare terminal plannings update terminal plannings approve each terminal planningfinish terminal planning'
+    tags:
+    - Resource Group
+    source: openapi/portbase-vessel-visit-openapi.yml
+  - term: ApiError
+    definition: 'Object declared by the contract with fields: timestamp, status, error, message, rejectedValue.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/ApiError
+  - term: SubscribeDto
+    definition: 'Object declared by the contract with fields: bookingNumber, callReferenceNumber, imoCode.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/SubscribeDto
+  - term: SubscriptionId
+    definition: The subscription id for an organisation to a booking
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/SubscriptionId
+  - term: Berth
+    definition: A berth at a terminal
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Berth
+  - term: BerthVisit
+    definition: A visit to a specific berth within a port
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/BerthVisit
+  - term: BookingDossier
+    definition: A booking dossier belonging to an organisation
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/BookingDossier
+  - term: BookingEquipment
+    definition: Equipment associated with a booking
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/BookingEquipment
+  - term: Document
+    definition: An export document associated with equipment
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Document
+  - term: DocumentType
+    definition: The type classification of a document
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentType
+  - term: EquipmentStatus
+    definition: Aggregated status overview of an equipment across all process steps
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/EquipmentStatus
+  - term: GateIn
+    definition: Gate-in information for equipment at a terminal
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/GateIn
+  - term: LoadConfirmation
+    definition: Confirmation that equipment has been loaded onto a vessel
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/LoadConfirmation
+  - term: Manifest
+    definition: Manifest information linking equipment to a vessel visit
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Manifest
+  - term: Port
+    definition: A port location
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Port
+  - term: PortOfCall
+    definition: The port of call for a vessel visit
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/PortOfCall
+  - term: PortVisit
+    definition: A port visit containing berth visit information
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/PortVisit
+  - term: Status
+    definition: A status value with its filter classification, timestamp, and optional parameters
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Status
+  - term: SubscribedTerminal
+    definition: A terminal that is subscribed to a booking
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/SubscribedTerminal
+  - term: Terminal
+    definition: A terminal at a port
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Terminal
+  - term: Vessel
+    definition: A vessel
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/Vessel
+  - term: VesselVisit
+    definition: A vessel visit to a port
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VesselVisit
+  - term: VisitDeclaration
+    definition: The visit declaration containing port visit details
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VisitDeclaration
+  - term: WebhookBody
+    definition: The body of a webhook event
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/WebhookBody
+  - term: CargoWindowAdded
+    definition: 'Object declared by the contract with fields: callReferenceNumber, cargoOpeningDateTime, cargoClosingDateTime, terminalFullName.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/CargoWindowAdded
+  - term: CargoWindowUpdated
+    definition: 'Object declared by the contract with fields: callReferenceNumber, cargoOpeningDateTime, cargoClosingDateTime, terminalFullName.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/CargoWindowUpdated
+  - term: DocumentAccepted
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentAccepted
+  - term: DocumentAdded
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber, documentType, createdByOrgFullName.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentAdded
+  - term: DocumentCleared
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentCleared
+  - term: DocumentNumberUpdated
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentNumberUpdated
+  - term: DocumentRejected
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber, rejectionReason, rejectionType.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentRejected
+  - term: DocumentReleased
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber, releaseType.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentReleased
+  - term: DocumentRemoved
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentRemoved
+  - term: DocumentReported
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentReported
+  - term: DocumentTypeUpdated
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber, documentType.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentTypeUpdated
+  - term: DocumentUncleared
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/DocumentUncleared
+  - term: InspectionNotified
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, documentId, documentNumber, inspectionType, inspectionLocation,
+      customsProvidedEquipmentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/InspectionNotified
+  - term: InspectionReleased
+    definition: 'Object declared by the contract with fields: bookingNumber, documentId, documentNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/InspectionReleased
+  - term: TerminalSubscribed
+    definition: 'Object declared by the contract with fields: bookingNumber, orgFullName.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/TerminalSubscribed
+  - term: TransportEquipmentGateIn
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, terminalFullName, gatedInDateTime.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/TransportEquipmentGateIn
+  - term: TransportEquipmentLoaded
+    definition: 'Object declared by the contract with fields: equipmentNumber, callReferenceNumber, terminalShortName, terminalFullName, loadedDateTime.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/TransportEquipmentLoaded
+  - term: TransportEquipmentPlanned
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, manifestId, callReferenceNumber, voyageNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/TransportEquipmentPlanned
+  - term: TransportEquipmentUnPlanned
+    definition: 'Object declared by the contract with fields: bookingNumber, equipmentNumber, manifestId, callReferenceNumber, voyageNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/TransportEquipmentUnPlanned
+  - term: VisitArrived
+    definition: 'Object declared by the contract with fields: callReferenceNumber, terminalFullName, ata.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VisitArrived
+  - term: VisitDeparted
+    definition: 'Object declared by the contract with fields: callReferenceNumber, terminalFullName, atd.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VisitDeparted
+  - term: VisitEtaUpdated
+    definition: 'Object declared by the contract with fields: callReferenceNumber, eta, terminalFullName, provider.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VisitEtaUpdated
+  - term: VisitEtdUpdated
+    definition: 'Object declared by the contract with fields: callReferenceNumber, etd, terminalFullName, provider.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/VisitEtdUpdated
+  - term: WebhookPayload
+    definition: The event payload. Discriminated by the '@class' property.
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-export-openapi.yml#/components/schemas/WebhookPayload
+  - term: StubApiShipmentDto
+    definition: 'Object declared by the contract with fields: stubSettings, deepSeaEta, deepSeaTerminal, deepSeaVesselName, deepSeaVesselImo,
+      deepSeaVoyageNumber, transportEquipments.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/StubApiShipmentDto
+  - term: StubSettings
+    definition: 'Object declared by the contract with fields: webhookUrl, blNumber, referenceNumber.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/StubSettings
+  - term: TransportEquipmentDto
+    definition: 'Object declared by the contract with fields: equipmentNumber, sizeType, containerOperator, placeOfDestination, inlandTerminalLocation,
+      inlandTerminalCode, inlandOperator, inlandModality, releaseReference, transportOrder.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TransportEquipmentDto
+  - term: TransportOrder
+    definition: 'Object declared by the contract with fields: invoiceReference, debtorName, consigneeName, releaseExpiration, demurrage, detention,
+      returnTerminal, returnReference, destinationTargetDate, destinationReference, destinationInstructions, customsCategory. (2 more)'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TransportOrder
+  - term: Shipment
+    definition: 'Object declared by the contract with fields: deepSeaEta, deepSeaTerminal, deepSeaVesselName, deepSeaVesselImo, deepSeaVoyageNumber,
+      transportEquipments.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/Shipment
+  - term: CargoDirector
+    definition: Use either the CoC number (for Dutch organisations) or the iamConnectedId of the assigned organisation. When both are filled out,
+      the iamConnectedId will be ignored. You can use the CoC or Iam id of your own organisation when you want to 'reclaim' the role for your
+      organisation.
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/CargoDirector
+  - term: TransferRequest
+    definition: 'Object declared by the contract with fields: equipmentNumbers, director, cargoDirector.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TransferRequest
+  - term: StubBatchTrackRequestDto
+    definition: 'Object declared by the contract with fields: trackRequests, webhookUrl.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/StubBatchTrackRequestDto
+  - term: TrackRequest
+    definition: 'Object declared by the contract with fields: blNumber, transportEquipmentNumber, referenceNumber, labels, callReferenceNumber,
+      vesselImoCode.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TrackRequest
+  - term: TrackResponse
+    definition: 'Object declared by the contract with fields: trackedBLs, notTrackedBLs, rejectedBLs.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TrackResponse
+  - term: TrackResult
+    definition: 'Object declared by the contract with fields: id, blNumber, transportEquipmentNumber, referenceNumber, vesselName, labels.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/TrackResult
+  - term: BatchTrackRequest
+    definition: 'Object declared by the contract with fields: trackRequests.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/BatchTrackRequest
+  - term: AcceptStatus
+    definition: 'Object declared by the contract with fields: type, code, remark.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/AcceptStatus
+  - term: ApiBerth
+    definition: 'Object declared by the contract with fields: name, terminal.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiBerth
+  - term: ApiBerthVisit
+    definition: 'Object declared by the contract with fields: berth, eta, ata, etd, atd, etaTerminal, etdTerminal.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiBerthVisit
+  - term: ApiBillOfLading
+    definition: 'Object declared by the contract with fields: blNumber, vesselVisit, handlingAgent, portOfLoading, portOfDischarge, dischargeTerminal,
+      movementType, customsStatus, exchangeRate, placeOfOrigin, placeOfDestination, goodsItems. (12 more)'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiBillOfLading
+  - term: ApiCommercialRelease
+    definition: 'Object declared by the contract with fields: equipmentNumber, releaseToParty, releaseValidUntilDateTime.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiCommercialRelease
+  - term: ApiCommodity
+    definition: 'Object declared by the contract with fields: code, description.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiCommodity
+  - term: ApiCurrency
+    definition: 'Object declared by the contract with fields: unCode, description.'
+    tags:
+    - Object
+    source: openapi/portbase-cargo-controller-import-openapi.yml#/components/schemas/ApiCurrency

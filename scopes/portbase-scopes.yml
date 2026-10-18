@@ -1,0 +1,5 @@
+generated: '2026-10-18'
+method: none
+source: openapi/portbase-cargo-controller-import-openapi.yml
+scopes: []
+note: No OAuth2 scopes found in OpenAPI specifications. Authentication uses API keys.

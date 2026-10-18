@@ -1,0 +1,287 @@
+openapi: 3.2.0
+info:
+  title: Portbase Waste Collector API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Waste Collector API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Waste Collector API
+paths:
+  /waste-collector/wastecollection:cancel:
+    post:
+      tags:
+      - Waste Collector API
+      summary: Cancel waste collection
+      description: This endpoint can be used to cancel a registered waste collection.
+      operationId: cancelWasteCollection
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputCancelWasteCollection'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /waste-collector/wastecollection:complete:
+    post:
+      tags:
+      - Waste Collector API
+      summary: Complete waste collection
+      description: This endpoint can be used to complete a waste collection by filling in the actual times.
+      operationId: completeWasteCollection
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputCompleteWasteCollection'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /waste-collector/wastecollection:register:
+    post:
+      tags:
+      - Waste Collector API
+      summary: Register waste collection
+      description: This endpoint can be used to register a waste collection.
+      operationId: registerWasteCollection
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputRegisterWasteCollection'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+  /waste-collector/wastecollection:financials:
+    post:
+      tags:
+      - Waste Collector API
+      summary: Submit waste collection financials
+      description: This endpoint can be used to fill in all financial data of a waste collection.
+      operationId: submitFinancialsForWasteCollection
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputSubmitFinancials'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputCancelWasteCollection:
+      title: InputCancelWasteCollection
+      required:
+      - collectionId
+      - crn
+      - imo
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+        imo:
+          minLength: 1
+          type: string
+        collectionId:
+          minLength: 1
+          type: string
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputSubmitFinancials:
+      title: InputSubmitFinancials
+      required:
+      - crn
+      - imo
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The crn of the visit. The vessel should have arrived at the port.
+        imo:
+          minLength: 1
+          type: string
+          description: The imo number of the vessel.
+        collection:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputWasteCollection'
+        timestamp:
+          type: string
+          description: The time that the command was sent.
+          format: date-time
+      description: Submit financials by collector. (equivalent of EOVMF)
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputCompleteWasteCollection:
+      title: InputCompleteWasteCollection
+      required:
+      - crn
+      - imo
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The crn of the visit. The vessel should have arrived at the port.
+        imo:
+          minLength: 1
+          type: string
+          description: The imo number of the vessel.
+        collection:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputWasteCollection'
+        timestamp:
+          type: string
+          description: The time that the command was sent.
+          format: date-time
+      description: Complete waste collection by collector. (equivalent of EOVM)
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputCollectedItem:
+      title: InputCollectedItem
+      required:
+      - ssnCode
+      type: object
+      properties:
+        ssnCode:
+          minLength: 1
+          type: string
+        typeCode:
+          type:
+          - string
+          - 'null'
+        receptionFacility:
+          type:
+          - string
+          - 'null'
+        amount:
+          type:
+          - number
+          - 'null'
+        directCost:
+          type:
+          - number
+          - 'null'
+        indirectCost:
+          type:
+          - number
+          - 'null'
+        specification:
+          type:
+          - string
+          - 'null'
+      description: The waste items.
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputWasteCollection:
+      title: InputWasteCollection
+      required:
+      - id
+      - startTime
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: The id of the collection. This id links register, complete and submit financials.
+        sformNumber:
+          type:
+          - string
+          - 'null'
+          description: The name of the S-Form (required in CompleteCollection and SubmitFinancials).
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Extra remarks for on the S-Form.
+        berthVisitId:
+          type:
+          - string
+          - 'null'
+          description: The berthVisitId (either berthVisitId of locationName should be filled).
+        locationName:
+          type:
+          - string
+          - 'null'
+          description: The locationName (either berthVisitId of locationName should be filled).
+        fixedCosts:
+          type:
+          - number
+          - 'null'
+          description: The fixed costs of the collection (either berthVisitId of locationName should be filled).
+        items:
+          type: array
+          description: The waste items.
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputCollectedItem'
+        startTime:
+          type: string
+          description: The time of the start of the collection.
+          format: date-time
+        endTime:
+          type:
+          - string
+          - 'null'
+          description: The time that the collection has completed (required in CompleteCollection and SubmitFinancials).
+          format: date-time
+      description: The collection to be registered, completed, of for which financials should be submitted.
+    com.portbase.bezoekschip.common.api.waste.collector.input.InputRegisterWasteCollection:
+      title: InputRegisterWasteCollection
+      required:
+      - crn
+      - imo
+      - timestamp
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The crn of the visit. The vessel should have arrived at the port.
+        imo:
+          minLength: 1
+          type: string
+          description: The imo number of the vessel.
+        collection:
+          $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.waste.collector.input.InputWasteCollection'
+        timestamp:
+          type: string
+          description: The time that the command was sent.
+          format: date-time
+      description: Register waste by collector. (equivalent of EOPM)
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

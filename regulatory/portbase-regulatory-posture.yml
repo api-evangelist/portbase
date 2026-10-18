@@ -1,0 +1,92 @@
+generated: '2026-10-18'
+method: searched
+probe: true
+source:
+- https://www.portbase.com/en/privacy-statement/
+- https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+- https://www.portbase.com/en/cookie-statement/
+signals:
+  data_subject_request:
+    url: https://www.portbase.com/en/privacy-statement/
+    section: 'Data Subjects’ Rights — Inspection, amendment, deletion & data portability'
+    channel: contact form (per the Privacy Statement)
+    stated_sla: 'Within the statutory period of one (1) month'
+    rights_named: [inspection, amendment, deletion, data portability, withdrawal of consent]
+    escalation: Data Protection Authority
+    evidence:
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'Via our contact form you can, as a data subject: – Make a written request to inspect, amend and delete personal data. – Request or invoke the right to data portability. This is the right to transfer data, either to yourself or to another organisation providing the same services.'
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'Portbase hereby requests justification of your request as well as identification. Within the statutory period of one (1) month, Portbase will comply with the request or inform you as a data subject of the status of the request or appeal.'
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'If, as a data subject, you are dissatisfied with the way Portbase has dealt with your request or in any other way with Portbase’s processing of your personal data, please file a complaint about the use of the personal data with the Data Protection Authority.'
+    note: GDPR data-subject rights channel (contact form) with a one-month response commitment and escalation to the Data Protection Authority. The statement also reserves grounds to deny requests (compelling legitimate interest, unreasonable frequency or technical effort).
+  data_retention:
+    url: https://www.portbase.com/en/privacy-statement/
+    section: Retention period(s)
+    evidence:
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'Portbase retains most personal data for up to seven (7) years after the end of the business relationship as a client. Personal data of main administrators and/or users in IAMconnected are deleted within three (3) months after the end of the account, e.g. after a period of inactivity or exit from the organisation to which your account is linked.'
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'Identity document data or any copy thereof will be deleted within two (2) months after the identification required for registration of the account in IAMconnected.'
+    note: Concrete retention periods are published — 7 years after the client relationship ends for most personal data, 3 months after account end for IAMconnected users, 2 months for identity-document data.
+  data_residency:
+    url: https://www.portbase.com/en/privacy-statement/
+    section: Access to personal data and sharing with third parties
+    evidence:
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'Personal data is mostly stored within the European Union. Only data collected via cookies on Websites is processed in the United States.'
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'In that case and other possible cases where Portbase shares personal data with organisations in countries outside the European Economic Area (EEA), it takes the necessary measures required by the GDPR to protect this data, such as the necessary contractual, technical and organisational safeguards.'
+    note: Storage is stated as "mostly" EU, with website-cookie data processed in the US under GDPR transfer safeguards. This is a statement of practice, not a contractual EU-only residency guarantee.
+  subprocessors:
+    url: https://www.portbase.com/en/privacy-statement/
+    section: Access to personal data and sharing with third parties
+    evidence:
+    - source: https://www.portbase.com/en/privacy-statement/
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'In addition, Portbase’s software suppliers have access to its systems. Portbase has made agreements with these data processors to ensure sufficient guarantees are in place for the careful processing of personal data, in accordance with the GDPR and this Privacy Statement.'
+    note: Confirms that processors (software suppliers) are used, and that Portbase has processing agreements with them. No named subprocessor list was found on the pages read.
+  notice_and_action:
+    url: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+    section: 11. Illegal content and the notice & takedown procedure
+    channel: security@portbase.com (objections to legal@portbase.com)
+    stated_sla: endeavour to decide within 10 Working Days
+    evidence:
+    - source: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: '11.2 If the Client is of the opinion that the Services contain unlawful, illegal or otherwise harmful content then the Client will contact Portbase as soon as possible at the email address security@portbase.com. The Client’s notification must in all cases include a brief reason for the notification of and the exact location of the allegedly unlawful or illegal content.'
+    - source: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: '11.3 Portbase will then make a decision about the Client’s notification and will endeavour to inform the Client of this decision within 10 (ten) Working Days. 11.4 If the Client does not agree with the decision Portbase makes about the notification then he can file an objection with the Legal department at the e-mail address legal@portbase.com.'
+    note: A DSA-style notice-and-action mechanism in the GTC (version dated 11 February 2025), with a notice channel, required notice contents, a target decision time and an internal objection route.
+  transparency_report:
+    url: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+    section: 11. Illegal content and the notice & takedown procedure
+    evidence:
+    - source: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: '11.7 At least 1 time (i.e. once) a year, Portbase will publish a transparency report in which it will state such information as'
+    - source: https://www.portbase.com/wp-content/uploads/2025/02/General-Terms-and-Conditions-of-Portbase-1.pdf
+      http_status: 200
+      fetched: '2026-10-18'
+      quote: 'number of orders received from the authorities to delete illegal content, the content moderation carried out on Portbase’s initiative, the IT tools (if any) that Portbase used for content moderation, and the number of complaints and notifications received by Portbase.'
+    note: A contractual commitment to publish an annual transparency report (the clause runs across a page break in the PDF, so it is quoted in two parts). No published report was located in this pass; this records the commitment only.

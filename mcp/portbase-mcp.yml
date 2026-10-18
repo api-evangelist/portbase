@@ -1,0 +1,1406 @@
+generated: '2026-10-18'
+method: derived
+status: candidate
+source:
+- openapi/portbase-cargo-controller-export-openapi.yml
+- openapi/portbase-cargo-controller-import-openapi.yml
+- openapi/portbase-hinterland-container-notification-openapi.yml
+- openapi/portbase-vessel-visit-openapi.yml
+name: Portbase MCP server (candidate)
+auth: Portbase-access-key-id + Portbase-secret-access-key headers (documented in each API description)
+search_evidence:
+  web_search: Portbase MCP server "Model Context Protocol" port community system -> no Portbase result (only Port.io, an unrelated product)
+  probes:
+  - url: https://api.portbase.com/mcp
+    status: 403
+    note: 'preflight: control path also 403, the edge rejects before routing; proves nothing'
+  - url: https://status.portbase.com/mcp
+    status: 403
+    note: 'preflight: control path also 403; opaque'
+deployment:
+  mode: none
+  auth: api-key
+  verified: derived
+tool_count: 197
+tools:
+- name: cargo_controller_export__subscribe
+  category: Bookings
+  description: Subscribe to a booking
+  api: openapi/portbase-cargo-controller-export-openapi.yml
+  operationId: subscribe
+  method: POST
+  path: /v1/bookings
+- name: cargo_controller_export__get_by_subscription_id
+  category: Bookings
+  description: Get booking dossier by subscriptionId
+  api: openapi/portbase-cargo-controller-export-openapi.yml
+  operationId: getBySubscriptionId
+  method: GET
+  path: /v1/bookings/{subscriptionId}
+- name: cargo_controller_export__get_jwks
+  category: Event API
+  description: JSON Web Key Set
+  api: openapi/portbase-cargo-controller-export-openapi.yml
+  operationId: getJwks
+  method: GET
+  path: /public/.well-known/jwks.json
+- name: cargo_controller_import__nominate_inland_operators_1
+  category: Secure Chain API
+  description: Nominate inland operator
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operationId: nominateInlandOperators_1
+  method: PUT
+  path: /public/track-requests/{trackRequestId}/inland-operator-nominations
+- name: cargo_controller_import__assign_cargo_director
+  category: Secure Chain API
+  description: Assign cargo director
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operationId: assignCargoDirector
+  method: PUT
+  path: /public/track-requests/{trackRequestId}/assign-cargo-director
+- name: cargo_controller_import__track_1
+  category: Cargo Controller Import API
+  description: Track requests
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operationId: track_1
+  method: POST
+  path: /public/track-requests
+- name: cargo_controller_import__tracked_bls_1
+  category: Cargo Controller Import API
+  description: Tracked B/L's
+  api: openapi/portbase-cargo-controller-import-openapi.yml
+  operationId: trackedBls_1
+  method: GET
+  path: /public/tracked-bls
+- name: hinterland_container_notification__accept_handling
+  category: Terminal API - handlings
+  description: Accept handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_acceptHandling
+  method: POST
+  path: /handlings:accept
+- name: hinterland_container_notification__accept_visit_post
+  category: Terminal API - visits
+  description: Accept visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_acceptVisit_Post
+  method: POST
+  path: /visits:accept
+- name: hinterland_container_notification__accept_visit_patch
+  category: Terminal API - visits
+  description: Accept visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_acceptVisit_Patch
+  method: PATCH
+  path: /visits:accept
+- name: hinterland_container_notification__create_attached_handling
+  category: Operator API - handlings
+  description: Create handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_createAttachedHandling
+  method: POST
+  path: /attachedHandlings:create
+- name: hinterland_container_notification__create_visit
+  category: Operator API - visits
+  description: Create visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_createVisit
+  method: POST
+  path: /visits:create
+- name: hinterland_container_notification__create_voyage
+  category: Operator API - voyages
+  description: Create voyage
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_createVoyage
+  method: POST
+  path: /voyages:create
+- name: hinterland_container_notification__find_shipping_companies
+  category: Reference Data API
+  description: Find shipping companies
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_findShippingCompanies
+  method: POST
+  path: /refdata/findShippingCompanies
+- name: hinterland_container_notification__get_bollards
+  category: Organisation Data API
+  description: Get bollards
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_getBollards
+  method: POST
+  path: /bollards
+- name: hinterland_container_notification__listen
+  category: Tracking API
+  description: Listen to voyage and detachedHandling updates
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_listen
+  method: POST
+  path: /listen
+- name: hinterland_container_notification__plan_voyage
+  category: Integral Planning API
+  description: Update voyage planning
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_planVoyage
+  method: POST
+  path: /integralPlanning/voyage
+- name: hinterland_container_notification__process_shipments
+  category: Forwarder API
+  description: Declare shipments
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_processShipments
+  method: POST
+  path: /processShipments
+- name: hinterland_container_notification__register_train_composition
+  category: Operator API - rail-only
+  description: Register train composition
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_registerTrainComposition
+  method: POST
+  path: /rail:train-composition
+- name: hinterland_container_notification__road_pre_notify
+  category: Operator API - road-only
+  description: Prenotify new handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_roadPreNotify
+  method: POST
+  path: /road:prenotify
+- name: hinterland_container_notification__update_transport_visit_status
+  category: Traction Supplier API
+  description: Update Transport Status
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _01_updateTransportVisitStatus
+  method: POST
+  path: /visits:update-transport-status
+- name: hinterland_container_notification__get_shipping_company
+  category: Reference Data API
+  description: Get shipping company
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_getShippingCompany
+  method: POST
+  path: /refdata/getShippingCompany
+- name: hinterland_container_notification__plan_visit
+  category: Integral Planning API
+  description: Update visit planning
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_planVisit
+  method: POST
+  path: /integralPlanning/visit
+- name: hinterland_container_notification__reject_handling
+  category: Terminal API - handlings
+  description: Reject handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_rejectHandling
+  method: POST
+  path: /handlings:reject
+- name: hinterland_container_notification__road_upgrade
+  category: Operator API - road-only
+  description: Prenotify detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_roadUpgrade
+  method: POST
+  path: /road:upgrade
+- name: hinterland_container_notification__update_attached_handling
+  category: Operator API - handlings
+  description: Update handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_updateAttachedHandling
+  method: POST
+  path: /attachedHandlings:update
+- name: hinterland_container_notification__get_visit_by_uuid
+  category: Road API V1
+  description: Get roadvisit by visitUuid
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_getVisitByUuid
+  method: GET
+  path: /roadvisits/{visitUuid}
+- name: hinterland_container_notification__delete_road_visit
+  category: Road API V1
+  description: Delete roadvisit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_deleteRoadVisit
+  method: DELETE
+  path: /roadvisits/{visitUuid}
+- name: hinterland_container_notification__update_road_visit_eta
+  category: Road API V1
+  description: Update visit eta
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_updateRoadVisitEta
+  method: PATCH
+  path: /roadvisits/{visitUuid}
+- name: hinterland_container_notification__update_visit
+  category: Operator API - visits
+  description: Update visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_updateVisit
+  method: POST
+  path: /visits:update
+- name: hinterland_container_notification__update_voyage
+  category: Operator API - voyages
+  description: Update voyage
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02_updateVoyage
+  method: POST
+  path: /voyages:update
+- name: hinterland_container_notification__get_shipping_companies
+  category: Reference Data API
+  description: Get shipping companies
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _02b_getShippingCompanies
+  method: POST
+  path: /refdata/getShippingCompanies
+- name: hinterland_container_notification__cancel_visit
+  category: Operator API - visits
+  description: Cancel visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_cancelVisit
+  method: POST
+  path: /visits:cancel
+- name: hinterland_container_notification__cancel_voyage
+  category: Operator API - voyages
+  description: Cancel voyage
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_cancelVoyage
+  method: POST
+  path: /voyages:cancel
+- name: hinterland_container_notification__complete_handling
+  category: Terminal API - handlings
+  description: Complete handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_completeHandling
+  method: POST
+  path: /handlings:complete
+- name: hinterland_container_notification__detach
+  category: Operator API - handlings
+  description: Detach handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_detach
+  method: POST
+  path: /attachedHandlings:detach
+- name: hinterland_container_notification__find_barges
+  category: Reference Data API
+  description: Find barges
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_findBarges
+  method: POST
+  path: /refdata/findBarges
+- name: hinterland_container_notification__forward_shipment
+  category: Forwarder API
+  description: Forward a shipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_forwardShipment
+  method: POST
+  path: /forwardShipment
+- name: hinterland_container_notification__plan_handling
+  category: Integral Planning API
+  description: Update handling planning
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_planHandling
+  method: POST
+  path: /integralPlanning/handling
+- name: hinterland_container_notification__reject_visit
+  category: Terminal API - visits
+  description: Reject visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_rejectVisit
+  method: POST
+  path: /visits:reject
+- name: hinterland_container_notification__road_create_visit
+  category: Operator API - road-only
+  description: Create road visit and prenotify handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_roadCreateVisit
+  method: POST
+  path: /road:visit
+- name: hinterland_container_notification__update_position
+  category: Tracking API
+  description: Update position
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_updatePosition
+  method: POST
+  path: /updatePosition
+- name: hinterland_container_notification__cancel_shipment_forwarding
+  category: Forwarder API
+  description: Cancel shipment forwarding
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03b_cancelShipmentForwarding
+  method: POST
+  path: /cancelShipmentForwarding
+- name: hinterland_container_notification__cancel_any_handling
+  category: Operator API - handlings
+  description: Cancel any handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_cancelAnyHandling
+  method: POST
+  path: /handlings:cancel
+- name: hinterland_container_notification__complete_extra_handling
+  category: Terminal API - handlings
+  description: Complete extra handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_completeExtraHandling
+  method: POST
+  path: /handlings:completeExtraHandling
+- name: hinterland_container_notification__create_remain_on_truck_handling
+  category: Operator API - road-only
+  description: Create handling for non-pcs visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_createRemainOnTruckHandling
+  method: POST
+  path: /road:handlings:create-nonpcs
+- name: hinterland_container_notification__get_barge
+  category: Reference Data API
+  description: Get barge
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_getBarge
+  method: POST
+  path: /refdata/getBarge
+- name: hinterland_container_notification__move_visit
+  category: Operator API - visits
+  description: Move visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_moveVisit
+  method: POST
+  path: /visits:move
+- name: hinterland_container_notification__process_visit
+  category: Terminal API - visits
+  description: Acknowledge visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_processVisit
+  method: POST
+  path: /visits:acknowledge
+- name: hinterland_container_notification__reset_position
+  category: Tracking API
+  description: Reset position
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_resetPosition
+  method: POST
+  path: /resetPosition
+- name: hinterland_container_notification__update_restrictions
+  category: Operator API - voyages
+  description: Update restrictions
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _04_updateRestrictions
+  method: POST
+  path: /voyages/restrictions:update
+- name: hinterland_container_notification__disconnect_client
+  category: Tracking API
+  description: Disconnects client
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_disconnectClient
+  method: POST
+  path: /disconnectClient
+- name: hinterland_container_notification__finalize_load_discharge_list
+  category: Operator API - visits
+  description: Finalize load-discharge list
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_finalizeLoadDischargeList
+  method: POST
+  path: /visits:finalize
+- name: hinterland_container_notification__find_locations
+  category: Reference Data API
+  description: Find locations
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_findLocations
+  method: POST
+  path: /refdata/findLocations
+- name: hinterland_container_notification__get_booking_number
+  category: Terminal API - handlings
+  description: Get booking number
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_getBookingNumber
+  method: POST
+  path: /handlings:getBookingNumber
+- name: hinterland_container_notification__move
+  category: Operator API - handlings
+  description: Move any handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_move
+  method: POST
+  path: /handlings:move
+- name: hinterland_container_notification__update_restriction_groups
+  category: Operator API - voyages
+  description: Update restriction groups
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_updateRestrictionGroups
+  method: POST
+  path: /voyages/restrictionGroups:update
+- name: hinterland_container_notification__update_visit_status_post
+  category: Terminal API - visits
+  description: Update visit status
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05_updateVisitStatus_Post
+  method: POST
+  path: /visits:updateStatus
+- name: hinterland_container_notification__update_visit_status_patch
+  category: Terminal API - visits
+  description: Update visit status
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_updateVisitStatus_Patch
+  method: PATCH
+  path: /visits:updateStatus
+- name: hinterland_container_notification__get_location
+  category: Reference Data API
+  description: Get location
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _05b_getLocation
+  method: POST
+  path: /refdata/getLocation
+- name: hinterland_container_notification__accept_road_handling
+  category: Terminal API - handlings
+  description: Accept road handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_acceptRoadHandling
+  method: POST
+  path: /road:acceptHandling
+- name: hinterland_container_notification__find_size_types
+  category: Reference Data API
+  description: Find size types
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_findSizeTypes
+  method: POST
+  path: /refdata/findSizeTypes
+- name: hinterland_container_notification__get_voyage
+  category: Operator API - voyages
+  description: Get voyage
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_getVoyage
+  method: POST
+  path: /voyages:get
+- name: hinterland_container_notification__listen
+  category: Tracking API
+  description: Listen to shipment updates
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_listen
+  method: POST
+  path: /listen/shipments
+- name: hinterland_container_notification__send_load_discharge_list
+  category: Operator API - visits
+  description: Send load-discharge list
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_sendLoadDischargeList
+  method: POST
+  path: /visits:send
+- name: hinterland_container_notification__get_road_visit_equipments
+  category: Road API V1
+  description: Find attached equipments
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _03_getRoadVisitEquipments
+  method: GET
+  path: /roadvisits/{visitUuid}/equipments
+- name: hinterland_container_notification__update_road_visit_equipments
+  category: Road API V1
+  description: Update attached equipments
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06_updateRoadVisitEquipments
+  method: PATCH
+  path: /roadvisits/{visitUuid}/equipments
+- name: hinterland_container_notification__get_size_types
+  category: Reference Data API
+  description: Get size type
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06b_getSizeTypes
+  method: POST
+  path: /refdata/getSizeType
+- name: hinterland_container_notification__get_size_types
+  category: Reference Data API
+  description: Get all size types
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _06c_getSizeTypes
+  method: POST
+  path: /refdata/getSizeTypes
+- name: hinterland_container_notification__complete_visit
+  category: Terminal API - visits
+  description: Complete visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _07_completeVisit
+  method: POST
+  path: /visits:complete
+- name: hinterland_container_notification__get_barge_access_points
+  category: Reference Data API
+  description: Get barge access points
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _07_getBargeAccessPoints
+  method: POST
+  path: /refdata/getBargeAccessPoints
+- name: hinterland_container_notification__listen_all
+  category: Tracking API
+  description: Listen to ALL updates
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _07_listenAll
+  method: POST
+  path: /listen/all
+- name: hinterland_container_notification__update_cargo_declarants
+  category: Operator API - voyages
+  description: Update cargo declarants
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _07_updateCargoDeclarants
+  method: POST
+  path: /voyages/cargoDeclarants:update
+- name: hinterland_container_notification__accept_visit_cancellation
+  category: Terminal API - visits
+  description: Accept visit cancellation
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _08_acceptVisitCancellation
+  method: POST
+  path: /visits:acceptCancellation
+- name: hinterland_container_notification__get_terminals
+  category: Reference Data API
+  description: Get terminals
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _08_getTerminals
+  method: POST
+  path: /refdata/getTerminals
+- name: hinterland_container_notification__get_terminal
+  category: Reference Data API
+  description: Get terminal
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _09_getTerminal
+  method: POST
+  path: /refdata/getTerminal
+- name: hinterland_container_notification__listen_road_voyages
+  category: Tracking API
+  description: Listen to road voyage updates
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _09_listenRoadVoyages
+  method: POST
+  path: /listen/road
+- name: hinterland_container_notification__reopen_load_discharge_list
+  category: Terminal API - visits
+  description: Reopen load-discharge list
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _09_reopenLoadDischargeList
+  method: POST
+  path: /visits:reopen
+- name: hinterland_container_notification__get_terminal
+  category: Reference Data API
+  description: Get terminal by BICS or SMDG code
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _09b_getTerminal
+  method: POST
+  path: /refdata/getTerminalByCode
+- name: hinterland_container_notification__get_by_tar
+  category: Terminal API - visits
+  description: Get road visit by TAR code.
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _10_getByTar
+  method: POST
+  path: /roadVisits:byTar
+- name: hinterland_container_notification__get_forwarder
+  category: Reference Data API
+  description: Get forwarder
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _10_getForwarder
+  method: POST
+  path: /refdata/getForwarder
+- name: hinterland_container_notification__update_notifications
+  category: Terminal API - handlings
+  description: Set the notifications for a handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _10_updateNotifications
+  method: POST
+  path: /handlings:updateNotifications
+- name: hinterland_container_notification__create_detached_handling
+  category: Operator API - handlings
+  description: Create detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _11_createDetachedHandling
+  method: POST
+  path: /detachedHandlings:create
+- name: hinterland_container_notification__create_equipment
+  category: Road API V1
+  description: Create equipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _11_createEquipment
+  method: POST
+  path: /equipments
+- name: hinterland_container_notification__get_traction_supplier
+  category: Reference Data API
+  description: Get traction supplier
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _11_getTractionSupplier
+  method: POST
+  path: /refdata/getTractionSupplier
+- name: hinterland_container_notification__update_road_eta
+  category: Terminal API - visits
+  description: Update road eta for the charter
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _11_updateRoadEta
+  method: POST
+  path: /roadVisits:updateEta
+- name: hinterland_container_notification__get_traction_suppliers
+  category: Reference Data API
+  description: Get traction suppliers
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _11b_getTractionSuppliers
+  method: GET
+  path: /refdata/getTractionSuppliers
+- name: hinterland_container_notification__get_rail_inter_terminals
+  category: Reference Data API
+  description: Get rail inter-terminals
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _12_getRailInterTerminals
+  method: POST
+  path: /refdata/getRailInterTerminals
+- name: hinterland_container_notification__get_equipment_by_uuid
+  category: Road API V1
+  description: Get equipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _13_getEquipmentByUuid
+  method: GET
+  path: /equipments/{equipmentUuid}
+- name: hinterland_container_notification__replace_equipment
+  category: Road API V1
+  description: Replace equipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _12_replaceEquipment
+  method: PUT
+  path: /equipments/{equipmentUuid}
+- name: hinterland_container_notification__delete_equipment
+  category: Road API V1
+  description: Delete equipment
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _14_deleteEquipment
+  method: DELETE
+  path: /equipments/{equipmentUuid}
+- name: hinterland_container_notification__update_detached_handling
+  category: Operator API - handlings
+  description: Update detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _12_updateDetachedHandling
+  method: POST
+  path: /detachedHandlings:update
+- name: hinterland_container_notification__update_notifications
+  category: Terminal API - visits
+  description: Set the notifications for a visit
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _12_updateNotifications
+  method: POST
+  path: /visits:updateNotifications
+- name: hinterland_container_notification__get_detached_handlings
+  category: Operator API - handlings
+  description: Get detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _13_getDetachedHandlings
+  method: POST
+  path: /detachedHandlings:get
+- name: hinterland_container_notification__get_rail_inter_terminal
+  category: Reference Data API
+  description: Get rail inter-terminal
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _13_getRailInterTerminal
+  method: POST
+  path: /refdata/getRailInterTerminal
+- name: hinterland_container_notification__cancel_attached_handling
+  category: Operator API - handlings
+  description: Cancel handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _14_cancelAttachedHandling
+  method: POST
+  path: /attachedHandlings:cancel
+- name: hinterland_container_notification__get_fixed_windows_for_declarant
+  category: Reference Data API
+  description: Get Fixed Windows for Declarant
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _14_getFixedWindowsForDeclarant
+  method: POST
+  path: /refdata/getFixedWindowsForDeclarant
+- name: hinterland_container_notification__get_fixed_windows_for_terminal
+  category: Reference Data API
+  description: Get Fixed Windows for Terminal
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _14b_getFixedWindowsForTerminal
+  method: POST
+  path: /refdata/getFixedWindowsForTerminal
+- name: hinterland_container_notification__get_fixed_windows_for_integral_planning
+  category: Reference Data API
+  description: Get Fixed Windows for Integral Planning
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _14c_getFixedWindowsForIntegralPlanning
+  method: POST
+  path: /refdata/getFixedWindowsForIntegralPlanning
+- name: hinterland_container_notification__cancel_detached_handling
+  category: Operator API - handlings
+  description: Cancel detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _15_cancelDetachedHandling
+  method: POST
+  path: /detachedHandlings:cancel
+- name: hinterland_container_notification__get_organisation
+  category: Reference Data API
+  description: Get Organisation
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _15_getOrganisation
+  method: POST
+  path: /refdata/getOrganisation
+- name: hinterland_container_notification__find_organisations
+  category: Reference Data API
+  description: Find Organisations
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _15b_findOrganisations
+  method: POST
+  path: /refdata/findOrganisations
+- name: hinterland_container_notification__find_inland_operators
+  category: Reference Data API
+  description: Find Inland Operators
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _15c_findInlandOperators
+  method: POST
+  path: /refdata/findInlandOperators
+- name: hinterland_container_notification__get_time_tables_for_declarant
+  category: Reference Data API
+  description: Get Timetable Entries for Declarant
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _16_getTimeTablesForDeclarant
+  method: POST
+  path: /refdata/getTimeTablesForDeclarant
+- name: hinterland_container_notification__move
+  category: Operator API - handlings
+  description: Move handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _16_move
+  method: POST
+  path: /attachedHandlings:move
+- name: hinterland_container_notification__attach
+  category: Operator API - handlings
+  description: Attach detached handling
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _17_attach
+  method: POST
+  path: /detachedHandlings:attach
+- name: hinterland_container_notification__get_barges
+  category: Reference Data API
+  description: Get barges
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _17_getBarges
+  method: POST
+  path: /refdata/getBarges
+- name: hinterland_container_notification__create_booking
+  category: Road API V1
+  description: Create booking
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _21_createBooking
+  method: POST
+  path: /bookings
+- name: hinterland_container_notification__replace_booking
+  category: Road API V1
+  description: Replace booking
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _22_replaceBooking
+  method: PUT
+  path: /bookings/{bookingUuid}
+- name: hinterland_container_notification__delete_booking
+  category: Road API V1
+  description: Delete booking
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _23_deleteBooking
+  method: DELETE
+  path: /bookings/{bookingUuid}
+- name: hinterland_container_notification__get_notification_preference_by_params
+  category: Road API V1
+  description: Get terminal notification preferences
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _31_getNotificationPreferenceByParams
+  method: GET
+  path: /preferences/notification
+- name: hinterland_container_notification__get_organisation_preferences_by_params
+  category: Road API V1
+  description: Get organisation preferences
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _32_getOrganisationPreferencesByParams
+  method: GET
+  path: /preferences/organisation
+- name: hinterland_container_notification__get_quay_modalities
+  category: Road API V1
+  description: Get quay modalities
+  api: openapi/portbase-hinterland-container-notification-openapi.yml
+  operationId: _40_getQuayModalities
+  method: GET
+  path: /quaymodalities
+- name: vessel_visit__declare_commercial_release
+  category: Commercial Release API
+  description: Declare commercial release
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _01_declareCommercialRelease
+  method: POST
+  path: /commercialRelease:declare
+- name: vessel_visit__listen_for_visit_updates
+  category: Tracking API
+  description: Listen to visit updates
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _01_listenForVisitUpdates
+  method: POST
+  path: /listen
+- name: vessel_visit__cancel_commercial_release
+  category: Commercial Release API
+  description: Cancel commercial release
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _02_cancelCommercialRelease
+  method: POST
+  path: /commercialRelease:cancel
+- name: vessel_visit__update_position
+  category: Tracking API
+  description: Update position
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _02_updatePosition
+  method: POST
+  path: /updatePosition
+- name: vessel_visit__accept_commercial_release
+  category: Commercial Release API
+  description: Accept commercial release
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _03_acceptCommercialRelease
+  method: POST
+  path: /commercialRelease:accept
+- name: vessel_visit__reset_position
+  category: Tracking API
+  description: Reset position
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _03_resetPosition
+  method: POST
+  path: /resetPosition
+- name: vessel_visit__disconnect_client
+  category: Tracking API
+  description: Disconnects client
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _04_disconnectClient
+  method: POST
+  path: /disconnectClient
+- name: vessel_visit__reject_commercial_release
+  category: Commercial Release API
+  description: Reject commercial release
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _04_rejectCommercialRelease
+  method: POST
+  path: /commercialRelease:reject
+- name: vessel_visit__listen_for_any_updates
+  category: Tracking API
+  description: Listen to any updates
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _05_listenForAnyUpdates
+  method: POST
+  path: /listen/all
+- name: vessel_visit__register_customer
+  category: Commercial Release API
+  description: Register customer of organisation
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _05_registerCustomer
+  method: POST
+  path: /organisation:registerCustomer
+- name: vessel_visit__delete_customer
+  category: Commercial Release API
+  description: Remove customer of organisation
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: _06_deleteCustomer
+  method: POST
+  path: /organisation:removeCustomer
+- name: vessel_visit__accept_health
+  category: Port Authority API
+  description: Accept health
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: acceptHealth
+  method: POST
+  path: /acceptHealth
+- name: vessel_visit__accept_security
+  category: Port Authority API
+  description: Accept security
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: acceptSecurity
+  method: POST
+  path: /acceptSecurity
+- name: vessel_visit__accept_visit
+  category: Port Authority API
+  description: Accept visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: acceptVisit
+  method: POST
+  path: /acceptVisit
+- name: vessel_visit__accept_visit_1
+  category: Terminal API
+  description: Register bulk discharge
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: acceptVisit_1
+  method: POST
+  path: /registerDischarge
+- name: vessel_visit__accept_waste
+  category: Port Authority API
+  description: Accept waste
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: acceptWaste
+  method: POST
+  path: /acceptWaste
+- name: vessel_visit__add_berth_visit_after
+  category: Port Authority API
+  description: Add berth visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: addBerthVisitAfter
+  method: POST
+  path: /addBerthVisitAfter
+- name: vessel_visit__approve_terminal_planning
+  category: Ship Operator API - terminal planning
+  description: Approve terminal planning
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: approveTerminalPlanning
+  method: POST
+  path: /planning/terminalplannings:approve/{crn}/{berthVisitId}
+- name: vessel_visit__c01_straight_bill_of_lading_single_filing
+  category: Consignments API
+  description: Send a straight bill of lading for single filing. (IE3F10)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c01StraightBillOfLadingSingleFiling
+  method: POST
+  path: /consignment/straight-bl-single-filing
+- name: vessel_visit__c02_master_bill_of_lading_single_filing
+  category: Consignments API
+  description: Send master and house bill of lading for single filing. (IE3F11)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c02MasterBillOfLadingSingleFiling
+  method: POST
+  path: /consignment/master-bl-single-filing
+- name: vessel_visit__c03_master_bill_of_lading_multiple_filing
+  category: Consignments API
+  description: Send a master bill of lading for multiple filing. (IE3F12)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c03MasterBillOfLadingMultipleFiling
+  method: POST
+  path: /consignment/master-bl-multiple-filing
+- name: vessel_visit__c04_straight_bill_of_lading_multple_filing
+  category: Consignments API
+  description: Send a straight bill of lading for multiple filing. (IE3F13)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c04StraightBillOfLadingMultpleFiling
+  method: POST
+  path: /consignment/straight-bl-multiple-filing
+- name: vessel_visit__c05_master_bill_of_lading_road_filing
+  category: Consignments API
+  description: Send a road bill of lading. (IE3F50)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c05MasterBillOfLadingRoadFiling
+  method: POST
+  path: /consignment/road-bl
+- name: vessel_visit__c06temporary_storage_declaration
+  category: Consignments API
+  description: Send an import declaration for usage in a temporary storage declaration to Dutch Customs (TSD)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c06temporaryStorageDeclaration
+  method: POST
+  path: /consignment/temporary-storage-declaration
+- name: vessel_visit__c08_master_bill_of_lading_no_filing
+  category: Consignments API
+  description: Send a master bill of lading without filing to customs.
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c08MasterBillOfLadingNoFiling
+  method: POST
+  path: /consignment/master-bl-no-filing
+- name: vessel_visit__c09_filing_invalidate
+  category: Consignments API
+  description: Invalidate a previously sent filing.
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c09FilingInvalidate
+  method: POST
+  path: /consignment/filing-invalidate-request
+- name: vessel_visit__c09_notify_arrival
+  category: Consignments API
+  description: Notifies the arrival of the vessel .
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: c09NotifyArrival
+  method: POST
+  path: /consignment/notification-of-arrival
+- name: vessel_visit__cancel
+  category: Ship to Shore API
+  description: Cancel the submitted port clearance data
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: cancel
+  method: POST
+  path: /shiptoshore/v1/cancel
+- name: vessel_visit__cancel_call
+  category: Port to Port API
+  description: To cancel the vessel call.
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: cancelCall
+  method: POST
+  path: /port-to-port/v1/cancelCall
+- name: vessel_visit__cancel_pax
+  category: Ship Operator API - other
+  description: Cancel all crew and passenger lists
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: cancelPax
+  method: POST
+  path: /declarations/pax:cancel
+- name: vessel_visit__cancel_waste_collection
+  category: Waste Collector API
+  description: Cancel waste collection
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: cancelWasteCollection
+  method: POST
+  path: /waste-collector/wastecollection:cancel
+- name: vessel_visit__change_bert_visit_location
+  category: Port Authority API
+  description: Change berth visit location
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: changeBertVisitLocation
+  method: POST
+  path: /changeBertVisitLocation
+- name: vessel_visit__complete_waste_collection
+  category: Waste Collector API
+  description: Complete waste collection
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: completeWasteCollection
+  method: POST
+  path: /waste-collector/wastecollection:complete
+- name: vessel_visit__create_visit
+  category: Ship Operator API - visit
+  description: Create visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: createVisit
+  method: POST
+  path: /declarations/createVisit
+- name: vessel_visit__declare_pax
+  category: Ship Operator API - other
+  description: Declare crew and passenger list
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declarePax
+  method: POST
+  path: /declarations/pax:declare
+- name: vessel_visit__declare_security
+  category: Ship Operator API - other
+  description: Declare security
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declareSecurity
+  method: POST
+  path: /declarations/security:declare
+- name: vessel_visit__declare_ship_stores
+  category: Ship Operator API - other
+  description: Declare ship's stores
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declareShipStores
+  method: POST
+  path: /declarations/shipstores:declare
+- name: vessel_visit__declare_terminal_plannings
+  category: Ship Operator API - terminal planning
+  description: Declare terminal planning
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declareTerminalPlannings
+  method: POST
+  path: /planning/terminalplannings:declare
+- name: vessel_visit__declare_visit
+  category: Ship Operator API - visit
+  description: Declare visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declareVisit
+  method: PUT
+  path: /declarations/visit
+- name: vessel_visit__declare_waste
+  category: Ship Operator API - other
+  description: Declare waste
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: declareWaste
+  method: POST
+  path: /declarations/waste:declare
+- name: vessel_visit__finish_terminal_planning
+  category: Ship Operator API - terminal planning
+  description: Finish terminal planning
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: finishTerminalPlanning
+  method: POST
+  path: /planning/terminalplannings:finish/{crn}
+- name: vessel_visit__get01
+  category: Reference Data API
+  description: Find vessels
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get01
+  method: POST
+  path: /refdata/findVessels
+- name: vessel_visit__get02
+  category: Reference Data API
+  description: Get entry points
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get02
+  method: POST
+  path: /refdata/getEntryPoints
+- name: vessel_visit__get03
+  category: Reference Data API
+  description: Get pilot boarding places
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get03
+  method: POST
+  path: /refdata/getPilotStations
+- name: vessel_visit__get04
+  category: Reference Data API
+  description: Get boatmen
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get04
+  method: POST
+  path: /refdata/getBoatmen
+- name: vessel_visit__get05
+  category: Reference Data API
+  description: Get pilots
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get05
+  method: POST
+  path: /refdata/getPilots
+- name: vessel_visit__get06
+  category: Reference Data API
+  description: Get tugboats
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get06
+  method: POST
+  path: /refdata/getTugboats
+- name: vessel_visit__get07
+  category: Reference Data API
+  description: Find carriers
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get07
+  method: POST
+  path: /refdata/findCarriers
+- name: vessel_visit__get08
+  category: Reference Data API
+  description: Find berths or buoys
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get08
+  method: POST
+  path: /refdata/findBerths
+- name: vessel_visit__get09
+  category: Reference Data API
+  description: Find pilot exemption holders
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get09
+  method: POST
+  path: /refdata/findPilotExemptions
+- name: vessel_visit__get10
+  category: Reference Data API
+  description: Find ports
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get10
+  method: POST
+  path: /refdata/findPorts
+- name: vessel_visit__get11
+  category: Reference Data API
+  description: Find ports or way points
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get11
+  method: POST
+  path: /refdata/findPortsOrWayPoints
+- name: vessel_visit__get12
+  category: Reference Data API
+  description: Get customs offices
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get12
+  method: POST
+  path: /refdata/getCustomsOffices
+- name: vessel_visit__get13
+  category: Reference Data API
+  description: Get waste collectors
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get13
+  method: POST
+  path: /refdata/getWasteCollectors
+- name: vessel_visit__get14
+  category: Reference Data API
+  description: Find liner services
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get14
+  method: POST
+  path: /refdata/findLinerServices
+- name: vessel_visit__get14deprecated
+  category: Reference Data API
+  description: Find liner services
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get14deprecated
+  method: POST
+  path: /refdata/findVesselServices
+- name: vessel_visit__get15
+  category: Reference Data API
+  description: Find waste types
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: get15
+  method: POST
+  path: /refdata/findWasteMaterials
+- name: vessel_visit__get_consignment
+  category: Consignments API
+  description: Get Consignment Process
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: getConsignment
+  method: POST
+  path: /consignment/get-consignment
+- name: vessel_visit__get_visit
+  category: Ship Operator API - terminal planning
+  description: Get terminal planning
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: getVisit
+  method: GET
+  path: /planning/terminalplannings/{crn}
+- name: vessel_visit__get_visit_1
+  category: Ship Operator API - visit
+  description: Get visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: getVisit_1
+  method: GET
+  path: /declarations/visit/{crn}/version/{version}
+- name: vessel_visit__p07accept_dangerous_goods
+  category: Port Authority API
+  description: Accept dangerous goods
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: p07acceptDangerousGoods
+  method: POST
+  path: /acceptDangerousGoods
+- name: vessel_visit__process_ata
+  category: Port Authority API
+  description: Register ATA (old)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: processAta
+  method: POST
+  path: /processAta
+- name: vessel_visit__process_atd
+  category: Port Authority API
+  description: Register ATD (old)
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: processAtd
+  method: POST
+  path: /processAtd
+- name: vessel_visit__process_atd_1
+  category: Port Authority API
+  description: Register ATD port
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: processAtd_1
+  method: POST
+  path: /processAtdPort
+- name: vessel_visit__register_ata
+  category: Port Authority API
+  description: Register ATA
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: registerAta
+  method: POST
+  path: /registerAta
+- name: vessel_visit__register_atd
+  category: Port Authority API
+  description: Register ATD
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: registerAtd
+  method: POST
+  path: /registerAtd
+- name: vessel_visit__register_passage
+  category: Port Call Optimization API
+  description: Register a passage
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: registerPassage
+  method: POST
+  path: /port-call-optimization/passage
+- name: vessel_visit__register_waste_collection
+  category: Waste Collector API
+  description: Register waste collection
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: registerWasteCollection
+  method: POST
+  path: /waste-collector/wastecollection:register
+- name: vessel_visit__reject_dangerous_goods
+  category: Port Authority API
+  description: Reject dangerous goods
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: rejectDangerousGoods
+  method: POST
+  path: /rejectDangerousGoods
+- name: vessel_visit__reject_health
+  category: Port Authority API
+  description: Reject health
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: rejectHealth
+  method: POST
+  path: /rejectHealth
+- name: vessel_visit__reject_security
+  category: Port Authority API
+  description: Reject security
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: rejectSecurity
+  method: POST
+  path: /rejectSecurity
+- name: vessel_visit__reject_visit
+  category: Port Authority API
+  description: Reject visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: rejectVisit
+  method: POST
+  path: /rejectVisit
+- name: vessel_visit__reject_waste
+  category: Port Authority API
+  description: Reject waste
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: rejectWaste
+  method: POST
+  path: /rejectWaste
+- name: vessel_visit__respond
+  category: Port Authority API
+  description: Respond to declaration
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: respond
+  method: POST
+  path: /declarationResponse
+- name: vessel_visit__save_visit
+  category: Ship Operator API - visit
+  description: Save visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: saveVisit
+  method: POST
+  path: /declarations/visit/save/{crn}
+- name: vessel_visit__send_invoices
+  category: Harbour Dues API
+  description: Send harbour dues invoices
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: sendInvoices
+  method: POST
+  path: /harbour-dues/send-invoices
+- name: vessel_visit__submit
+  category: Ship to Shore API
+  description: Submit port clearance data
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: submit
+  method: POST
+  path: /shiptoshore/v1/submitPortClearanceData
+- name: vessel_visit__submit_financials_for_waste_collection
+  category: Waste Collector API
+  description: Submit waste collection financials
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: submitFinancialsForWasteCollection
+  method: POST
+  path: /waste-collector/wastecollection:financials
+- name: vessel_visit__submit_timestamps
+  category: Port to Port API
+  description: For Port A to send timestamp data to Port B.
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: submitTimestamps
+  method: POST
+  path: /port-to-port/v1/submitTimestamps
+- name: vessel_visit__subscribe
+  category: Port to Port API
+  description: Subscribe to port to port events.
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: subscribe
+  method: POST
+  path: /port-to-port/v1/subscribe
+- name: vessel_visit__update_previous_and_next_ports
+  category: Ship Operator API - visit
+  description: Update previous and next ports
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: updatePreviousAndNextPorts
+  method: POST
+  path: /declarations/visit/{crn}/updatePreviousAndNextPorts
+- name: vessel_visit__update_terminal_planning
+  category: Ship Operator API - terminal planning
+  description: Update terminal planning
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: updateTerminalPlanning
+  method: POST
+  path: /planning/terminalplannings:declare/{crn}
+- name: vessel_visit__update_visit
+  category: Ship Operator API - visit
+  description: Update visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: updateVisit
+  method: POST
+  path: /declarations/visit/{crn}
+- name: vessel_visit__cancel_visit
+  category: Ship Operator API - visit
+  description: Cancel visit
+  api: openapi/portbase-vessel-visit-openapi.yml
+  operationId: cancelVisit
+  method: DELETE
+  path: /declarations/visit/{crn}
+notes: No official Portbase MCP server was found. Tools are a candidate list derived one-per-operation from the four saved OpenAPI contracts (HCN v1/v2 duplicate operationIds ending in _1/_2 are omitted).
+  Each tool takes the backing operation parameters and requestBody as its inputSchema.

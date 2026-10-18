@@ -1,0 +1,18 @@
+generated: '2026-10-18'
+method: none
+source: https://registry.npmjs.org/-/v1/search?text=portbase
+packages: []
+rejected:
+- name: portbase
+  registry: npm
+  reason: 'official: false as written'
+- name: angular-portbase-layout
+  registry: npm
+  reason: 'official: false as written'
+- name: portbase-generic-frontend
+  registry: npm
+  reason: 'official: false as written'
+- name: ng-portbase-commons
+  registry: npm
+  reason: 'official: false as written'
+note: 'no first-party package: every candidate a model listed was unowned (harvest-packages.py --audit)'

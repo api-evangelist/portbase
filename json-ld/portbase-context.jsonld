@@ -1,0 +1,1302 @@
+{
+  "@context": {
+    "@vocab": "https://portbase.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "portbase": "https://portbase.com/schema#",
+    "ApiError": "portbase:ApiError",
+    "timestamp": {
+      "@id": "portbase:timestamp",
+      "@type": "xsd:dateTime"
+    },
+    "status": {
+      "@id": "portbase:status",
+      "@type": "xsd:integer"
+    },
+    "error": {
+      "@id": "portbase:error",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "portbase:message",
+      "@type": "xsd:string"
+    },
+    "rejectedValue": {
+      "@id": "portbase:rejectedValue"
+    },
+    "SubscribeDto": "portbase:SubscribeDto",
+    "bookingNumber": {
+      "@id": "portbase:bookingNumber",
+      "@type": "xsd:string"
+    },
+    "callReferenceNumber": {
+      "@id": "portbase:callReferenceNumber",
+      "@type": "xsd:string"
+    },
+    "imoCode": {
+      "@id": "portbase:imoCode",
+      "@type": "xsd:string"
+    },
+    "SubscriptionId": "portbase:SubscriptionId",
+    "subscriptionId": {
+      "@id": "portbase:subscriptionId",
+      "@type": "xsd:string"
+    },
+    "Berth": "portbase:Berth",
+    "name": {
+      "@id": "portbase:name",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "portbase:code",
+      "@type": "xsd:string"
+    },
+    "terminalCode": {
+      "@id": "portbase:terminalCode",
+      "@type": "xsd:string"
+    },
+    "terminal": {
+      "@id": "portbase:terminal",
+      "@type": "@id"
+    },
+    "BerthVisit": "portbase:BerthVisit",
+    "id": {
+      "@id": "portbase:id",
+      "@type": "xsd:string"
+    },
+    "berth": {
+      "@id": "portbase:berth",
+      "@type": "@id"
+    },
+    "BookingDossier": "portbase:BookingDossier",
+    "dateCreated": {
+      "@id": "portbase:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "bookingEquipments": {
+      "@id": "portbase:bookingEquipments",
+      "@container": "@list"
+    },
+    "subscribedTerminals": {
+      "@id": "portbase:subscribedTerminals",
+      "@container": "@list"
+    },
+    "vesselVisit": {
+      "@id": "portbase:vesselVisit",
+      "@type": "@id"
+    },
+    "BookingEquipment": "portbase:BookingEquipment",
+    "equipmentNumber": {
+      "@id": "portbase:equipmentNumber",
+      "@type": "xsd:string"
+    },
+    "empty": {
+      "@id": "portbase:empty",
+      "@type": "xsd:boolean"
+    },
+    "manifest": {
+      "@id": "portbase:manifest",
+      "@type": "@id"
+    },
+    "gateIn": {
+      "@id": "portbase:gateIn",
+      "@type": "@id"
+    },
+    "loadConfirmation": {
+      "@id": "portbase:loadConfirmation",
+      "@type": "@id"
+    },
+    "documents": {
+      "@id": "portbase:documents",
+      "@container": "@list"
+    },
+    "equipmentStatus": {
+      "@id": "portbase:equipmentStatus",
+      "@type": "@id"
+    },
+    "Document": "portbase:Document",
+    "documentId": {
+      "@id": "portbase:documentId",
+      "@type": "xsd:string"
+    },
+    "documentNumber": {
+      "@id": "portbase:documentNumber",
+      "@type": "xsd:string"
+    },
+    "createdByOrgFullName": {
+      "@id": "portbase:createdByOrgFullName",
+      "@type": "xsd:string"
+    },
+    "registrationTime": {
+      "@id": "portbase:registrationTime",
+      "@type": "xsd:dateTime"
+    },
+    "transhipment": {
+      "@id": "portbase:transhipment",
+      "@type": "xsd:boolean"
+    },
+    "documentType": {
+      "@id": "portbase:documentType",
+      "@type": "@id"
+    },
+    "dateUpdated": {
+      "@id": "portbase:dateUpdated",
+      "@type": "xsd:dateTime"
+    },
+    "DocumentType": "portbase:DocumentType",
+    "forwarderCode": {
+      "@id": "portbase:forwarderCode",
+      "@type": "xsd:string"
+    },
+    "EquipmentStatus": "portbase:EquipmentStatus",
+    "customsInspectionStatus": {
+      "@id": "portbase:customsInspectionStatus",
+      "@type": "@id"
+    },
+    "exportDocumentClearanceStatus": {
+      "@id": "portbase:exportDocumentClearanceStatus",
+      "@type": "@id"
+    },
+    "exportDocumentStatus": {
+      "@id": "portbase:exportDocumentStatus",
+      "@type": "@id"
+    },
+    "exportDocumentCustomsStatus": {
+      "@id": "portbase:exportDocumentCustomsStatus",
+      "@type": "@id"
+    },
+    "exportDocumentPrenotificationStatus": {
+      "@id": "portbase:exportDocumentPrenotificationStatus",
+      "@type": "@id"
+    },
+    "terminalBookingSubscriptionStatus": {
+      "@id": "portbase:terminalBookingSubscriptionStatus",
+      "@type": "@id"
+    },
+    "transportEquipmentGateInStatus": {
+      "@id": "portbase:transportEquipmentGateInStatus",
+      "@type": "@id"
+    },
+    "transportEquipmentLoadStatus": {
+      "@id": "portbase:transportEquipmentLoadStatus",
+      "@type": "@id"
+    },
+    "vesselArrivalStatus": {
+      "@id": "portbase:vesselArrivalStatus",
+      "@type": "@id"
+    },
+    "vesselDepartureStatus": {
+      "@id": "portbase:vesselDepartureStatus",
+      "@type": "@id"
+    },
+    "GateIn": "portbase:GateIn",
+    "terminalFullName": {
+      "@id": "portbase:terminalFullName",
+      "@type": "xsd:string"
+    },
+    "gatedInDateTime": {
+      "@id": "portbase:gatedInDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "LoadConfirmation": "portbase:LoadConfirmation",
+    "loadedDateTime": {
+      "@id": "portbase:loadedDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "Manifest": "portbase:Manifest",
+    "manifestId": {
+      "@id": "portbase:manifestId",
+      "@type": "xsd:string"
+    },
+    "voyageNumber": {
+      "@id": "portbase:voyageNumber",
+      "@type": "xsd:string"
+    },
+    "Port": "portbase:Port",
+    "unCode": {
+      "@id": "portbase:unCode",
+      "@type": "xsd:string"
+    },
+    "countryUnCode": {
+      "@id": "portbase:countryUnCode",
+      "@type": "xsd:string"
+    },
+    "PortOfCall": "portbase:PortOfCall",
+    "port": {
+      "@id": "portbase:port",
+      "@type": "@id"
+    },
+    "PortVisit": "portbase:PortVisit",
+    "berthVisits": {
+      "@id": "portbase:berthVisits",
+      "@container": "@list"
+    },
+    "Status": "portbase:Status",
+    "value": {
+      "@id": "portbase:value",
+      "@type": "xsd:string"
+    },
+    "params": {
+      "@id": "portbase:params"
+    },
+    "SubscribedTerminal": "portbase:SubscribedTerminal",
+    "orgFullName": {
+      "@id": "portbase:orgFullName",
+      "@type": "xsd:string"
+    },
+    "subscriptionDateTime": {
+      "@id": "portbase:subscriptionDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "Terminal": "portbase:Terminal",
+    "ownerFullName": {
+      "@id": "portbase:ownerFullName",
+      "@type": "xsd:string"
+    },
+    "Vessel": "portbase:Vessel",
+    "VesselVisit": "portbase:VesselVisit",
+    "dateRegistered": {
+      "@id": "portbase:dateRegistered",
+      "@type": "xsd:string"
+    },
+    "cancelled": {
+      "@id": "portbase:cancelled",
+      "@type": "xsd:boolean"
+    },
+    "portOfCall": {
+      "@id": "portbase:portOfCall",
+      "@type": "@id"
+    },
+    "vessel": {
+      "@id": "portbase:vessel",
+      "@type": "@id"
+    },
+    "visitDeclaration": {
+      "@id": "portbase:visitDeclaration",
+      "@type": "@id"
+    },
+    "VisitDeclaration": "portbase:VisitDeclaration",
+    "portVisit": {
+      "@id": "portbase:portVisit",
+      "@type": "@id"
+    },
+    "WebhookBody": "portbase:WebhookBody",
+    "eventType": {
+      "@id": "portbase:eventType",
+      "@type": "xsd:string"
+    },
+    "payload": {
+      "@id": "portbase:payload",
+      "@type": "@id"
+    },
+    "state": {
+      "@id": "portbase:state",
+      "@type": "@id"
+    },
+    "CargoWindowAdded": "portbase:CargoWindowAdded",
+    "cargoOpeningDateTime": {
+      "@id": "portbase:cargoOpeningDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "cargoClosingDateTime": {
+      "@id": "portbase:cargoClosingDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "CargoWindowUpdated": "portbase:CargoWindowUpdated",
+    "DocumentAccepted": "portbase:DocumentAccepted",
+    "DocumentAdded": "portbase:DocumentAdded",
+    "DocumentCleared": "portbase:DocumentCleared",
+    "DocumentNumberUpdated": "portbase:DocumentNumberUpdated",
+    "DocumentRejected": "portbase:DocumentRejected",
+    "rejectionReason": {
+      "@id": "portbase:rejectionReason",
+      "@type": "xsd:string"
+    },
+    "rejectionType": {
+      "@id": "portbase:rejectionType",
+      "@type": "xsd:string"
+    },
+    "DocumentReleased": "portbase:DocumentReleased",
+    "releaseType": {
+      "@id": "portbase:releaseType",
+      "@type": "xsd:string"
+    },
+    "DocumentRemoved": "portbase:DocumentRemoved",
+    "DocumentReported": "portbase:DocumentReported",
+    "DocumentTypeUpdated": "portbase:DocumentTypeUpdated",
+    "DocumentUncleared": "portbase:DocumentUncleared",
+    "InspectionNotified": "portbase:InspectionNotified",
+    "inspectionType": {
+      "@id": "portbase:inspectionType",
+      "@type": "xsd:string"
+    },
+    "inspectionLocation": {
+      "@id": "portbase:inspectionLocation",
+      "@type": "xsd:string"
+    },
+    "customsProvidedEquipmentNumber": {
+      "@id": "portbase:customsProvidedEquipmentNumber",
+      "@type": "xsd:string"
+    },
+    "InspectionReleased": "portbase:InspectionReleased",
+    "TerminalSubscribed": "portbase:TerminalSubscribed",
+    "TransportEquipmentGateIn": "portbase:TransportEquipmentGateIn",
+    "TransportEquipmentLoaded": "portbase:TransportEquipmentLoaded",
+    "terminalShortName": {
+      "@id": "portbase:terminalShortName",
+      "@type": "xsd:string"
+    },
+    "TransportEquipmentPlanned": "portbase:TransportEquipmentPlanned",
+    "TransportEquipmentUnPlanned": "portbase:TransportEquipmentUnPlanned",
+    "VisitArrived": "portbase:VisitArrived",
+    "ata": {
+      "@id": "portbase:ata",
+      "@type": "xsd:dateTime"
+    },
+    "VisitDeparted": "portbase:VisitDeparted",
+    "atd": {
+      "@id": "portbase:atd",
+      "@type": "xsd:dateTime"
+    },
+    "VisitEtaUpdated": "portbase:VisitEtaUpdated",
+    "eta": {
+      "@id": "portbase:eta",
+      "@type": "xsd:dateTime"
+    },
+    "provider": {
+      "@id": "portbase:provider",
+      "@type": "xsd:string"
+    },
+    "VisitEtdUpdated": "portbase:VisitEtdUpdated",
+    "etd": {
+      "@id": "portbase:etd",
+      "@type": "xsd:dateTime"
+    },
+    "StubApiShipmentDto": "portbase:StubApiShipmentDto",
+    "stubSettings": {
+      "@id": "portbase:stubSettings",
+      "@type": "@id"
+    },
+    "deepSeaEta": {
+      "@id": "portbase:deepSeaEta",
+      "@type": "xsd:string"
+    },
+    "deepSeaTerminal": {
+      "@id": "portbase:deepSeaTerminal",
+      "@type": "xsd:string"
+    },
+    "deepSeaVesselName": {
+      "@id": "portbase:deepSeaVesselName",
+      "@type": "xsd:string"
+    },
+    "deepSeaVesselImo": {
+      "@id": "portbase:deepSeaVesselImo",
+      "@type": "xsd:string"
+    },
+    "deepSeaVoyageNumber": {
+      "@id": "portbase:deepSeaVoyageNumber",
+      "@type": "xsd:string"
+    },
+    "transportEquipments": {
+      "@id": "portbase:transportEquipments",
+      "@container": "@list"
+    },
+    "StubSettings": "portbase:StubSettings",
+    "webhookUrl": {
+      "@id": "portbase:webhookUrl",
+      "@type": "xsd:string"
+    },
+    "blNumber": {
+      "@id": "portbase:blNumber",
+      "@type": "xsd:string"
+    },
+    "referenceNumber": {
+      "@id": "portbase:referenceNumber",
+      "@type": "xsd:string"
+    },
+    "TransportEquipmentDto": "portbase:TransportEquipmentDto",
+    "sizeType": {
+      "@id": "portbase:sizeType",
+      "@type": "xsd:string"
+    },
+    "containerOperator": {
+      "@id": "portbase:containerOperator",
+      "@type": "xsd:string"
+    },
+    "placeOfDestination": {
+      "@id": "portbase:placeOfDestination",
+      "@type": "xsd:string"
+    },
+    "inlandTerminalLocation": {
+      "@id": "portbase:inlandTerminalLocation",
+      "@type": "xsd:string"
+    },
+    "inlandTerminalCode": {
+      "@id": "portbase:inlandTerminalCode",
+      "@type": "xsd:string"
+    },
+    "inlandOperator": {
+      "@id": "portbase:inlandOperator",
+      "@type": "xsd:string"
+    },
+    "inlandModality": {
+      "@id": "portbase:inlandModality",
+      "@type": "xsd:string"
+    },
+    "releaseReference": {
+      "@id": "portbase:releaseReference",
+      "@type": "xsd:string"
+    },
+    "transportOrder": {
+      "@id": "portbase:transportOrder",
+      "@type": "@id"
+    },
+    "TransportOrder": "portbase:TransportOrder",
+    "invoiceReference": {
+      "@id": "portbase:invoiceReference",
+      "@type": "xsd:string"
+    },
+    "debtorName": {
+      "@id": "portbase:debtorName",
+      "@type": "xsd:string"
+    },
+    "consigneeName": {
+      "@id": "portbase:consigneeName",
+      "@type": "xsd:string"
+    },
+    "releaseExpiration": {
+      "@id": "portbase:releaseExpiration",
+      "@type": "xsd:string"
+    },
+    "demurrage": {
+      "@id": "portbase:demurrage",
+      "@type": "xsd:string"
+    },
+    "detention": {
+      "@id": "portbase:detention",
+      "@type": "xsd:string"
+    },
+    "returnTerminal": {
+      "@id": "portbase:returnTerminal",
+      "@type": "xsd:string"
+    },
+    "returnReference": {
+      "@id": "portbase:returnReference",
+      "@type": "xsd:string"
+    },
+    "destinationTargetDate": {
+      "@id": "portbase:destinationTargetDate",
+      "@type": "xsd:string"
+    },
+    "destinationReference": {
+      "@id": "portbase:destinationReference",
+      "@type": "xsd:string"
+    },
+    "destinationInstructions": {
+      "@id": "portbase:destinationInstructions",
+      "@type": "xsd:string"
+    },
+    "customsCategory": {
+      "@id": "portbase:customsCategory",
+      "@type": "xsd:string"
+    },
+    "documentExpiration": {
+      "@id": "portbase:documentExpiration",
+      "@type": "xsd:string"
+    },
+    "Shipment": "portbase:Shipment",
+    "CargoDirector": "portbase:CargoDirector",
+    "chamberOfCommerceNumber": {
+      "@id": "portbase:chamberOfCommerceNumber",
+      "@type": "xsd:string"
+    },
+    "iamConnectedId": {
+      "@id": "portbase:iamConnectedId",
+      "@type": "xsd:string"
+    },
+    "TransferRequest": "portbase:TransferRequest",
+    "equipmentNumbers": {
+      "@id": "portbase:equipmentNumbers",
+      "@container": "@list"
+    },
+    "director": {
+      "@id": "portbase:director",
+      "@type": "xsd:string"
+    },
+    "cargoDirector": {
+      "@id": "portbase:cargoDirector",
+      "@type": "@id"
+    },
+    "StubBatchTrackRequestDto": "portbase:StubBatchTrackRequestDto",
+    "trackRequests": {
+      "@id": "portbase:trackRequests",
+      "@container": "@list"
+    },
+    "TrackRequest": "portbase:TrackRequest",
+    "transportEquipmentNumber": {
+      "@id": "portbase:transportEquipmentNumber",
+      "@type": "xsd:string"
+    },
+    "labels": {
+      "@id": "portbase:labels",
+      "@container": "@list"
+    },
+    "vesselImoCode": {
+      "@id": "portbase:vesselImoCode",
+      "@type": "xsd:string"
+    },
+    "TrackResponse": "portbase:TrackResponse",
+    "trackedBLs": {
+      "@id": "portbase:trackedBLs",
+      "@container": "@list"
+    },
+    "notTrackedBLs": {
+      "@id": "portbase:notTrackedBLs",
+      "@container": "@list"
+    },
+    "rejectedBLs": {
+      "@id": "portbase:rejectedBLs",
+      "@container": "@list"
+    },
+    "TrackResult": "portbase:TrackResult",
+    "vesselName": {
+      "@id": "portbase:vesselName",
+      "@type": "xsd:string"
+    },
+    "BatchTrackRequest": "portbase:BatchTrackRequest",
+    "AcceptStatus": "portbase:AcceptStatus",
+    "type": {
+      "@id": "portbase:type",
+      "@type": "xsd:string"
+    },
+    "remark": {
+      "@id": "portbase:remark",
+      "@type": "xsd:string"
+    },
+    "ApiBerth": "portbase:ApiBerth",
+    "ApiBerthVisit": "portbase:ApiBerthVisit",
+    "etaTerminal": {
+      "@id": "portbase:etaTerminal",
+      "@type": "xsd:string"
+    },
+    "etdTerminal": {
+      "@id": "portbase:etdTerminal",
+      "@type": "xsd:string"
+    },
+    "ApiBillOfLading": "portbase:ApiBillOfLading",
+    "handlingAgent": {
+      "@id": "portbase:handlingAgent",
+      "@type": "@id"
+    },
+    "portOfLoading": {
+      "@id": "portbase:portOfLoading",
+      "@type": "@id"
+    },
+    "portOfDischarge": {
+      "@id": "portbase:portOfDischarge",
+      "@type": "@id"
+    },
+    "dischargeTerminal": {
+      "@id": "portbase:dischargeTerminal",
+      "@type": "@id"
+    },
+    "movementType": {
+      "@id": "portbase:movementType",
+      "@type": "xsd:string"
+    },
+    "customsStatus": {
+      "@id": "portbase:customsStatus",
+      "@type": "xsd:string"
+    },
+    "exchangeRate": {
+      "@id": "portbase:exchangeRate",
+      "@type": "@id"
+    },
+    "placeOfOrigin": {
+      "@id": "portbase:placeOfOrigin",
+      "@type": "@id"
+    },
+    "goodsItems": {
+      "@id": "portbase:goodsItems",
+      "@container": "@list"
+    },
+    "dischargeReports": {
+      "@id": "portbase:dischargeReports",
+      "@container": "@list"
+    },
+    "hinterlandTerminalData": {
+      "@id": "portbase:hinterlandTerminalData",
+      "@container": "@list"
+    },
+    "inspectionItems": {
+      "@id": "portbase:inspectionItems",
+      "@container": "@list"
+    },
+    "transportEquipmentDeclarations": {
+      "@id": "portbase:transportEquipmentDeclarations",
+      "@container": "@list"
+    },
+    "hinterlandPreNotifications": {
+      "@id": "portbase:hinterlandPreNotifications",
+      "@container": "@list"
+    },
+    "cargoDirectors": {
+      "@id": "portbase:cargoDirectors",
+      "@container": "@list"
+    },
+    "transportDirectors": {
+      "@id": "portbase:transportDirectors",
+      "@container": "@list"
+    },
+    "commercialReleases": {
+      "@id": "portbase:commercialReleases",
+      "@container": "@list"
+    },
+    "releaseToParty": {
+      "@id": "portbase:releaseToParty",
+      "@type": "@id"
+    },
+    "firstTrackingOrganisation": {
+      "@id": "portbase:firstTrackingOrganisation",
+      "@type": "@id"
+    },
+    "deleted": {
+      "@id": "portbase:deleted",
+      "@type": "xsd:boolean"
+    },
+    "ApiCommercialRelease": "portbase:ApiCommercialRelease",
+    "releaseValidUntilDateTime": {
+      "@id": "portbase:releaseValidUntilDateTime",
+      "@type": "xsd:string"
+    },
+    "ApiCommodity": "portbase:ApiCommodity",
+    "description": {
+      "@id": "portbase:description",
+      "@type": "xsd:string"
+    },
+    "ApiCurrency": "portbase:ApiCurrency",
+    "ApiDangerousGoods": "portbase:ApiDangerousGoods",
+    "hazardClass": {
+      "@id": "portbase:hazardClass",
+      "@type": "xsd:string"
+    },
+    "packingGroup": {
+      "@id": "portbase:packingGroup",
+      "@type": "xsd:string"
+    },
+    "flashPoint": {
+      "@id": "portbase:flashPoint",
+      "@type": "xsd:decimal"
+    },
+    "ApiDirector": "portbase:ApiDirector",
+    "scacCode": {
+      "@id": "portbase:scacCode",
+      "@type": "xsd:string"
+    },
+    "ApiDischargeReport": "portbase:ApiDischargeReport",
+    "actualDischargeDateTime": {
+      "@id": "portbase:actualDischargeDateTime",
+      "@type": "xsd:string"
+    },
+    "ApiExchangeRate": "portbase:ApiExchangeRate",
+    "rate": {
+      "@id": "portbase:rate",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "portbase:currency",
+      "@type": "@id"
+    },
+    "ApiGoodsItem": "portbase:ApiGoodsItem",
+    "itemNumber": {
+      "@id": "portbase:itemNumber",
+      "@type": "xsd:integer"
+    },
+    "grossWeight": {
+      "@id": "portbase:grossWeight",
+      "@type": "xsd:decimal"
+    },
+    "numberOfOuterPackages": {
+      "@id": "portbase:numberOfOuterPackages",
+      "@type": "xsd:integer"
+    },
+    "outerPackageType": {
+      "@id": "portbase:outerPackageType",
+      "@type": "@id"
+    },
+    "netWeight": {
+      "@id": "portbase:netWeight",
+      "@type": "xsd:decimal"
+    },
+    "numberOfInnerPackages": {
+      "@id": "portbase:numberOfInnerPackages",
+      "@type": "xsd:integer"
+    },
+    "innerPackageType": {
+      "@id": "portbase:innerPackageType",
+      "@type": "@id"
+    },
+    "commodity": {
+      "@id": "portbase:commodity",
+      "@type": "@id"
+    },
+    "dangerousGoods": {
+      "@id": "portbase:dangerousGoods",
+      "@type": "@id"
+    },
+    "minimumTemperature": {
+      "@id": "portbase:minimumTemperature",
+      "@type": "xsd:decimal"
+    },
+    "maximumTemperature": {
+      "@id": "portbase:maximumTemperature",
+      "@type": "xsd:decimal"
+    },
+    "goodsItemTransportEquipments": {
+      "@id": "portbase:goodsItemTransportEquipments",
+      "@container": "@list"
+    },
+    "ApiGoodsItemTransportEquipment": "portbase:ApiGoodsItemTransportEquipment",
+    "numberOfPackages": {
+      "@id": "portbase:numberOfPackages",
+      "@type": "xsd:integer"
+    },
+    "ApiHinterlandPreNotification": "portbase:ApiHinterlandPreNotification",
+    "modality": {
+      "@id": "portbase:modality",
+      "@type": "xsd:string"
+    },
+    "plannedVisit": {
+      "@id": "portbase:plannedVisit",
+      "@type": "@id"
+    },
+    "ApiHinterlandTerminalData": "portbase:ApiHinterlandTerminalData",
+    "expectedDischargeTime": {
+      "@id": "portbase:expectedDischargeTime",
+      "@type": "xsd:string"
+    },
+    "gateOut": {
+      "@id": "portbase:gateOut",
+      "@type": "xsd:string"
+    },
+    "ApiInlandOperatorNominationDto": "portbase:ApiInlandOperatorNominationDto",
+    "inlandOperatorFullName": {
+      "@id": "portbase:inlandOperatorFullName",
+      "@type": "xsd:string"
+    },
+    "ApiInspectionItem": "portbase:ApiInspectionItem",
+    "ApiOrganisationBL": "portbase:ApiOrganisationBL",
+    "origin": {
+      "@id": "portbase:origin",
+      "@type": "xsd:string"
+    },
+    "trackingType": {
+      "@id": "portbase:trackingType",
+      "@type": "xsd:string"
+    },
+    "billOfLading": {
+      "@id": "portbase:billOfLading",
+      "@type": "@id"
+    },
+    "nominatedInlandOperators": {
+      "@id": "portbase:nominatedInlandOperators",
+      "@container": "@list"
+    },
+    "ApiPackageType": "portbase:ApiPackageType",
+    "ApiParty": "portbase:ApiParty",
+    "ApiPort": "portbase:ApiPort",
+    "locationName": {
+      "@id": "portbase:locationName",
+      "@type": "xsd:string"
+    },
+    "locationUnCode": {
+      "@id": "portbase:locationUnCode",
+      "@type": "xsd:string"
+    },
+    "ApiPortVisit": "portbase:ApiPortVisit",
+    "etaPort": {
+      "@id": "portbase:etaPort",
+      "@type": "xsd:string"
+    },
+    "etdPort": {
+      "@id": "portbase:etdPort",
+      "@type": "xsd:string"
+    },
+    "ataPort": {
+      "@id": "portbase:ataPort",
+      "@type": "xsd:string"
+    },
+    "atdPort": {
+      "@id": "portbase:atdPort",
+      "@type": "xsd:string"
+    },
+    "ApiSizeType": "portbase:ApiSizeType",
+    "ApiTerminal": "portbase:ApiTerminal",
+    "ownerShortName": {
+      "@id": "portbase:ownerShortName",
+      "@type": "xsd:string"
+    },
+    "ApiTransportEquipment": "portbase:ApiTransportEquipment",
+    "shippersOwned": {
+      "@id": "portbase:shippersOwned",
+      "@type": "xsd:boolean"
+    },
+    "emptyIndicator": {
+      "@id": "portbase:emptyIndicator",
+      "@type": "xsd:boolean"
+    },
+    "tareWeight": {
+      "@id": "portbase:tareWeight",
+      "@type": "xsd:decimal"
+    },
+    "shipperSealNumber": {
+      "@id": "portbase:shipperSealNumber",
+      "@type": "xsd:string"
+    },
+    "carrierSealNumber": {
+      "@id": "portbase:carrierSealNumber",
+      "@type": "xsd:string"
+    },
+    "customsSealNumber": {
+      "@id": "portbase:customsSealNumber",
+      "@type": "xsd:string"
+    },
+    "temperature": {
+      "@id": "portbase:temperature",
+      "@type": "xsd:decimal"
+    },
+    "overlength": {
+      "@id": "portbase:overlength",
+      "@type": "xsd:decimal"
+    },
+    "overheight": {
+      "@id": "portbase:overheight",
+      "@type": "xsd:decimal"
+    },
+    "overwidth": {
+      "@id": "portbase:overwidth",
+      "@type": "xsd:decimal"
+    },
+    "oversizeRemarks": {
+      "@id": "portbase:oversizeRemarks",
+      "@type": "xsd:string"
+    },
+    "initialDemurrage": {
+      "@id": "portbase:initialDemurrage",
+      "@type": "xsd:string"
+    },
+    "redeliveryAddress": {
+      "@id": "portbase:redeliveryAddress",
+      "@type": "xsd:string"
+    },
+    "ApiTransportEquipmentDeclaration": "portbase:ApiTransportEquipmentDeclaration",
+    "declarations": {
+      "@id": "portbase:declarations",
+      "@container": "@list"
+    },
+    "ApiVessel": "portbase:ApiVessel",
+    "flagCode": {
+      "@id": "portbase:flagCode",
+      "@type": "xsd:string"
+    },
+    "flagCountryUnCode": {
+      "@id": "portbase:flagCountryUnCode",
+      "@type": "xsd:string"
+    },
+    "ApiVesselVisit": "portbase:ApiVesselVisit",
+    "crn": {
+      "@id": "portbase:crn",
+      "@type": "xsd:string"
+    },
+    "visitStatus": {
+      "@id": "portbase:visitStatus",
+      "@type": "xsd:string"
+    },
+    "ApiVisitDeclaration": "portbase:ApiVisitDeclaration",
+    "PlannedVisit": "portbase:PlannedVisit",
+    "RejectReason": "portbase:RejectReason",
+    "terminalDescription": {
+      "@id": "portbase:terminalDescription",
+      "@type": "xsd:string"
+    },
+    "parsedReason": {
+      "@id": "portbase:parsedReason",
+      "@type": "xsd:string"
+    },
+    "BargeAccessPoint": "portbase:BargeAccessPoint",
+    "IntegralPlanningVoyageStatus": "portbase:IntegralPlanningVoyageStatus",
+    "pta": {
+      "@id": "portbase:pta",
+      "@type": "xsd:dateTime"
+    },
+    "ptd": {
+      "@id": "portbase:ptd",
+      "@type": "xsd:dateTime"
+    },
+    "plannedEntryPoint": {
+      "@id": "portbase:plannedEntryPoint"
+    },
+    "plannedExitPoint": {
+      "@id": "portbase:plannedExitPoint"
+    },
+    "actualEntryPoint": {
+      "@id": "portbase:actualEntryPoint"
+    },
+    "actualExitPoint": {
+      "@id": "portbase:actualExitPoint"
+    },
+    "netTime": {
+      "@id": "portbase:netTime",
+      "@type": "xsd:integer"
+    },
+    "slackTime": {
+      "@id": "portbase:slackTime",
+      "@type": "xsd:integer"
+    },
+    "normTime": {
+      "@id": "portbase:normTime",
+      "@type": "xsd:integer"
+    },
+    "alerts": {
+      "@id": "portbase:alerts",
+      "@container": "@list"
+    },
+    "NextlogicAlert": "portbase:NextlogicAlert",
+    "severity": {
+      "@id": "portbase:severity",
+      "@type": "xsd:string"
+    },
+    "forBargeOperator": {
+      "@id": "portbase:forBargeOperator",
+      "@type": "xsd:boolean"
+    },
+    "forTerminalOperator": {
+      "@id": "portbase:forTerminalOperator",
+      "@type": "xsd:boolean"
+    },
+    "PlanVoyage": "portbase:PlanVoyage",
+    "voyageId": {
+      "@id": "portbase:voyageId",
+      "@type": "xsd:string"
+    },
+    "IllegalCommandException": "portbase:IllegalCommandException",
+    "Bollard": "portbase:Bollard",
+    "bicsCode": {
+      "@id": "portbase:bicsCode",
+      "@type": "xsd:string"
+    },
+    "number": {
+      "@id": "portbase:number",
+      "@type": "xsd:string"
+    },
+    "coordinates": {
+      "@id": "portbase:coordinates"
+    },
+    "metersToNextBollard": {
+      "@id": "portbase:metersToNextBollard",
+      "@type": "xsd:decimal"
+    },
+    "mooringSide": {
+      "@id": "portbase:mooringSide",
+      "@type": "xsd:string"
+    },
+    "Coordinates": "portbase:Coordinates",
+    "latitude": {
+      "@id": "portbase:latitude",
+      "@type": "xsd:decimal"
+    },
+    "longitude": {
+      "@id": "portbase:longitude",
+      "@type": "xsd:decimal"
+    },
+    "Crane": "portbase:Crane",
+    "speed": {
+      "@id": "portbase:speed",
+      "@type": "xsd:decimal"
+    },
+    "height": {
+      "@id": "portbase:height",
+      "@type": "xsd:decimal"
+    },
+    "maxWidth": {
+      "@id": "portbase:maxWidth",
+      "@type": "xsd:decimal"
+    },
+    "outreach": {
+      "@id": "portbase:outreach",
+      "@type": "xsd:integer"
+    },
+    "twinningAllowed": {
+      "@id": "portbase:twinningAllowed",
+      "@type": "xsd:boolean"
+    },
+    "liftCapacity": {
+      "@id": "portbase:liftCapacity",
+      "@type": "xsd:integer"
+    },
+    "canHandleFullContainers": {
+      "@id": "portbase:canHandleFullContainers",
+      "@type": "xsd:boolean"
+    },
+    "canHandleOOG": {
+      "@id": "portbase:canHandleOOG",
+      "@type": "xsd:boolean"
+    },
+    "canHandleBundles": {
+      "@id": "portbase:canHandleBundles",
+      "@type": "xsd:boolean"
+    },
+    "GetTerminalByBicsCode": "portbase:GetTerminalByBicsCode",
+    "IntegralPlanningVisitStatusRequest": "portbase:IntegralPlanningVisitStatusRequest",
+    "plannedHandlings": {
+      "@id": "portbase:plannedHandlings"
+    },
+    "totalNetTeu": {
+      "@id": "portbase:totalNetTeu",
+      "@type": "xsd:decimal"
+    },
+    "fromBollard": {
+      "@id": "portbase:fromBollard"
+    },
+    "toBollard": {
+      "@id": "portbase:toBollard"
+    },
+    "bestMooringPosition": {
+      "@id": "portbase:bestMooringPosition"
+    },
+    "cranes": {
+      "@id": "portbase:cranes",
+      "@container": "@list"
+    },
+    "lastUpdate": {
+      "@id": "portbase:lastUpdate",
+      "@type": "xsd:dateTime"
+    },
+    "PlanVisitRequest": "portbase:PlanVisitRequest",
+    "visitId": {
+      "@id": "portbase:visitId",
+      "@type": "xsd:string"
+    },
+    "PlannedHandlings": "portbase:PlannedHandlings",
+    "dischargeTotal": {
+      "@id": "portbase:dischargeTotal",
+      "@type": "xsd:integer"
+    },
+    "dischargeOutOfGauge": {
+      "@id": "portbase:dischargeOutOfGauge",
+      "@type": "xsd:integer"
+    },
+    "dischargeTwinnable": {
+      "@id": "portbase:dischargeTwinnable",
+      "@type": "xsd:integer"
+    },
+    "dischargeEmpty": {
+      "@id": "portbase:dischargeEmpty",
+      "@type": "xsd:integer"
+    },
+    "dischargeStacked": {
+      "@id": "portbase:dischargeStacked",
+      "@type": "xsd:integer"
+    },
+    "dischargeBundles": {
+      "@id": "portbase:dischargeBundles",
+      "@type": "xsd:integer"
+    },
+    "loadingTotal": {
+      "@id": "portbase:loadingTotal",
+      "@type": "xsd:integer"
+    },
+    "loadingOutOfGauge": {
+      "@id": "portbase:loadingOutOfGauge",
+      "@type": "xsd:integer"
+    },
+    "loadingTwinnable": {
+      "@id": "portbase:loadingTwinnable",
+      "@type": "xsd:integer"
+    },
+    "loadingEmpty": {
+      "@id": "portbase:loadingEmpty",
+      "@type": "xsd:integer"
+    },
+    "loadingStacked": {
+      "@id": "portbase:loadingStacked",
+      "@type": "xsd:integer"
+    },
+    "loadingBundles": {
+      "@id": "portbase:loadingBundles",
+      "@type": "xsd:integer"
+    },
+    "shifters": {
+      "@id": "portbase:shifters",
+      "@type": "xsd:integer"
+    },
+    "IntegralPlanningHandlingStatus": "portbase:IntegralPlanningHandlingStatus",
+    "PlanHandling": "portbase:PlanHandling",
+    "handlingId": {
+      "@id": "portbase:handlingId",
+      "@type": "xsd:string"
+    },
+    "CreateHandlingResult": "portbase:CreateHandlingResult",
+    "CreateHandling": "portbase:CreateHandling",
+    "handlingData": {
+      "@id": "portbase:handlingData"
+    },
+    "preNotification": {
+      "@id": "portbase:preNotification",
+      "@type": "xsd:boolean"
+    },
+    "DangerousGood": "portbase:DangerousGood",
+    "gevi": {
+      "@id": "portbase:gevi",
+      "@type": "xsd:string"
+    },
+    "limitedQuantity": {
+      "@id": "portbase:limitedQuantity",
+      "@type": "xsd:string"
+    },
+    "DeepSeaReference": "portbase:DeepSeaReference",
+    "shipName": {
+      "@id": "portbase:shipName",
+      "@type": "xsd:string"
+    },
+    "crnNumber": {
+      "@id": "portbase:crnNumber",
+      "@type": "xsd:string"
+    },
+    "HandlingData": "portbase:HandlingData",
+    "weight": {
+      "@id": "portbase:weight",
+      "@type": "xsd:decimal"
+    },
+    "sealNumber": {
+      "@id": "portbase:sealNumber",
+      "@type": "xsd:string"
+    },
+    "reefer": {
+      "@id": "portbase:reefer"
+    },
+    "outOfGauge": {
+      "@id": "portbase:outOfGauge"
+    },
+    "shippingCompany": {
+      "@id": "portbase:shippingCompany"
+    },
+    "full": {
+      "@id": "portbase:full",
+      "@type": "xsd:boolean"
+    },
+    "humidity": {
+      "@id": "portbase:humidity",
+      "@type": "xsd:decimal"
+    },
+    "doorOpen": {
+      "@id": "portbase:doorOpen",
+      "@type": "xsd:boolean"
+    },
+    "chainWork": {
+      "@id": "portbase:chainWork",
+      "@type": "xsd:boolean"
+    },
+    "generator": {
+      "@id": "portbase:generator",
+      "@type": "xsd:boolean"
+    },
+    "damageRemark": {
+      "@id": "portbase:damageRemark",
+      "@type": "xsd:string"
+    },
+    "previousPort": {
+      "@id": "portbase:previousPort",
+      "@type": "xsd:string"
+    },
+    "remarks": {
+      "@id": "portbase:remarks",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "portbase:category",
+      "@type": "xsd:string"
+    },
+    "nextPort": {
+      "@id": "portbase:nextPort",
+      "@type": "xsd:string"
+    },
+    "finalPort": {
+      "@id": "portbase:finalPort",
+      "@type": "xsd:string"
+    },
+    "consignmentNumber": {
+      "@id": "portbase:consignmentNumber",
+      "@type": "xsd:string"
+    },
+    "totalContainerWeight": {
+      "@id": "portbase:totalContainerWeight",
+      "@type": "xsd:decimal"
+    },
+    "deepSea": {
+      "@id": "portbase:deepSea"
+    },
+    "InlandTerminal": "portbase:InlandTerminal",
+    "location": {
+      "@id": "portbase:location"
+    },
+    "Location": "portbase:Location",
+    "OutOfGauge": "portbase:OutOfGauge",
+    "left": {
+      "@id": "portbase:left",
+      "@type": "xsd:integer"
+    },
+    "front": {
+      "@id": "portbase:front",
+      "@type": "xsd:integer"
+    },
+    "right": {
+      "@id": "portbase:right",
+      "@type": "xsd:integer"
+    },
+    "rear": {
+      "@id": "portbase:rear",
+      "@type": "xsd:integer"
+    },
+    "Reefer": "portbase:Reefer",
+    "temperatureFixed": {
+      "@id": "portbase:temperatureFixed",
+      "@type": "xsd:boolean"
+    },
+    "ShippingCompany": "portbase:ShippingCompany",
+    "smdgCode": {
+      "@id": "portbase:smdgCode",
+      "@type": "xsd:string"
+    },
+    "SizeType": "portbase:SizeType",
+    "UpdateHandling": "portbase:UpdateHandling",
+    "DetachHandling": "portbase:DetachHandling",
+    "CancelAndDetachHandling": "portbase:CancelAndDetachHandling",
+    "cancelReason": {
+      "@id": "portbase:cancelReason",
+      "@type": "xsd:string"
+    },
+    "MoveHandling": "portbase:MoveHandling",
+    "nextVisitId": {
+      "@id": "portbase:nextVisitId",
+      "@type": "xsd:string"
+    },
+    "nextVoyageId": {
+      "@id": "portbase:nextVoyageId",
+      "@type": "xsd:string"
+    },
+    "CreateDetachedHandling": "portbase:CreateDetachedHandling",
+    "UpdateDetachedHandling": "portbase:UpdateDetachedHandling"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Portbase API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Portbase's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-18) from openapi/portbase-cargo-controller-export-openapi.yml, openapi/portbase-cargo-controller-import-openapi.yml, openapi/portbase-hinterland-container-notification-openapi.yml.",
+  "dcterms:created": "2026-10-18",
+  "dcterms:source": [
+    "openapi/portbase-cargo-controller-export-openapi.yml",
+    "openapi/portbase-cargo-controller-import-openapi.yml",
+    "openapi/portbase-hinterland-container-notification-openapi.yml",
+    "openapi/portbase-vessel-visit-openapi.yml"
+  ]
+}

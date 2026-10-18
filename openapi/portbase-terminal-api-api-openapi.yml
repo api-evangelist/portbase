@@ -1,0 +1,89 @@
+openapi: 3.2.0
+info:
+  title: Portbase Terminal API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Terminal API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Terminal API
+paths:
+  /registerDischarge:
+    post:
+      tags:
+      - Terminal API
+      summary: Register bulk discharge
+      description: This endpoint can be used by terminals to register the actually discharged weight for bulk consignments.
+      operationId: acceptVisit_1
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.cargo.RegisterBulkDischarge'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.cargo.common.BulkDischargeResult:
+      title: BulkDischargeResult
+      required:
+      - consignmentNumber
+      - grossWeight
+      - itemNumber
+      type:
+      - object
+      - 'null'
+      properties:
+        consignmentNumber:
+          minLength: 1
+          type: string
+        itemNumber:
+          type: integer
+          format: int32
+        grossWeight:
+          minimum: 0
+          type: number
+      description: Discharged bulk goods reported by terminals
+    com.portbase.bezoekschip.common.api.cargo.RegisterBulkDischarge:
+      title: RegisterBulkDischarge
+      required:
+      - bulkDischargeResults
+      - crn
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        terminalShortName:
+          type:
+          - string
+          - 'null'
+        bulkDischargeResults:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.cargo.common.BulkDischargeResult'
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

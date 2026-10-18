@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-com-portbase-bezoekschip-common-api-commercialrelease-input-input-commercial-release-data-schema.json",
+  "title": "InputCommercialReleaseData",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-vessel-visit-openapi.yml#/components/schemas/com.portbase.bezoekschip.common.api.commercialrelease.input.InputCommercialReleaseData",
+  "required": [
+    "consignmentNumber",
+    "containerOperatorCode",
+    "equipmentNumber",
+    "releaseToPartyCode",
+    "terminalCode"
+  ],
+  "type": "object",
+  "properties": {
+    "equipmentNumber": {
+      "minLength": 1,
+      "type": "string",
+      "description": "Unique identifier of the container."
+    },
+    "empty": {
+      "type": "boolean",
+      "description": "Indication whether the container is full or empty."
+    },
+    "consignmentNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Synonym of Bill of Lading number. Unique identifier of the consignment in the container. If multiple consignments are present in the container, fill in the first consignment number."
+    },
+    "releaseDeadline": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The commercial release is valid until this datetime.",
+      "format": "date-time"
+    },
+    "releaseModality": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The modality of the on-carriage transport.",
+      "enum": [
+        "road",
+        "rail",
+        "barge",
+        "sea"
+      ]
+    },
+    "remarks": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Remarks about this release from the carrier."
+    },
+    "releaseReference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reference number of the release as it is known with the carrier. This is *not* the pin code of the container."
+    },
+    "sizeType": {
+      "$ref": "#/$defs/com.portbase.bezoekschip.common.api.cargo.common.SizeType"
+    },
+    "crn": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The call reference number of the visit"
+    },
+    "terminalCode": {
+      "minLength": 1,
+      "type": "string",
+      "description": "The SMDG code of the terminal to send this commercial release to."
+    },
+    "containerOperatorCode": {
+      "minLength": 1,
+      "type": "string",
+      "description": "The SMDG code of the box operator authorising this commercial release."
+    },
+    "releaseToPartyCode": {
+      "minLength": 1,
+      "type": "string",
+      "description": "Identity of the customer of this carrier which is given the permission to pick up the container. Note, this code needs to be registered by the customer in Portbase service Cargo Controller before it is used by the carrier."
+    },
+    "inlandOperatorEanCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The inland-operator which is nominated by the cargo director (the carrier department / subsidiary) to\npick-up the container from the terminal. Every inland-operator active at the Port of Rotterdam terminals\nhas been issued an identifier by Secure Logistics in the format of an EAN-code. This is the unique\nidentifier used by Portbase and the terminals to identify parties.\n"
+    }
+  },
+  "$defs": {
+    "com.portbase.bezoekschip.common.api.cargo.common.SizeType": {
+      "title": "SizeType",
+      "required": [
+        "code"
+      ],
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "code": {
+          "maxLength": 4,
+          "minLength": 0,
+          "type": "string",
+          "description": "The coded container's length, width, height, type and features."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The descriptive name of the size type of container as specified with the code."
+        }
+      },
+      "description": "The classification of the container's length, width, height, type and features.<br>Use a size type retrieved with find size types via the Reference Data API '[Find SizeTypes](#operation/_06_findSizeTypes)'."
+    }
+  }
+}

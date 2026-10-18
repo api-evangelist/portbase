@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/portbase/main/json-schema/portbase-equipment-update-request-schema.json",
+  "title": "EquipmentUpdateRequest",
+  "description": "Equipment representation",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/portbase-hinterland-container-notification-openapi.yml#/components/schemas/EquipmentUpdateRequest",
+  "required": [
+    "bookingOrderReference",
+    "full",
+    "loading",
+    "notificationType",
+    "visitUuid"
+  ],
+  "type": "object",
+  "properties": {
+    "equipmentNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..11 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Format**| 'AAAA9999999' |\n|**Description**| Equipment number|\n|**Validation**| R040 - C-Loading on size type |\n||R037 - V-If not shippers owned format must be correct |\n||R043 - V-for POST duplicate check |\n||R088 - V-for PUT duplicate check |\n||R089 - V-for PUT equipment number allowed |"
+    },
+    "shippersOwnedContainer": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..5 |\n|**Occurrence**| 0..1 |\n|**Description**| Shippers owned indicator. Default = False. True bypasses the equipment number validation. |\n"
+    },
+    "full": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..5 |\n|**Occurrence**| 1..1 |\n|**Description**| Indicator if the container is full or empty. True = full equipment, False = empty equipment |\n|**Validation**|R087 - V-for PUT duplicate check |\n"
+    },
+    "loading": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..5 |\n|**Occurrence**| 1..1 |\n|**Description**| Loading or discharge. True = loading, False = discharge |\n|**Validation**|R043 - V-for PUT duplicate check |\n"
+    },
+    "bookingOrderReference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..35 |\n|**Occurrence**| 1..1 |\n|**Description**| Release Order Reference (import) or Acceptance Order Reference (export) |\n|**Validation**|R043 - V-for PUT duplicate check |\n"
+    },
+    "grossWeight": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| n5 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Description**| Gross weight in KGM |\n|**Validation**|R045 - C-Mandatory if terminal preference is true |\n",
+      "format": "int32"
+    },
+    "sealNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..15 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Format**| min 2 and max 15 characters |\n|**Description**| Seal number |\n|**Validation**|R053 - C-Mandatory if terminal preference is true |\n"
+    },
+    "sizeType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an4 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Description**| ISO Size Type code, ie 22G1 |\n|**Validation**|R040 - C-Loading on size type |\n||R136 - C-Mandatory if terminal preference is true |\n||R036 - V-valid ISO Size Type code |\n"
+    },
+    "transportReferenceNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..15 |\n|**Occurrence**| 0..1 |\n|**Description**| Customer's ref number of the hinterland transport. |\n"
+    },
+    "notificationType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| a1 |\n|**Occurrence**| 1..1 |\n|**Description**| Notification type |\n|**Validation**|R091 - V-can only be changed from R to N |\n|**Possible values**| 'N' = Notification, ||'R' = Status Request |\n",
+      "enum": [
+        "N, R"
+      ]
+    },
+    "executingHaulierEANNumber": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| n35 |\n|**Occurrence**| 0..1 |\n|**Description**| EAN number of charter party that will execute the physical transport |\n|**Validation**|R182 - V-Valid Road Haulier |\n||R183 - P-ignored if not mandatory |\n||R184 - V-only allowed if modality = Road |\n",
+      "format": "int64"
+    },
+    "carrier": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/CarrierRequest"
+        }
+      ]
+    },
+    "handling": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/HandlingRequest"
+        }
+      ]
+    },
+    "visitUuid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "| | |\n|----|----|\n|**Length**| an..32 |\n|**Occurrence**| 1..1 |\n|**Description**| Universal Unique Identifier for the Visit as generated by the PCS |\n|**Validation**|R191 - V-Valid Visit UUID |\n"
+    }
+  },
+  "$defs": {
+    "CarrierRequest": {
+      "type": "object",
+      "properties": {
+        "scacCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| an4 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Description**| Carrier SCAC Code |\n|**Validation**|R245 - C-SMDG or SCAC code must be present |\n||R031 - V-valid SCAC or SMDG |\n||R043 - V-for POST duplicate check |\n"
+        },
+        "smdgCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| an3 |\n|**Occurrence**| 0..1 |\n|**Cardinality**| Conditional |\n|**Description**| Carrier SMDG Code |\n|**Validation**|R245 - C-SMDG or SCAC code must be present |\n||R031 - V-valid SCAC or SMDG |\n||R043 - V-for POST duplicate check |\n"
+        }
+      },
+      "description": "Carrier representation: SCAC code and/or SMDG code"
+    },
+    "HandlingRequest": {
+      "type": "object",
+      "properties": {
+        "temperatureMaximum": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n3,1 |\n|**Occurrence**| 0..1 |\n|**Description**| Maximum temperature in degrees Celsius |\n|**Format**| 999 max 1 decimal |\n|**Validation**|R060 - V-if container is empty no value allowed |\n||R063 - V-both min and max temperature must be present |\n||R064 - V-if temperature setting is filled, no min and max allowed |\n"
+        },
+        "temperatureMinimum": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n3,1 |\n|**Occurrence**| 0..1 |\n|**Description**| Minimum temperature in degrees Celsius |\n|**Format**| 999 max 1 decimal |\n|**Validation**|R060 - V-if container is empty no value allowed |\n||R062 - V-max temperature higher than min |\n||R063 - V-both min and max temperature must be present |\n||R064 - V-if temperature setting is filled, no min and max allowed |\n"
+        },
+        "temperatureSetting": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n3,1 |\n|**Occurrence**| 0..1 |\n|**Description**| Temperature setting in degrees Celsius |\n|**Format**| 999 max 1 decimal |\n|**Validation**|R060 - V-if container is empty no value allowed |\n||R065 - V-if min and max are filled, no temperature setting allowed |\n"
+        },
+        "offDimensionsFront": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n4,0 |\n|**Occurrence**| 0..1 |\n|**Description**| Off dimensions front - Dimensions in Centimeter |\n|**Format**| 4 numbers no decimals |\n",
+          "format": "int32"
+        },
+        "offDimensionsHeight": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n4,0 |\n|**Occurrence**| 0..1 |\n|**Description**| Off dimensions height - Dimensions in Centimeter |\n|**Format**| 4 numbers no decimals |\n",
+          "format": "int32"
+        },
+        "offDimensionsLeft": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n4,0 |\n|**Occurrence**| 0..1 |\n|**Description**| Off dimensions left - Dimensions in Centimeter |\n|**Format**| 4 numbers no decimals |\n",
+          "format": "int32"
+        },
+        "offDimensionsRear": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n4,0 |\n|**Occurrence**| 0..1 |\n|**Description**| Off dimensions rear - Dimensions in Centimeter |\n|**Format**| 4 numbers no decimals |\n",
+          "format": "int32"
+        },
+        "offDimensionsRight": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "| | |\n|----|----|\n|**Length**| n4,0 |\n|**Occurrence**| 0..1 |\n|**Description**| Off dimensions right - Dimensions in Centimeter |\n|**Format**| 4 numbers no decimals |\n",
+          "format": "int32"
+        }
+      },
+      "description": "| | |\n|----|----|\n|**Occurrence**| 0..1 |\n|**Description**| Handling representation |\n"
+    }
+  }
+}

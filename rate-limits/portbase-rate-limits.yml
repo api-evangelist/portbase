@@ -1,0 +1,7 @@
+generated: '2026-10-18'
+method: derived
+source: openapi/portbase-cargo-controller-export-openapi.yml
+name: Portbase rate limits
+limit_count: 0
+limits: []
+note: Rate limiting is implemented (returns 429 status code) but specific limits are not documented in available specifications or documentation.

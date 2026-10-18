@@ -1,0 +1,23 @@
+generated: '2026-10-18'
+method: none
+source:
+- https://zapier.com/apps/portbase/integrations
+- https://n8n.io/integrations/portbase/
+- https://composio.dev/toolkits/portbase
+- https://monid.ai/tools/portbase
+checked:
+- https://composio.dev/toolkits/portbase
+- https://make.com/en/integrations/portbase
+- https://monid.ai/tools/portbase
+- https://n8n.io/integrations/portbase
+- https://n8n.io/integrations/portbase/
+- https://support.portbase.com/hc/en-gb/categories/26797994131858
+- https://workato.com/integrations/portbase
+- https://www.portbase.com/en/marketplace/
+- https://zapier.com/apps/portbase/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
+note: No integration marketplace listings or named partner integrations found. Portbase appears to be a port community
+  system platform rather than an app with marketplace integrations.

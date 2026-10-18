@@ -1,0 +1,515 @@
+openapi: 3.2.0
+info:
+  title: Portbase Terminal API - visits API
+  version: '2.0'
+  contact:
+    name: Portbase hinterland team
+    url: https://hcn.pcs.portbase.com
+    email: hinterland@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Terminal API - visits across 2 of this provider''s published API definitions: portbase-hinterland-container-notification-v2.json, portbase-hinterland-container-notification-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/hcn
+  description: Production server
+- url: https://api.kt.portbase.com/hcn
+  description: Test server
+tags:
+- name: Terminal API - visits
+  description: Api defining the operations a terminal can do to respond on visit requests from the declarant. The terminal supplies feedback if a visit is accepted and can be planned, rejected or completed.
+paths:
+  /visits:accept:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Accept visit
+      description: This endpoint can be used to accept/plan a requested visit or update an already accepted/planned visit.
+      operationId: _01_acceptVisit_Post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApproveVisit'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    patch:
+      tags:
+      - Terminal API - visits
+      summary: Accept visit
+      description: This endpoint can be used to update a previously accepted/planned visit. Only supplied properties will be updated. Any supplied properties with NULL values will delete existing values.
+      operationId: _02_acceptVisit_Patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApproveVisit'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminalVisitStatus'
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:reject:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Reject visit
+      description: 'This endpoint can be used to reject a requested visit.
+
+        Examples of codes that can be used (non-restrictive):
+
+
+        codedescription
+
+
+        CAWCall withdrawn / Rejected by planning
+
+
+        CAUCall unknown
+
+
+        MREMessage rejected'
+      operationId: _03_rejectVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:acknowledge:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Acknowledge visit
+      description: This endpoint can be used to acknowledge the visit request, without accepting or rejecting yet. This notifies the declarant that the visit request has been received.
+      operationId: _04_processVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:updateStatus:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Update visit status
+      description: This endpoint can be used to update the status of a requested visit without accepting it.
+      operationId: _05_updateVisitStatus_Post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTerminalVisitStatus'
+      responses:
+        '204':
+          description: successful operation
+    patch:
+      tags:
+      - Terminal API - visits
+      summary: Update visit status
+      description: This endpoint can be used to update the status of a requested visit without accepting it. Only supplied properties will be updated. Any supplied properties with NULL values will delete existing values.
+      operationId: _06_updateVisitStatus_Patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTerminalVisitStatus'
+      responses:
+        '204':
+          description: successful operation
+        '403':
+          description: operation unsuccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IllegalCommandException'
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:complete:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Complete visit
+      description: This endpoint can be used to indicate that the visit is completed, no longer in operation.
+      operationId: _07_completeVisit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:acceptCancellation:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Accept visit cancellation
+      description: This endpoint can be used to accept the cancellation of a visit.
+      operationId: _08_acceptVisitCancellation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptVisitCancellation'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:reopen:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Reopen load-discharge list
+      description: This endpoint can be used to reopen the load-discharge list after it was closed.
+      operationId: _09_reopenLoadDischargeList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReopenVisit'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /roadVisits:byTar:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Get road visit by TAR code
+      description: This endpoint can be used by terminals to get a road visit by TAR code.
+      operationId: _10_getByTar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRoadByTar'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /roadVisits:updateEta:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Update road eta for the charter
+      description: This endpoint can be used by terminals to update a road visit eta as a declarant, for when the charter has arrived early at the gate.
+      operationId: _11_updateRoadEta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoadEta'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+  /visits:updateNotifications:
+    post:
+      tags:
+      - Terminal API - visits
+      summary: Set the notifications for a visit
+      description: This endpoint can be used by terminals to update the notifications of a visit
+      operationId: _12_updateNotifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVisitNotifications'
+      responses:
+        '204':
+          description: successful operation
+    servers:
+    - url: https://api.portbase.com/hcn
+      description: Production server
+    - url: https://api.kt.portbase.com/hcn
+      description: Test server
+components:
+  schemas:
+    ReopenVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    RejectReason:
+      type: object
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: The rejection (error) code sent by the terminal
+        terminalDescription:
+          type:
+          - string
+          - 'null'
+          description: The rejection description sent by the terminal
+    UpdateVisitNotifications:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerminalNotification'
+    ProcessVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    ApproveVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        plannedVisitData:
+          allOf:
+          - $ref: '#/components/schemas/TerminalVisitStatus'
+        remarks:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+    UpdateTerminalVisitStatus:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        plannedVisitData:
+          title: ''
+          type:
+          - ''
+          - 'null'
+          description: The latest VisitData provided by the terminal.
+          deprecated: false
+          allOf:
+          - $ref: '#/components/schemas/TerminalVisitStatus'
+        visitResult:
+          allOf:
+          - $ref: '#/components/schemas/TerminalVisitResult'
+    AcceptVisitCancellation:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+    IllegalCommandException:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+    RejectVisit:
+      required:
+      - reasons
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectReason'
+    TerminalVisitStatus:
+      required:
+      - modality
+      type: object
+      properties:
+        notifications:
+          type: array
+          description: Notifications from the terminal about this visit
+          items:
+            $ref: '#/components/schemas/TerminalNotification'
+        eta:
+          type:
+          - string
+          - 'null'
+          description: The expected time of arrival of the means of hinterland's transport at the terminal.
+          format: date-time
+          example: '2019-09-12T21:34:22.123Z'
+        modality:
+          type: string
+          description: The way in which the transportation of the cargo takes place in the hinterland.
+          example: barge
+          enum:
+          - road
+          - rail
+          - barge
+          - cer
+          - sea
+      description: The latest VisitData accepted and planned by the terminal.
+      discriminator:
+        propertyName: modality
+        mapping:
+          barge: '#/components/schemas/BargeTerminalVisitStatus'
+          road: '#/components/schemas/RoadVisitStatus'
+          rail: '#/components/schemas/RailVisitStatus'
+    GetRoadByTar:
+      required:
+      - tar
+      type: object
+      properties:
+        tar:
+          type: string
+          description: The TAR code of the visit
+    UpdateRoadEta:
+      required:
+      - eta
+      - tar
+      type: object
+      properties:
+        tar:
+          type: string
+          description: The TAR code of the visit
+        eta:
+          type: string
+          description: The updated ETA for this road visit.
+          format: date-time
+    TerminalNotification:
+      required:
+      - code
+      - description
+      - level
+      type: object
+      properties:
+        level:
+          type: string
+          description: 'The urgency of the notification: LOW is intended to be informative only. MEDIUM and HIGH are considered actionable for the recipient.'
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+        code:
+          type: string
+          description: Used to group notifications of the same type, chosen by the sender of the notification.
+        description:
+          type: string
+          description: The content of the notification.
+      description: A notification from the terminal with important information about this handling or visit.
+    TerminalVisitResult:
+      type: object
+      properties:
+        ata:
+          type:
+          - string
+          - 'null'
+          description: The actual time of arrival at the terminal.
+          format: date-time
+          example: '2025-09-12T21:34:22Z'
+        atd:
+          type:
+          - string
+          - 'null'
+          description: The actual time of departure from the terminal.
+          format: date-time
+          example: '2025-09-12T21:34:22Z'
+      description: Containing the terminal visit actuals.
+    CompleteVisit:
+      required:
+      - visitId
+      type: object
+      properties:
+        visitId:
+          type: string
+          description: Unique identifier of the visit which was generated on the creation of the visit
+          example: '75111204'
+        endOfOperations:
+          type:
+          - string
+          - 'null'
+          description: The actual time of when all operations completed at the terminal
+          format: date-time
+          example: '2021-07-13T10:30:50Z'
+externalDocs:
+  description: The connection instructions, use cases per mode of transport, and changelog can be found here.
+  url: linkmenu.html
+x-refined-from:
+- portbase-hinterland-container-notification-v2.json
+- portbase-hinterland-container-notification-openapi.yml

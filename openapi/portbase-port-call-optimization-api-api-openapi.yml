@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Portbase Port Call Optimization API
+  version: '6.0'
+  contact:
+    name: Portbase portvisit team
+    url: https://portvisit.pcs.portbase.com
+    email: customerservice@portbase.com
+  x-logo:
+    url: Portbase_WB_RGB.png
+    altText: Portbase logo
+  description: 'Operations tagged Port Call Optimization API across 2 of this provider''s published API definitions: portbase-portvisit-v6.json, portbase-vessel-visit-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.portbase.com/portvisit
+  description: Production server
+- url: https://api.kt.portbase.com/portvisit
+  description: Acceptance server
+- url: https://api.sc.portbase.com/portvisit
+  description: Test server
+tags:
+- name: Port Call Optimization API
+paths:
+  /port-call-optimization/passage:
+    post:
+      tags:
+      - Port Call Optimization API
+      summary: Register a passage
+      description: This endpoint can be used to register a passage of a vessel.
+      operationId: registerPassage
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/com.portbase.bezoekschip.common.api.visit.portcalloptimization.RegisterPassage'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+    servers:
+    - url: https://api.portbase.com/portvisit
+      description: Production server
+    - url: https://api.kt.portbase.com/portvisit
+      description: Acceptance server
+    - url: https://api.sc.portbase.com/portvisit
+      description: Test server
+components:
+  schemas:
+    com.portbase.bezoekschip.common.api.visit.portcalloptimization.RegisterPassage:
+      title: RegisterPassage
+      required:
+      - ata
+      - code
+      - crn
+      - registrationTime
+      type: object
+      properties:
+        crn:
+          minLength: 1
+          type: string
+          description: The call reference number of the visit
+        code:
+          type: string
+          description: The code of passage
+          enum:
+          - PPA
+          - LEFT_PREVIOUS_PORT
+        ata:
+          type: string
+          description: The actual time of arrival.
+          format: date-time
+        registrationTime:
+          type: string
+          description: The time that the passage has been registered.
+          format: date-time
+x-refined-from:
+- portbase-portvisit-v6.json
+- portbase-vessel-visit-openapi.yml

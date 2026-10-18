@@ -1,0 +1,1132 @@
+openapi: 3.2.0
+info:
+  title: Portbase Cargo Controller Import API
+  version: v1.0
+  contact:
+    name: Portbase - Team Import Cargo
+    url: https://www.portbase.com/services/cargo-controller-import/
+    email: importcargo@portbase.com
+  x-logo:
+    url: images/portbase-logo.png
+    altText: Portbase logo
+  description: 'Operations tagged Cargo Controller Import API across 2 of this provider''s published API definitions: portbase-cargo-controller-import.json, portbase-cargo-controller-import-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.cargo-controller.pcs.portbase.com
+  description: Production
+- url: https://api.cargo-controller.pcs.portbase.com/stub
+  description: Test
+- url: https://api.cargo-controller.kt.portbase.com
+  description: KT
+tags:
+- name: Cargo Controller Import API
+paths:
+  /public/track-requests:
+    post:
+      tags:
+      - Cargo Controller Import API
+      summary: Track requests
+      description: 'This endpoint can be used to track cargo. After tracking cargo, it''s possible to receive real-time updates through our webhook functionality.
+
+        Please refer to the Webhook events section for more information.
+
+
+        > Please note that for testing purposes there is a stub endpoint available. The URL can be found in the dropdown above the ''Request samples'' section to the right. This test endpoint bases its response on the **reference number** in your track request. The
+
+        following prefixes of the value of **reference number** can be used to control the track response:
+
+        > * NT: will appear under ''notTrackedBLs'' in the response
+
+        > * RE: will appear under ''rejectedBLs'' in the response
+
+        > * Any other value or no value: will appear under ''trackedBLs'' in the response
+
+        **Please note**: It is possible to add an optional **webhook url** for testing purposes.
+
+        This url can be added on the same level as the "trackRequests" in the JSON and needs to be a valid url.
+
+        Please refer to the ''samples'' sections to the right for example objects of requests and responses. For more information about the content of requests and responses, see below.'
+      operationId: track_1
+      parameters:
+      - name: portbase-access-key-id
+        in: header
+        schema:
+          type: string
+        example: abcdef
+      - name: portbase-secret-access-key
+        in: header
+        schema:
+          type: string
+        example: 1234567
+      - name: authorization
+        in: header
+        description: 'The authorization header is for internal use only. Please use the Portbase headers above or refer to the
+
+          <a target="_self" href="#section/Configuration/1.-Set-up-API-access">Set up API access</a> section for authentication.
+
+          '
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchTrackRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackResponse'
+      security:
+      - ${authorizer-name}: []
+      x-amazon-apigateway-integration:
+        passthroughBehavior: when_no_match
+        requestParameters:
+          integration.request.header.authorization: context.authorizer.jwtAuthHeader
+        httpMethod: POST
+        type: http_proxy
+        uri: ${backend-base-uri}/public/track-requests
+    servers:
+    - url: https://api.cargo-controller.pcs.portbase.com
+      description: Production
+    - url: https://api.cargo-controller.pcs.portbase.com/stub
+      description: Test
+    - url: https://api.cargo-controller.kt.portbase.com
+      description: KT
+  /public/tracked-bls:
+    get:
+      tags:
+      - Cargo Controller Import API
+      summary: Tracked B/L's
+      description: 'Real-time updates on tracked cargo can be received through our webhook functionality (see Webhook events section).
+
+        Additionally, this trackedBls endpoint can be used to retrieve information on tracked cargo in case your system missed webhook updates and
+
+        is in need of synchronization.
+
+
+        ***NOTE: This trackedBls endpoint is not meant for continuous synchronization and is throttled & monitored accordingly.***
+
+
+        > For testing purposes there is a stub endpoint available. The URL can be found in the dropdown above the ''Response samples'' section to the right.
+
+        The request parameter ''id'' is required, however it will not be validated, so anything can be entered. The endpoint will always return the same dummy data
+
+        enriched with the id in your request and adjusted to the current date and time.
+
+
+        Please refer to the ''Response samples'' to the right for an example object. For more information about the response schema, see the ''Responses'' section below.'
+      operationId: trackedBls_1
+      parameters:
+      - name: portbase-access-key-id
+        in: header
+        schema:
+          type: string
+        example: abcdef
+      - name: portbase-secret-access-key
+        in: header
+        schema:
+          type: string
+        example: 1234567
+      - name: authorization
+        in: header
+        description: The authorization header is for internal use only. Please use the Portbase headers above or refer to the <a target="_self" href="#section/Configuration/1.-Set-up-API-access">Set up API access</a> section for authentication.
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: A comma separated list of Track Request IDs, provided in the response of the track endpoint
+        required: true
+        schema:
+          type: array
+          description: A comma separated list of Track Request IDs, provided in the response of the track endpoint
+          items:
+            type: string
+            description: A comma separated list of Track Request IDs, provided in the response of the track endpoint
+          maxItems: 100
+          minItems: 1
+          uniqueItems: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiOrganisationBL'
+      security:
+      - ${authorizer-name}: []
+      x-amazon-apigateway-integration:
+        passthroughBehavior: when_no_match
+        requestParameters:
+          integration.request.header.authorization: context.authorizer.jwtAuthHeader
+        httpMethod: GET
+        type: http_proxy
+        uri: ${backend-base-uri}/public/tracked-bls
+    servers:
+    - url: https://api.cargo-controller.pcs.portbase.com
+      description: Production
+    - url: https://api.cargo-controller.pcs.portbase.com/stub
+      description: Test
+    - url: https://api.cargo-controller.kt.portbase.com
+      description: KT
+components:
+  schemas:
+    ApiSizeType:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The coded container's length, width, height, type and features
+          example: 22G1
+          maxLength: 4
+          minLength: 0
+        name:
+          type: string
+          description: The descriptive name of the size type of container as specified with the code
+          example: 20'x8'x8'6" General Purpose Container – 22G1
+    PlannedVisit:
+      type: object
+      properties:
+        eta:
+          type: string
+          example: '2021-02-28T09:45:00Z'
+        ata:
+          type: string
+          example: '2021-02-28T08:45:00Z'
+    ApiHinterlandPreNotification:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+        dateUpdated:
+          type: string
+        status:
+          type: string
+          enum:
+          - DECLARED
+          - ACCEPTED
+          - REJECTED
+        modality:
+          type: string
+          enum:
+          - road
+          - rail
+          - barge
+          - sea
+          - cer
+        plannedVisit:
+          $ref: '#/components/schemas/PlannedVisit'
+        equipmentStatus:
+          $ref: '#/components/schemas/EquipmentStatus'
+    ApiPort:
+      type: object
+      properties:
+        locationName:
+          type: string
+          description: The name of the port
+          example: Rotterdam
+        locationUnCode:
+          type: string
+          description: The UN code of the location where the port is located
+          example: NLRTM
+    ApiParty:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The full name of the organisation
+        scacCode:
+          type: string
+          description: The SCAC code of the organisation
+    ApiPackageType:
+      type: object
+      properties:
+        code:
+          type: string
+          example: DR
+        name:
+          type: string
+          example: Some package type name
+    RejectReason:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The error code sent by the terminal
+        terminalDescription:
+          type: string
+          description: The error description sent by the terminal
+        parsedReason:
+          type: string
+          description: A user friendly description of the error code
+    ApiExchangeRate:
+      type: object
+      properties:
+        rate:
+          type: number
+          example: 0.855
+        currency:
+          $ref: '#/components/schemas/ApiCurrency'
+    ApiTransportEquipment:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        type:
+          type: string
+          enum:
+          - UNKNOWN
+          - CONTAINER
+          - TRAILER
+          - SWAP_BODY
+          - CHASSIS
+        sizeType:
+          $ref: '#/components/schemas/ApiSizeType'
+        shippersOwned:
+          type: boolean
+          description: Indication whether the equipment number is a ISO 6346 compliant container number (apply true when it does not comply)
+        emptyIndicator:
+          type: boolean
+          description: Indication whether the container is full or empty
+          example: false
+        tareWeight:
+          type: number
+          description: The weight of the container without its content
+          example: 4560
+        shipperSealNumber:
+          type: string
+          example: SHIP789589234
+          maxLength: 17
+          minLength: 0
+        carrierSealNumber:
+          type: string
+          example: CARR789589234
+          maxLength: 17
+          minLength: 0
+        customsSealNumber:
+          type: string
+          example: CUST789589234
+          maxLength: 17
+          minLength: 0
+        temperature:
+          type: number
+          description: The temperature (degrees C) on which the cooling system must be set
+        overlength:
+          type: number
+          description: The extent (in centimeters) to which the contents of equipment exceeds the length of the equipment
+          example: 200
+        overheight:
+          type: number
+          description: The extent (in centimeters) to which the contents of equipment exceeds the height of the equipment
+          example: 200
+        overwidth:
+          type: number
+          description: The extent (in centimeters) to which the contents of equipment exceeds the width of the equipment
+          example: 200
+        oversizeRemarks:
+          type: string
+          description: Additional information regarding the off-dimensions of a piece of equipment
+          example: NO REMARKS
+        initialDemurrage:
+          type: string
+          description: First day that terminal storage charges must be paid after discharge of a equipment
+          example: '2021-02-28T07:45:00Z'
+        redeliveryAddress:
+          type: string
+          description: Address where empty equipment must be re-delivered after delivery of the cargo
+          example: Return home
+        containerOperator:
+          $ref: '#/components/schemas/ApiParty'
+          description: Organisation that owns the container
+          example:
+            name: Cargo Handling Agent 1
+            scacCode: CHAA
+    ApiTransportEquipmentDeclaration:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        declarations:
+          type: array
+          description: Submitted import declarations for a transport equipment. Contains a three letter document code for a sent Import Document.
+          example:
+          - DIN
+          items:
+            type: string
+    EquipmentStatus:
+      type: object
+      properties:
+        acceptStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcceptStatus'
+        rejectReasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectReason'
+    ApiGoodsItemTransportEquipment:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        numberOfPackages:
+          type: integer
+          format: int32
+          example: 80
+        grossWeight:
+          type: number
+          example: 15820
+    BatchTrackRequest:
+      type: object
+      properties:
+        trackRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackRequest'
+          maxItems: 500
+          minItems: 1
+          uniqueItems: true
+      required:
+      - trackRequests
+    ApiBerth:
+      type: object
+      properties:
+        name:
+          type: string
+        terminal:
+          $ref: '#/components/schemas/ApiTerminal'
+    AcceptStatus:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Broad categories of accept statuses. We categorize most accept codes under these types.  When we cannot match a code to a type, we leave the type empty (null).
+          enum:
+          - AVAILABLE
+          - BOOKING_APPROVED
+          - COMMERCIAL_RELEASE
+          - CUSTOMS_DOCUMENT
+          - BLOCKED
+          - SIZETYPE_APPROVED
+          - CARGO_OPENING
+          - MODALITY_APPROVED
+          - HANDLING_TYPE_APPROVED
+          - SHIPPING_COMPANY_APPROVED
+        code:
+          type: string
+          description: The warning code that is sent by the terminal.
+        remark:
+          type: string
+          description: The optional remark sent by the terminal.
+    ApiDirector:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+        name:
+          type: string
+          description: The full name of the organisation
+        scacCode:
+          type: string
+          description: The SCAC code of the organisation
+    ApiOrganisationBL:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identification of a Bill of Lading. This id corresponds with the one you received in the response of the Track Request.
+          example: a3dd46f6-5c29-11ec-bf63-0242ac130002
+        referenceNumber:
+          type: string
+          description: A reference relevant to your organisation.
+          example: 84923YY
+          maxLength: 35
+          minLength: 0
+        labels:
+          type: array
+          description: Labels allow you to categorize your cargo to improve collaboration within your organization
+          example:
+          - Rental cars
+          - Warehouse A
+          items:
+            type: string
+          uniqueItems: true
+        deleted:
+          type: boolean
+          description: Indication whether the Bill of Lading has been untracked
+          example: false
+        origin:
+          type: string
+          description: 'How the Bill of Lading was tracked: via the Cargo Controller GUI (`WEB`) or via the public API (`API`), or automatically (because your organisation was authorised by the handling agent) by `COMMERCIAL_RELEASE` or `BULK_AUTHORISATION`'
+          enum:
+          - WEB
+          - API
+          - EDI
+          - EVENT
+          - COMMERCIAL_RELEASE
+          - BULK_AUTHORISATION
+          - SECURE_CHAIN_TRANSFER
+          example: API
+        trackingType:
+          type: string
+          description: Indication of the tracking type for this Bill of Lading
+          enum:
+          - BASIC
+          - EXTENDED
+          example: BASIC
+        billOfLading:
+          $ref: '#/components/schemas/ApiBillOfLading'
+        nominatedInlandOperators:
+          type: array
+          description: List of nominated inland operators
+          items:
+            $ref: '#/components/schemas/ApiInlandOperatorNominationDto'
+    ApiBillOfLading:
+      type: object
+      properties:
+        blNumber:
+          type: string
+          description: Bill of Lading (consignment) number
+          example: SCAC1234567890
+          maxLength: 17
+          minLength: 6
+        vesselVisit:
+          $ref: '#/components/schemas/ApiVesselVisit'
+        handlingAgent:
+          $ref: '#/components/schemas/ApiParty'
+          description: Organisation responsible for reporting the cargo on board of the vessel
+          example:
+            name: Cargo Handling Agent 1
+            scacCode: CHAA
+        portOfLoading:
+          $ref: '#/components/schemas/ApiPort'
+        portOfDischarge:
+          $ref: '#/components/schemas/ApiPort'
+        dischargeTerminal:
+          $ref: '#/components/schemas/ApiTerminal'
+          description: Planned discharge terminal
+        movementType:
+          type: string
+          description: Identifying code of the contract of the conditions of carriage
+          enum:
+          - DOOR_TO_DOOR
+          - DOOR_TO_PIER
+          - PIER_TO_DOOR
+          - PIER_TO_PIER
+        customsStatus:
+          type: string
+          description: Coded classification of the type of declaration that is used to declare the import of goods to customs
+          enum:
+          - EU_COMMUNITY_GOODS
+          - EU_COMMUNITY_GOODS_IN_TRANSHIPMENT
+          - EU_EMPTY_RETURN_PACKAGING
+          - EU_PROCEDURE_T
+          - EU_PROCEDURE_T1
+          - EU_PROCEDURE_T2
+          - EU_PROCEDURE_T2F
+          - GOODS_FROM_EVA_COUNTRIES
+        exchangeRate:
+          $ref: '#/components/schemas/ApiExchangeRate'
+          description: Exchange rate of 1 euro
+        placeOfOrigin:
+          $ref: '#/components/schemas/ApiPort'
+        placeOfDestination:
+          $ref: '#/components/schemas/ApiPort'
+        goodsItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiGoodsItem'
+        transportEquipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTransportEquipment'
+        dischargeReports:
+          type: array
+          description: Discharged transport equipments reported by terminals
+          items:
+            $ref: '#/components/schemas/ApiDischargeReport'
+        hinterlandTerminalData:
+          type: array
+          description: Handling data reported by terminal
+          items:
+            $ref: '#/components/schemas/ApiHinterlandTerminalData'
+        inspectionItems:
+          type: array
+          description: Inspections reported by customs
+          items:
+            $ref: '#/components/schemas/ApiInspectionItem'
+        transportEquipmentDeclarations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTransportEquipmentDeclaration'
+        hinterlandPreNotifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiHinterlandPreNotification'
+        cargoDirectors:
+          type: array
+          description: Cargo directors per equipment, responsible for (arranging) the hinterland transport
+          example:
+          - equipmentNumber: CONT9434134
+            name: Cargo Director B.V.
+            scacCode: CD12
+          items:
+            $ref: '#/components/schemas/ApiDirector'
+        transportDirectors:
+          type: array
+          deprecated: true
+          description: Transport directors per equipment
+          example:
+          - equipmentNumber: CONT9434134
+            name: Transport Director B.V.
+            scacCode: TD34
+          items:
+            $ref: '#/components/schemas/ApiDirector'
+        commercialReleases:
+          type: array
+          description: Release-to parties per equipment
+          items:
+            $ref: '#/components/schemas/ApiCommercialRelease'
+        releaseToParty:
+          $ref: '#/components/schemas/ApiParty'
+          deprecated: true
+          description: Organisation to which the Bill of Lading was commercially released. <strong>Deprecated</strong> - use the release-to party in the commercial releases instead.
+          example:
+            name: Release-to Party B.V.
+            scacCode: RTP1
+        firstTrackingOrganisation:
+          $ref: '#/components/schemas/ApiParty'
+          deprecated: true
+          description: Organisation that first tracked the Bill of Lading; can grand access to the goods description
+          example:
+            name: Release-to Party B.V.
+            scacCode: RTP1
+        deleted:
+          type: boolean
+          description: When a B/L has been deleted by a cargo agent
+          example: false
+    TrackResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identification of your track request
+        blNumber:
+          type: string
+          description: Bill of Lading (consignment) number
+        transportEquipmentNumber:
+          type: string
+          description: Transport equipment number (for example a container number)
+        referenceNumber:
+          type: string
+          description: The self defined reference of the track request
+        vesselName:
+          type: string
+          description: The name of the vessel that was added by filling out the CRN or IMO code in the track request
+        labels:
+          type: array
+          description: The self defined labels of the track request
+          items:
+            type: string
+          uniqueItems: true
+    ApiDischargeReport:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        actualDischargeDateTime:
+          type: string
+          example: '2021-02-28T07:45:00Z'
+        dischargeTerminal:
+          $ref: '#/components/schemas/ApiTerminal'
+    TrackResponse:
+      type: object
+      properties:
+        trackedBLs:
+          type: array
+          description: 'If the combination of blNumber and equipmentNumber is known in our system, the Track Request will appear in this list.
+
+            The B/L is successfully tracked and you will automatically receive the B/L data (and every future update) on your webhook url.
+
+
+            NB: if you are already successfully tracking this B/L (e.g. because someone already added it via the web interface),
+
+            the Track Request will still appear in this list. However, a reference number or labels in the (new) track request will be ignored.
+
+            '
+          example:
+            id: a3dd46f6-5c29-11ec-bf63-0242ac130002
+            blNumber: SCAC1234567890
+            transportEquipmentNumber: CONT9434134
+            referenceNumber: TR37290523
+            labels:
+            - CARS
+          items:
+            $ref: '#/components/schemas/TrackResult'
+        notTrackedBLs:
+          type: array
+          description: 'If the combination of blNumber and equipmentNumber is not known in Cargo Controller (yet), the Track Request will appear in this list.
+
+            We will save the Track Request so ***you do not have to include this Track Request again in future requests to this endpoint***.
+
+            The saved Track Request will automatically be tracked when the B/L becomes known in our system. It will then be sent as an update to your webhook.
+
+            '
+          example:
+            id: b3dd46f6-5c29-11ec-bf63-0242ac130002
+            blNumber: SCAC2234567891
+            transportEquipmentNumber: CONT9434135
+            referenceNumber: NT37290523
+            labels:
+            - CARS
+            vesselName: EVER ZEEHOND
+          items:
+            $ref: '#/components/schemas/TrackResult'
+        rejectedBLs:
+          type: array
+          description: 'If the handling agent has withdrawn your access to its cargo data, the Track Request will appear in this list together with the agent''s name.
+
+            Please contact the handling agent for more information.
+
+            '
+          example:
+            id: c3dd46f6-5c29-11ec-bf63-0242ac130002
+            blNumber: SCAC3234567892
+            transportEquipmentNumber: CONT9434136
+            referenceNumber: RE37290523
+            labels:
+            - CARS
+            rejectedBy: Cargo Handling Agent 1
+          items:
+            $ref: '#/components/schemas/TrackResult'
+    ApiPortVisit:
+      type: object
+      properties:
+        berthVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiBerthVisit'
+        etaPort:
+          type: string
+          example: '2021-02-28T05:45:00Z'
+        etdPort:
+          type: string
+          example: '2021-02-30T07:30:00Z'
+        ataPort:
+          type: string
+          example: '2021-02-28T05:45:00Z'
+        atdPort:
+          type: string
+          example: '2021-02-30T07:30:00Z'
+    ApiCommercialRelease:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+        releaseToParty:
+          $ref: '#/components/schemas/ApiParty'
+          example:
+            name: Release-to Party B.V.
+            scacCode: RTP1
+        releaseValidUntilDateTime:
+          type: string
+          description: Release valid date as given by cargo handling agent
+          example: '2021-02-28T07:45:00Z'
+    ApiHinterlandTerminalData:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        expectedDischargeTime:
+          type: string
+          description: Expected discharge time reported by terminals
+          example: '2021-02-28T07:45:00Z'
+        gateOut:
+          type: string
+          description: Departure time reported by terminal
+          example: '2021-02-28T07:45:00Z'
+    ApiVesselVisit:
+      type: object
+      properties:
+        crn:
+          type: string
+          description: The call reference number of the visit
+          example: NLRTM21123456
+        portOfCall:
+          $ref: '#/components/schemas/ApiPort'
+          description: The port of call for the visit
+        vessel:
+          $ref: '#/components/schemas/ApiVessel'
+          description: The vessel that visits the port of call
+        visitDeclaration:
+          $ref: '#/components/schemas/ApiVisitDeclaration'
+          description: The declaration of the port visit
+        cancelled:
+          type: boolean
+          description: Indication whether the port visit is cancelled
+          example: false
+        visitStatus:
+          type: string
+          description: Indication of the status of a vessel call
+          enum:
+          - UNKNOWN
+          - EXPECTED
+          - ARRIVED
+          - DEPARTED
+          example: DEPARTED
+    ApiVessel:
+      type: object
+      properties:
+        flagCode:
+          type: string
+          description: The code of the flag that defines the nationality of a vessel as reported to port and/or customs authorities
+          example: USA
+        flagCountryUnCode:
+          type: string
+          description: The two letter UN code of the flag that defines the nationality of a vessel
+          example: US
+        imoCode:
+          type: string
+          description: The unique identification of a vessel according to Lloyds register
+          example: 9314210
+        name:
+          type: string
+          description: The name of the vessel
+          example: SAFMARINE MAFADI
+    ApiBerthVisit:
+      type: object
+      properties:
+        berth:
+          $ref: '#/components/schemas/ApiBerth'
+        eta:
+          type: string
+        ata:
+          type: string
+        etd:
+          type: string
+        atd:
+          type: string
+        etaTerminal:
+          type: string
+          description: ETA reported by terminal
+        etdTerminal:
+          type: string
+          description: ETD reported by terminal
+    ApiInspectionItem:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+          maxLength: 17
+          minLength: 0
+        inspectionType:
+          type: string
+          description: Indication of the type of inspection of the equipment to be carried out by customs
+          enum:
+          - UNKNOWN
+          - RELEASED
+          - BLOCK
+          - SCAN
+          - PHYSICAL_OUTLET
+          - PHYSICAL_CUSTOMS_WAREHOUSE
+          example: PHYSICAL_OUTLET
+        status:
+          type: string
+          enum:
+          - NOTIFIED
+          - RELEASED
+        dateUpdated:
+          type: string
+          example: '2021-02-26T07:45:00Z'
+    TrackRequest:
+      type: object
+      properties:
+        blNumber:
+          type: string
+          description: Bill of Lading (consignment) number
+          example: SCAC2345678901
+          maxLength: 17
+          minLength: 6
+        transportEquipmentNumber:
+          type: string
+          description: Transport equipment number (for example a container number)
+          example: CONT9434134
+          maxLength: 17
+          minLength: 1
+        referenceNumber:
+          type: string
+          description: A reference relevant to your organisation
+          example: NT37290523
+          maxLength: 35
+          minLength: 0
+        labels:
+          type: array
+          description: Categorize your cargo with self defined labels
+          items:
+            type: string
+          uniqueItems: true
+        callReferenceNumber:
+          type: string
+          description: Add a call reference number to your track request to track the visit before the manifest is registered within Portbase.
+          example: NLRTM25000001
+          maxLength: 13
+          minLength: 0
+        vesselImoCode:
+          type: string
+          description: Add the IMO code of the related vessel to track the visit before the manifest is registered within Portbase. If the CRN is filled out, the value of the IMO code will be ignored.
+          example: 9850795
+          maxLength: 7
+          minLength: 0
+      required:
+      - blNumber
+      - transportEquipmentNumber
+    ApiVisitDeclaration:
+      type: object
+      properties:
+        portVisit:
+          $ref: '#/components/schemas/ApiPortVisit'
+    ApiDangerousGoods:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The technical name of the dangerous good
+          example: RESIN SOLUTION
+        unCode:
+          type: string
+          description: The UN code of the dangerous good
+          example: 1866
+        hazardClass:
+          type: string
+          description: The IMO hazard class of the dangerous good
+          example: 3
+        packingGroup:
+          type: string
+          description: Indication of the level of danger
+          enum:
+          - MINOR_DANGER
+          - MEDIUM_DANGER
+          - GREAT_DANGER
+        flashPoint:
+          type: number
+          format: double
+          description: The temperature in degrees Celsius at which a good will give off enough flammable vapour to be ignited. According IMDG Code DG Class 3 or subsidiary risk of Class 3.
+          example: 39
+    ApiInlandOperatorNominationDto:
+      type: object
+      properties:
+        equipmentNumber:
+          type: string
+          example: CONT9434134
+        inlandOperatorFullName:
+          type: string
+          description: Full name of the nominated inland operator
+          example: Transport B.V.
+    ApiTerminal:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code of the terminal, see Dutch Customs codebook N24 locationcodes
+          example: 4810
+        name:
+          type: string
+          description: The name of the terminal
+          example: AMALIAH APMT DSQ
+        ownerFullName:
+          type: string
+          description: The name of the organisation that contains the terminal
+          example: APM Terminals Maasvlakte II B.V.
+        ownerShortName:
+          type: string
+          description: The Portbase short name of the organisation that contains the terminal
+          example: APMII
+    ApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        rejectedValue: {}
+    ApiCommodity:
+      type: object
+      properties:
+        code:
+          type: string
+          example: 3824
+        description:
+          type: string
+          example: Prepared binders for foundry moulds or cores
+    ApiGoodsItem:
+      type: object
+      properties:
+        itemNumber:
+          type: integer
+          format: int32
+          example: 1
+        description:
+          type: string
+          description: The goods description will be masked and replaced by 'Blocked by [organisation]' when your organisation is not the first to have tracked the B/L. Please contact the organisation displayed here to request access to the goods description.
+          example: DRUMS OF OIL
+        grossWeight:
+          type: number
+          description: The gross weight of the cargo in kilograms, including package weight, excluding container weight
+          example: 15820
+        numberOfOuterPackages:
+          type: integer
+          format: int32
+          example: 80
+        outerPackageType:
+          $ref: '#/components/schemas/ApiPackageType'
+        netWeight:
+          type: number
+          description: The total weight of the cargo in kilograms, excluding package weight, excluding container weight
+          example: 11230
+        numberOfInnerPackages:
+          type: integer
+          format: int32
+          example: 0
+        innerPackageType:
+          $ref: '#/components/schemas/ApiPackageType'
+        commodity:
+          $ref: '#/components/schemas/ApiCommodity'
+          description: Goods commodity classification of the Harmonised System
+        dangerousGoods:
+          $ref: '#/components/schemas/ApiDangerousGoods'
+        minimumTemperature:
+          type: number
+          description: The minimum temperature (degrees C) on which the cooling system must be set
+          example: 4
+        maximumTemperature:
+          type: number
+          description: The maximum temperature (degrees C) on which the cooling system must be set
+          example: 88
+        goodsItemTransportEquipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiGoodsItemTransportEquipment'
+    ApiCurrency:
+      type: object
+      properties:
+        unCode:
+          type: string
+          example: USD
+        description:
+          type: string
+          example: U.S.A.-dollar
+  securitySchemes:
+    authorizer-name:
+      type: apiKey
+      name: authorizer
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        authorizerResultTtlInSeconds: 0
+        authorizerCredentials: ${authorizer-credentials-arn}
+        type: request
+        identitySource: method.request.header.Portbase-access-key-id,method.request.header.Portbase-secret-access-key
+        authorizerUri: ${authorizer-uri-arn}
+x-refined-from:
+- portbase-cargo-controller-import.json
+- portbase-cargo-controller-import-openapi.yml
