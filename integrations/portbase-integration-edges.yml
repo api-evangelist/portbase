@@ -1,5 +1,5 @@
 generated: '2026-10-18'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/portbase/integrations
 - https://n8n.io/integrations/portbase/
@@ -7,17 +7,45 @@ source:
 - https://monid.ai/tools/portbase
 checked:
 - https://composio.dev/toolkits/portbase
+- https://dcsa.org/about-us/members
+- https://dcsa.org/get-involved/dcsa-plus
+- https://ipcsa.international/about/members/
 - https://make.com/en/integrations/portbase
 - https://monid.ai/tools/portbase
 - https://n8n.io/integrations/portbase
 - https://n8n.io/integrations/portbase/
 - https://support.portbase.com/hc/en-gb/categories/26797994131858
 - https://workato.com/integrations/portbase
+- https://www.igpandi.org/article/ig-approved-electronic-bill-of-lading-systems/
 - https://www.portbase.com/en/marketplace/
 - https://zapier.com/apps/portbase/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: IPCSA (International Port Community Systems Association)
+  partner: ipcsa
+  partner_match: register
+  type: register
+  direction: partner-built
+  evidence: https://ipcsa.international/about/members/members-europe-and-north-america/portbase/
+  category: port community system / single window
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: IPCSA members (ipcsa.international/about/members)
+    spec_file: null
+    standard: port community systems (IPCSA)
+    role: ipcsa-member
+    registered_name: Portbase, Netherlands
+    website: https://www.portbase.com/
+    matched_domain: portbase.com
+    matched_by: domain
+    region: founding-members
+    signal_note: 'participation only: membership, never a count'
+    detected_by: sweep-maritime-logistics.py
+    detected: '2026-10-19'
+  detected_by: sweep-maritime-logistics.py
+  first_seen: '2026-10-19'
 templates: []
 note: No integration marketplace listings or named partner integrations found. Portbase appears to be a port community
   system platform rather than an app with marketplace integrations.
