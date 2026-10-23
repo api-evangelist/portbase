@@ -439,3 +439,9 @@ components:
 x-refined-from:
 - portbase-cargo-controller-import.json
 - portbase-cargo-controller-import-openapi.yml
+x-provenance:
+  method: harvested
+  publisher: Portbase
+  source: https://cargo-controller.pcs.portbase.com/api/public/api-docs
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
